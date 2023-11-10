@@ -1,10 +1,15 @@
 package Clases;
 
+import java.util.ArrayList;
+
 public class Usuario {
 	private String nombre;
 	private String apellidos;
 	private String correo;
 	private String contrasena;
+	private ArrayList<Cuenta> cuentasUsuario; //nuevo
+	
+	public Usuario() {}
 	
 	public Usuario(String nombre, String apellidos, String correo, String contrasena) {
 		super();
@@ -12,6 +17,16 @@ public class Usuario {
 		this.apellidos = apellidos;
 		this.correo = correo;
 		this.contrasena = contrasena;
+	}
+	
+	public Usuario(String nombre, String apellidos, String correo, String contrasena,
+			ArrayList<Cuenta> cuentasUsuario) {
+		super();
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.correo = correo;
+		this.contrasena = contrasena;
+		this.cuentasUsuario = cuentasUsuario;
 	}
 
 	public String getNombre() {
@@ -44,6 +59,14 @@ public class Usuario {
 
 	public void setContrasena(String contrasena) {
 		this.contrasena = contrasena;
+	}
+
+	public ArrayList<Cuenta> getCuentasUsuario() {
+		return cuentasUsuario;
+	}
+
+	public void setCuentasUsuario(ArrayList<Cuenta> cuentasUsuario) {
+		this.cuentasUsuario = cuentasUsuario;
 	}
 	
 	

@@ -4,6 +4,7 @@ public class Actividad {
 	private Acciones accion;
 	private String concepto;
 	
+	public Actividad () {}
 	public Actividad(Acciones accion, String concepto) {
 		super();
 		this.accion = accion;
