@@ -94,5 +94,6 @@ public class Transaccion {
 				+ ", moneda: " + currencyTransaccion + ", Fecha/hora" + fechaHora;
 	}
 	
+	
 
 }

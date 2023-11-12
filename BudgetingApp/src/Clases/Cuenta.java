@@ -72,5 +72,22 @@ public class Cuenta {
 		return "Cuenta: " + nombreCuenta + ", dinero: " + dinero +" "+ currency;
 	}
 	
+	//metodos para añadir y restar del dinero de la cuenta
+	
+	public synchronized void aniadirDinero (long monto) {
+		
+		dinero += monto;
+		
+	}
+	
+	public synchronized void quitarDinero (long monto) {
+		
+		if(dinero < monto) {
+			return;
+		}
+		else {
+			dinero -= monto;
+		}
+	}
 	
 }
