@@ -227,6 +227,12 @@ public class VentanaLogIn extends JFrame {
 		lblNewLabel.setBounds(71, 370, 165, 14);
 		panelLogIn.add(lblNewLabel);
 		
+		JLabel lblNewLabel_2 = new JLabel("");
+		ImageIcon icUser = new ImageIcon(new ImageIcon(VentanaLogIn.class.getResource("/Imagenes/User.png")).getImage().getScaledInstance(130, 130, Image.SCALE_DEFAULT));
+		lblNewLabel_2.setIcon(icUser);	
+		lblNewLabel_2.setBounds(121, 26, 141, 126);
+		panelLogIn.add(lblNewLabel_2);
+		
 		JPanel panelCubreLogIn = new JPanel();
 		panelCubreLogIn.setBounds(0, 0, 399, 433);
 		internalFrame.getContentPane().add(panelCubreLogIn);
