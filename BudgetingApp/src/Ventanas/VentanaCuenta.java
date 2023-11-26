@@ -6,6 +6,11 @@ import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Clases.Cuenta;
+import Clases.TipoCuenta;
+import Clases.Usuario;
+
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JInternalFrame;
@@ -14,8 +19,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Currency;
 import java.util.regex.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,21 +32,46 @@ import java.util.regex.Pattern;
 import javax.swing.JSplitPane;
 import java.awt.Font;
 import javax.swing.JPasswordField;
-import javax.swing.UIManager;
+import javax.swing.JFormattedTextField;
+import java.text.Format;
+import java.text.NumberFormat;
 
-public class VentanaPrincipal extends JFrame {
+import javax.swing.JComboBox;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+
+public class VentanaCuenta extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	private Usuario user;
+	private Cuenta cuenta;
+	private String[] currencies = {"USD","EUR","COP","CHF","CNY"};
+
 	private JPanel contentPane;
+	private JTextField textNomCuenta;
+	private JTextField textPais;
+	private JTextField textFieldPais;
+	private NumberFormat dineroFormat;
+	
+	//default constructor 
+	public VentanaCuenta() {
+		CreacionCuenta();
+	}
+
+	//constructor for users with more than one account
+	public VentanaCuenta(Usuario user) {
+		this.user = user;
+		CreacionCuenta();
+	}
 
 	/**
 	 * Launch the application.
-	 */
+	 *//*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaPrincipal frame = new VentanaPrincipal();
+					VentanaCuentaAct frame = new VentanaCuentaAct();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,11 +79,11 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 	}
-
+*/
 	/**
 	 * Create the frame.
 	 */
-	public VentanaPrincipal() {
+	public void CreacionCuenta() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
 		setBounds(100, 100, 1280, 720);
@@ -64,232 +98,111 @@ public class VentanaPrincipal extends JFrame {
 		internalFrame.setBorder(null);
 		internalFrame.getContentPane().setBackground(new Color(255, 255, 255));
 		internalFrame.getContentPane().setLayout(null);
-		
-		JLabel Bienvenido = new JLabel("Bienvenido, ");
-		Bienvenido.setFont(new Font("Tahoma", Font.BOLD, 20));
-		Bienvenido.setBounds(31, 22, 137, 25);
-		internalFrame.getContentPane().add(Bienvenido);
-		
-		JLabel Nombre = new JLabel("<nombre>");
-		Nombre.setForeground(new Color(255, 128, 64));
-		Nombre.setFont(new Font("Tahoma", Font.BOLD, 20));
-		Nombre.setBounds(157, 22, 137, 25);
-		internalFrame.getContentPane().add(Nombre);
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 59, 1188, 111);
-		internalFrame.getContentPane().add(panel);
-		panel.setLayout(null);
-		
-		JLabel TusCuentas = new JLabel("Cuentas: ");
-		TusCuentas.setFont(new Font("Tahoma", Font.BOLD, 16));
-		TusCuentas.setBounds(31, 11, 137, 25);
-		panel.add(TusCuentas);
-		
-		JButton btnNewButton = new JButton("Cuenta 1");
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setBackground(new Color(0, 128, 255));
-		btnNewButton.setBounds(31, 38, 229, 50);
-		panel.add(btnNewButton);
-		
-		JButton btnCuenta = new JButton("Cuenta 2");
-		btnCuenta.setForeground(new Color(255, 255, 255));
-		btnCuenta.setBackground(new Color(46, 202, 0));
-		btnCuenta.setBounds(277, 38, 229, 50);
-		panel.add(btnCuenta);
-		
-		JButton btnCuenta_2 = new JButton("Cuenta 3");
-		btnCuenta_2.setForeground(new Color(255, 255, 255));
-		btnCuenta_2.setBackground(new Color(198, 0, 0));
-		btnCuenta_2.setBounds(525, 38, 229, 50);
-		panel.add(btnCuenta_2);
-		
-		JButton AgregarCuenta = new JButton("+ Agregar Cuenta");
-		AgregarCuenta.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				try {
-					VentanaCuenta frame = new VentanaCuenta();
-					frame.setVisible(true);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
-		AgregarCuenta.setForeground(new Color(0, 0, 0));
-		AgregarCuenta.setBackground(new Color(245, 245, 245));
-		AgregarCuenta.setBounds(775, 38, 229, 50);
-		panel.add(AgregarCuenta);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(21, 191, 382, 234);
-		internalFrame.getContentPane().add(panel_1);
-		panel_1.setLayout(null);
-		
-		JLabel lblPosicinTotal = new JLabel("Posición Total:");
-		lblPosicinTotal.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblPosicinTotal.setBounds(10, 11, 137, 17);
-		panel_1.add(lblPosicinTotal);
-		
-		JLabel lblSaldo = new JLabel("Saldo:");
-		lblSaldo.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblSaldo.setBounds(10, 39, 67, 17);
-		panel_1.add(lblSaldo);
-		
-		JLabel lblPosicinTotal_1 = new JLabel("<euros>");
-		lblPosicinTotal_1.setForeground(new Color(37, 187, 0));
-		lblPosicinTotal_1.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblPosicinTotal_1.setBounds(55, 39, 137, 17);
-		panel_1.add(lblPosicinTotal_1);
-		
-		JLabel lblMovimientosltimos = new JLabel("Movimientos:");
-		lblMovimientosltimos.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblMovimientosltimos.setBounds(10, 67, 109, 17);
-		panel_1.add(lblMovimientosltimos);
-		
-		JLabel lblPosicinTotal_1_1 = new JLabel("<balance>");
-		lblPosicinTotal_1_1.setForeground(new Color(210, 0, 0));
-		lblPosicinTotal_1_1.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblPosicinTotal_1_1.setBounds(245, 66, 137, 17);
-		panel_1.add(lblPosicinTotal_1_1);
-		
-		JLabel lblltimosDas = new JLabel("(últimos 31 días)");
-		lblltimosDas.setFont(new Font("Tahoma", Font.PLAIN, 8));
-		lblltimosDas.setBounds(10, 83, 67, 17);
-		panel_1.add(lblltimosDas);
-		
-		JLabel lblIngresos = new JLabel("Ingresos:");
-		lblIngresos.setFont(new Font("Tahoma", Font.ITALIC, 13));
-		lblIngresos.setBounds(10, 103, 91, 17);
-		panel_1.add(lblIngresos);
-		
-		JLabel lblGastoss = new JLabel("Gastos:");
-		lblGastoss.setFont(new Font("Tahoma", Font.ITALIC, 13));
-		lblGastoss.setBounds(10, 163, 91, 17);
-		panel_1.add(lblGastoss);
-		
-		JButton btnNewButton_1 = new JButton("Grafico1");
-		btnNewButton_1.setBounds(10, 122, 362, 32);
-		panel_1.add(btnNewButton_1);
-		
-		JLabel lblPosicinTotal_1_2 = new JLabel("<euros>");
-		lblPosicinTotal_1_2.setForeground(new Color(0, 0, 0));
-		lblPosicinTotal_1_2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblPosicinTotal_1_2.setBounds(315, 103, 67, 17);
-		panel_1.add(lblPosicinTotal_1_2);
-		
-		JButton btnNewButton_1_1 = new JButton("Grafico2");
-		btnNewButton_1_1.setBounds(10, 182, 362, 32);
-		panel_1.add(btnNewButton_1_1);
-		
-		JLabel lblPosicinTotal_1_2_1 = new JLabel("<euros>");
-		lblPosicinTotal_1_2_1.setForeground(Color.BLACK);
-		lblPosicinTotal_1_2_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblPosicinTotal_1_2_1.setBounds(315, 163, 67, 17);
-		panel_1.add(lblPosicinTotal_1_2_1);
-		
-		JPanel panel_1_1 = new JPanel();
-		panel_1_1.setLayout(null);
-		panel_1_1.setBounds(423, 191, 338, 234);
-		internalFrame.getContentPane().add(panel_1_1);
-		
-		JLabel lblEvolucin = new JLabel("Evolución:");
-		lblEvolucin.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblEvolucin.setBounds(10, 11, 137, 17);
-		panel_1_1.add(lblEvolucin);
-		
-		JPanel panel_1_2 = new JPanel();
-		panel_1_2.setLayout(null);
-		panel_1_2.setBounds(780, 191, 382, 234);
-		internalFrame.getContentPane().add(panel_1_2);
-		
-		JLabel lblltimosMovimientos = new JLabel("Últimos Movimientos:");
-		lblltimosMovimientos.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblltimosMovimientos.setBounds(10, 11, 192, 17);
-		panel_1_2.add(lblltimosMovimientos);
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(0, 486, 1188, 111);
-		internalFrame.getContentPane().add(panel_2);
-		panel_2.setLayout(null);
-		
-		JLabel lblOperaciones = new JLabel("Operaciones:");
-		lblOperaciones.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblOperaciones.setBounds(34, 11, 137, 25);
-		panel_2.add(lblOperaciones);
-		
-		JButton btnNewButton_2 = new JButton("Nuevo Ingreso");
-		btnNewButton_2.setForeground(new Color(0, 0, 0));
-		btnNewButton_2.setBackground(new Color(255, 255, 255));
-		btnNewButton_2.setBounds(33, 39, 273, 61);
-		ImageIcon imageIng = new ImageIcon(new ImageIcon(VentanaLogIn.class.getResource("/Imagenes/Ingreso.png")).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
-		btnNewButton_2.setIcon(imageIng);	
-		panel_2.add(btnNewButton_2);
-		
-		JButton btnNewButton_2_1 = new JButton("Nueva Transferencia");
-		btnNewButton_2_1.setForeground(new Color(0, 0, 0));
-		btnNewButton_2_1.setBackground(new Color(255, 255, 255));
-		btnNewButton_2_1.setBounds(614, 39, 273, 61);
-		ImageIcon imageTrans = new ImageIcon(new ImageIcon(VentanaLogIn.class.getResource("/Imagenes/Transferencia.png")).getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
-		btnNewButton_2_1.setIcon(imageTrans);
-		panel_2.add(btnNewButton_2_1);
-		
-		JButton btnNewButton_2_1_1 = new JButton("Nuevo Gasto");
-		btnNewButton_2_1_1.setForeground(new Color(0, 0, 0));
-		btnNewButton_2_1_1.setBackground(new Color(255, 255, 255));
-		btnNewButton_2_1_1.setBounds(324, 39, 273, 61);
-		ImageIcon imageGast = new ImageIcon(new ImageIcon(VentanaLogIn.class.getResource("/Imagenes/Gasto.png")).getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT));
-		btnNewButton_2_1_1.setIcon(imageGast);	
-		panel_2.add(btnNewButton_2_1_1);
-		
-		JButton btnNewButton_2_1_2 = new JButton("Agregar cuenta");
-		btnNewButton_2_1_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				try {
-					VentanaCuenta frame = new VentanaCuenta();
-					frame.setVisible(true);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
-		btnNewButton_2_1_2.setForeground(Color.BLACK);
-		btnNewButton_2_1_2.setBackground(Color.WHITE);
-		btnNewButton_2_1_2.setBounds(905, 39, 257, 61);
-		ImageIcon imageAdd = new ImageIcon(new ImageIcon(VentanaLogIn.class.getResource("/Imagenes/Agregar.png")).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
-		btnNewButton_2_1_2.setIcon(imageAdd);
-		panel_2.add(btnNewButton_2_1_2);
-		
-		JLabel lblCerrarSesin = new JLabel("Cerrar Sesión");
-		lblCerrarSesin.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				try {
-					dispose();
-					VentanaLogIn frame = new VentanaLogIn();
-					frame.setVisible(true);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
-		lblCerrarSesin.setForeground(new Color(255, 128, 64));
-		lblCerrarSesin.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblCerrarSesin.setBounds(1051, 19, 137, 25);
-		internalFrame.getContentPane().add(lblCerrarSesin);
-		
-		JLabel lblCerrarSesin_1 = new JLabel();
-		lblCerrarSesin_1.setBounds(990, 6, 61, 50);
-		internalFrame.getContentPane().add(lblCerrarSesin_1);
-		lblCerrarSesin_1.setForeground(new Color(255, 128, 64));
-		ImageIcon imageUser = new ImageIcon(new ImageIcon(VentanaLogIn.class.getResource("/Imagenes/User.png")).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
-		lblCerrarSesin_1.setIcon(imageUser);	
 		internalFrame.setVisible(true);
 		((javax.swing.plaf.basic.BasicInternalFrameUI)internalFrame.getUI()).setNorthPane(null);
-		internalFrame.setBounds(47, 49, 1188, 635);
+		internalFrame.setBounds(177, 84, 901, 529);
 		contentPane.add(internalFrame);
 		
+		JPanel panelCubreLogIn = new JPanel();
+		panelCubreLogIn.setBounds(0, 0, 434, 529);
+		internalFrame.getContentPane().add(panelCubreLogIn);
+		panelCubreLogIn.setBackground(new Color(255, 128, 64));
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setForeground(new Color(0, 0, 0));
+		btnCancelar.setBackground(new Color(255, 128, 64));
+		btnCancelar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+			}
+		});
+		btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnCancelar.setBounds(500, 439, 117, 41);
+		internalFrame.getContentPane().add(btnCancelar);
+		
+		JFormattedTextField textFieldDinero = new JFormattedTextField(dineroFormat);
+		textFieldDinero.setBounds(500, 371, 330, 30);
+		internalFrame.getContentPane().add(textFieldDinero);
+		
+		JLabel lblDinero = new JLabel("Dinero");
+		lblDinero.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDinero.setBounds(500, 341, 77, 20);
+		internalFrame.getContentPane().add(lblDinero);
+		
+		DefaultComboBoxModel tipoCuentaModel = new DefaultComboBoxModel<>(TipoCuenta.values());
+		JComboBox tipoCuentaBox = new JComboBox(tipoCuentaModel);
+		tipoCuentaBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		tipoCuentaBox.setBounds(500, 292, 260, 30);
+		tipoCuentaBox.setSelectedIndex(-1);
+		internalFrame.getContentPane().add(tipoCuentaBox);
+
+		
+		JLabel lblTipoCuenta = new JLabel("Tipo de cuenta");
+		lblTipoCuenta.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTipoCuenta.setBounds(500, 261, 140, 20);
+		internalFrame.getContentPane().add(lblTipoCuenta);
+		
+		DefaultComboBoxModel currenciesModel = new DefaultComboBoxModel<>(currencies);
+		JComboBox currenciesComboBox = new JComboBox(currenciesModel);
+		currenciesComboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		currenciesComboBox.setBounds(500, 212, 140, 30);
+		currenciesComboBox.setSelectedIndex(-1);
+		internalFrame.getContentPane().add(currenciesComboBox);
+		
+		JLabel label_currency = new JLabel("Moneda");
+		label_currency.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		label_currency.setBounds(500, 181, 57, 20);
+		internalFrame.getContentPane().add(label_currency);
+		
+		textFieldPais = new JTextField();
+		textFieldPais.setColumns(10);
+		textFieldPais.setBounds(500, 131, 330, 30);
+		internalFrame.getContentPane().add(textFieldPais);
+		
+		JLabel lblPais = new JLabel("Pais");
+		lblPais.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblPais.setBounds(500, 101, 100, 20);
+		internalFrame.getContentPane().add(lblPais);
+		
+		textNomCuenta = new JTextField();
+		textNomCuenta.setColumns(10);
+		textNomCuenta.setBounds(500, 51, 330, 30);
+		internalFrame.getContentPane().add(textNomCuenta);
+		
+		JLabel lblNombreCuenta = new JLabel("Nombre cuenta");
+		lblNombreCuenta.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNombreCuenta.setBounds(500, 21, 100, 20);
+		internalFrame.getContentPane().add(lblNombreCuenta);
+		
+		JButton btnCrearCuenta = new JButton("Crear Cuenta");
+		btnCrearCuenta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				cuenta = new Cuenta();
+				if (user.getCuentasUsuario() == null) {
+					user.setCuentasUsuario(new ArrayList<Cuenta>());
+				}
+
+				ArrayList<Cuenta> cuentasUser = user.getCuentasUsuario();
+
+				cuenta.setUsuario(user);
+				cuenta.setNombreCuenta(textNomCuenta.getText());
+				cuenta.setCurrency(Currency.getInstance((String) currenciesModel.getSelectedItem()));
+				cuenta.setPais(textFieldPais.getText());
+				cuenta.setTipocuenta((TipoCuenta)tipoCuentaModel.getSelectedItem());
+				cuenta.setDinero(Long.parseLong(textFieldDinero.getText()));
+
+				cuentasUser.add(cuenta);
+
+
+			}
+		});
+		btnCrearCuenta.setForeground(new Color(0, 0, 0));
+		btnCrearCuenta.setBackground(new Color(255, 128, 64));
+		btnCrearCuenta.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnCrearCuenta.setBounds(713, 439, 117, 41);
+		internalFrame.getContentPane().add(btnCrearCuenta);
 		
 		JLabel lblExit = new JLabel("");
 		lblExit.addMouseListener(new MouseAdapter() {
@@ -302,7 +215,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(lblExit);
 		
 		
-		ImageIcon imageIcon = new ImageIcon(new ImageIcon(VentanaPrincipal.class.getResource("/Imagenes/X.png")).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+		ImageIcon imageIcon = new ImageIcon(new ImageIcon(VentanaLogIn.class.getResource("/Imagenes/X.png")).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
 		lblExit.setIcon(imageIcon);
 
 	}
