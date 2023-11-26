@@ -219,6 +219,17 @@ public class VentanaPrincipal extends JFrame {
 		panel_2.add(lblOperaciones);
 		
 		JButton btnNewButton_2 = new JButton("Nuevo Ingreso");
+		btnNewButton_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					VentanaMovimientos frame = new VentanaMovimientos("INGRESO");
+					frame.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
 		btnNewButton_2.setForeground(new Color(0, 0, 0));
 		btnNewButton_2.setBackground(new Color(255, 255, 255));
 		btnNewButton_2.setBounds(33, 39, 273, 61);
@@ -227,6 +238,17 @@ public class VentanaPrincipal extends JFrame {
 		panel_2.add(btnNewButton_2);
 		
 		JButton btnNewButton_2_1 = new JButton("Nueva Transferencia");
+		btnNewButton_2_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					VentanaMovimientos frame = new VentanaMovimientos("TRANSFERENCIA");
+					frame.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
 		btnNewButton_2_1.setForeground(new Color(0, 0, 0));
 		btnNewButton_2_1.setBackground(new Color(255, 255, 255));
 		btnNewButton_2_1.setBounds(614, 39, 273, 61);
@@ -235,6 +257,17 @@ public class VentanaPrincipal extends JFrame {
 		panel_2.add(btnNewButton_2_1);
 		
 		JButton btnNewButton_2_1_1 = new JButton("Nuevo Gasto");
+		btnNewButton_2_1_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					VentanaMovimientos frame = new VentanaMovimientos("GASTO");
+					frame.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
 		btnNewButton_2_1_1.setForeground(new Color(0, 0, 0));
 		btnNewButton_2_1_1.setBackground(new Color(255, 255, 255));
 		btnNewButton_2_1_1.setBounds(324, 39, 273, 61);
@@ -300,6 +333,7 @@ public class VentanaPrincipal extends JFrame {
 		});
 		lblExit.setBounds(1253, 11, 27, 14);
 		contentPane.add(lblExit);
+		
 		
 		ImageIcon imageIcon = new ImageIcon(new ImageIcon(VentanaPrincipal.class.getResource("/Imagenes/X.png")).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
 		lblExit.setIcon(imageIcon);
