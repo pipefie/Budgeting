@@ -2,6 +2,7 @@ package Clases;
 import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -105,5 +106,27 @@ public class ConexionMySQL {
 			e.printStackTrace();
 		}
 		return null;
-    }
-}
+    } 
+    public boolean registro(String correo,String contrasena) {
+    	
+    	String insertTableSQL = "INSERT INTO usuarios"
+                + "(correo,contrasena) VALUES"
+                + "(?,?)";
+    	Connection conn;
+        try {
+        	conn = DriverManager.getConnection(url, username, password);
+        	PreparedStatement preparedStatement = conn.prepareStatement(insertTableSQL);
+            preparedStatement.setString(1, correo);
+            preparedStatement.setString(2, contrasena);
+
+            // execute insert SQL stetement
+            preparedStatement.executeUpdate();
+            System.out.println("Se inserto correctamente");
+            return true;
+
+        } catch (SQLException e) {
+        	return false;
+           
+
+        }
+    }}

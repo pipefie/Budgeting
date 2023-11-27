@@ -6,6 +6,9 @@ import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Clases.ConexionMySQL;
+
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JInternalFrame;
@@ -34,6 +37,7 @@ public class VentanaLogIn extends JFrame {
 	private JPasswordField passwordField_1;
 	private JTextField textField_1;
 	private JTextField textField_2;
+	private ConexionMySQL conexion =  new ConexionMySQL();
 
 	/**
 	 * Launch the application.
@@ -281,6 +285,15 @@ public class VentanaLogIn extends JFrame {
 							JOptionPane.showMessageDialog(null, "Rellena todos los campos.");
 						}else {
 							//Aqui va el codigo de Signup
+							System.out.println(textField_2.getText());
+							 if(conexion.registro(textField_2.getText(),passwordField_1.getText())) {
+								//pasar a la siguiente ventana con esto 
+								 //conexion.inicioSesion(textField_2.getText(),passwordField_1.getText()) 
+								 //es un arraylist con el id del usuario y el correo
+							 }else{
+								 JOptionPane.showMessageDialog(null,"cuenta existente");
+							 }
+							
 						}
 						
 					}
