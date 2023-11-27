@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Clases.ConexionMySQL;
+import Clases.Usuario;
 
 import java.awt.Color;
 import javax.swing.JTextField;
@@ -19,6 +20,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.regex.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,6 +40,7 @@ public class VentanaLogIn extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private ConexionMySQL conexion =  new ConexionMySQL();
+	private static Usuario usuario = new Usuario();
 
 	/**
 	 * Launch the application.
@@ -286,10 +289,19 @@ public class VentanaLogIn extends JFrame {
 						}else {
 							//Aqui va el codigo de Signup
 							System.out.println(textField_2.getText());
-							 if(conexion.registro(textField_2.getText(),passwordField_1.getText())) {
+							ArrayList<String> datosusuario = conexion.registro(textField_2.getText(),passwordField_1.getText(),textField.getText(),textField_1.getText());
+							 if(  datosusuario != null ) {
 								//pasar a la siguiente ventana con esto 
-								 //conexion.inicioSesion(textField_2.getText(),passwordField_1.getText()) 
-								 //es un arraylist con el id del usuario y el correo
+								 
+								usuario.setNombre(datosusuario.get(1));
+								usuario.setApellidos(datosusuario.get(2));
+								usuario.setCorreo(datosusuario.get(3));
+								usuario.setId(datosusuario.get(0));
+								VentanaPrincipal ventana = new VentanaPrincipal(usuario);
+								ventana.setVisible(true);
+								dispose();
+								 
+								 
 							 }else{
 								 JOptionPane.showMessageDialog(null,"cuenta existente");
 							 }

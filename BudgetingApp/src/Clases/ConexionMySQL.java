@@ -60,10 +60,14 @@ public class ConexionMySQL {
 			ResultSet resultado = estado.executeQuery(consulta);
 			while(resultado.next()) {
 				String id = resultado.getString("id");
+				String nombre = resultado.getString("nombre");
+				String apellidos = resultado.getString("apellidos");
 				String correo1 = resultado.getString("correo");
-				System.out.println(id + correo1);
+
 				ArrayList<String> lista = new ArrayList<>();
 				lista.add(id);
+				lista.add(nombre);
+				lista.add(apellidos);
 				lista.add(correo1);
 				return lista;
 				
@@ -107,26 +111,29 @@ public class ConexionMySQL {
 		}
 		return null;
     } 
-    public boolean registro(String correo,String contrasena) {
+    public ArrayList<String> registro(String correo,String contrasena,String nombre,String apellidos) {
     	
     	String insertTableSQL = "INSERT INTO usuarios"
-                + "(correo,contrasena) VALUES"
-                + "(?,?)";
+                + "(correo,contrasena,nombre,apellidos) VALUES"
+                + "(?,?,?,?)";
     	Connection conn;
         try {
         	conn = DriverManager.getConnection(url, username, password);
         	PreparedStatement preparedStatement = conn.prepareStatement(insertTableSQL);
-            preparedStatement.setString(1, correo);
+        	preparedStatement.setString(1, correo);
             preparedStatement.setString(2, contrasena);
+            preparedStatement.setString(3, nombre);
+            preparedStatement.setString(4, apellidos);
 
             // execute insert SQL stetement
             preparedStatement.executeUpdate();
             System.out.println("Se inserto correctamente");
-            return true;
+            return this.inicioSesion(correo, contrasena);
 
         } catch (SQLException e) {
-        	return false;
+        	
            
 
         }
+		return null;
     }}

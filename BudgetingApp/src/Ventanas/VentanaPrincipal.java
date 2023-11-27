@@ -6,6 +6,9 @@ import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Clases.Usuario;
+
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JInternalFrame;
@@ -16,6 +19,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.regex.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,6 +33,7 @@ public class VentanaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private static Usuario usuario;
 
 	/**
 	 * Launch the application.
@@ -37,7 +42,7 @@ public class VentanaPrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaPrincipal frame = new VentanaPrincipal();
+					VentanaPrincipal frame = new VentanaPrincipal(usuario);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,8 +53,9 @@ public class VentanaPrincipal extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param arrayList 
 	 */
-	public VentanaPrincipal() {
+	public VentanaPrincipal(Usuario usuario) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
 		setBounds(100, 100, 1280, 720);
@@ -70,7 +76,7 @@ public class VentanaPrincipal extends JFrame {
 		Bienvenido.setBounds(31, 22, 137, 25);
 		internalFrame.getContentPane().add(Bienvenido);
 		
-		JLabel Nombre = new JLabel("<nombre>");
+		JLabel Nombre = new JLabel(usuario.getNombre() );
 		Nombre.setForeground(new Color(255, 128, 64));
 		Nombre.setFont(new Font("Tahoma", Font.BOLD, 20));
 		Nombre.setBounds(157, 22, 137, 25);

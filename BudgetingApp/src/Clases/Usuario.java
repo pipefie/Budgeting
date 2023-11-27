@@ -3,6 +3,7 @@ package Clases;
 import java.util.ArrayList;
 
 public class Usuario {
+	private String id;
 	private String nombre;
 	private String apellidos;
 	private String correo;
@@ -67,6 +68,14 @@ public class Usuario {
 
 	public void setCuentasUsuario(ArrayList<Cuenta> cuentasUsuario) {
 		this.cuentasUsuario = cuentasUsuario;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	
