@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.regex.*;
 import java.util.regex.Matcher;
@@ -101,44 +102,12 @@ public class VentanaPrincipal extends JFrame {
 		ArrayList<ArrayList<String>> cuentadatos = conn.cargacuentas(usuario.getId());
 		ArrayList<ArrayList<String>> tipocuentas = conn.cargartipocuentas();
 		 int distancia = 31;
-		for (int i = 0; i < cuentadatos.size(); i++) {	
-			
-			ArrayList<String> cuenta1 = cuentadatos.get(i);
-			String tipo = "";
-			for (int j = 0; j < tipocuentas.size(); j++) {
-				ArrayList<String> tipocuenta = tipocuentas.get(j);
-				System.out.println(tipocuenta);
-				if(cuenta1.get(3).equals(tipocuenta.get(0)) ) {
-					tipo = tipocuenta.get(1);
-				}
-			}
-			
-			JButton btnNewButton = new JButton("Cuenta "+ tipo);
-			btnNewButton.setForeground(new Color(255, 255, 255));
-			btnNewButton.setBackground(new Color(0, 128, 255));
-			btnNewButton.setBounds(distancia , 38, 229, 50);
-			btnNewButton.setName(cuenta1.get(0));
-			panel.add(btnNewButton);
-			distancia+= 250;
-		}
+		 String dinero = "";
 		
 		
-		JButton AgregarCuenta = new JButton("+ Agregar Cuenta");
-		AgregarCuenta.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				try {
-					VentanaCuenta frame = new VentanaCuenta();
-					frame.setVisible(true);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
-		AgregarCuenta.setForeground(new Color(0, 0, 0));
-		AgregarCuenta.setBackground(new Color(245, 245, 245));
-		AgregarCuenta.setBounds(distancia	, 38, 229, 50);
-		panel.add(AgregarCuenta);
+		
+		
+		
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(21, 191, 382, 234);
@@ -155,7 +124,7 @@ public class VentanaPrincipal extends JFrame {
 		lblSaldo.setBounds(10, 39, 67, 17);
 		panel_1.add(lblSaldo);
 		
-		JLabel lblPosicinTotal_1 = new JLabel("<euros>");
+		JLabel lblPosicinTotal_1 = new JLabel("<dinero>");
 		lblPosicinTotal_1.setForeground(new Color(37, 187, 0));
 		lblPosicinTotal_1.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblPosicinTotal_1.setBounds(55, 39, 137, 17);
@@ -356,6 +325,89 @@ public class VentanaPrincipal extends JFrame {
 		
 		ImageIcon imageIcon = new ImageIcon(new ImageIcon(VentanaPrincipal.class.getResource("/Imagenes/X.png")).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
 		lblExit.setIcon(imageIcon);
-
+		 MouseListener ms = new MouseListener() {
+				
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					System.out.println(e.getComponent());
+					if(e.getComponent().getName() != null) {
+					String idcuenta = e.getComponent().getName();
+					for (int i = 0; i < cuentadatos.size(); i++) {
+						if(cuentadatos.get(i).get(1).equals(idcuenta)) {
+							lblPosicinTotal_1.setText(cuentadatos.get(i).get(2));
+						}
+					}
+					}
+				}
+			};
+		for (int i = 0; i < cuentadatos.size(); i++) {	
+			
+			ArrayList<String> cuenta1 = cuentadatos.get(i);
+			String tipo = "";
+			for (int j = 0; j < tipocuentas.size(); j++) {
+				ArrayList<String> tipocuenta = tipocuentas.get(j);
+				System.out.println(tipocuenta);
+				if(cuenta1.get(3).equals(tipocuenta.get(0)) ) {
+					tipo = tipocuenta.get(1);
+				}
+				if(cuenta1.get(3).equals("1")) {
+					dinero = cuenta1.get(2);
+					lblPosicinTotal_1.setText(dinero);
+				}
+			}
+			
+			JButton btnNewButton = new JButton("Cuenta "+ tipo);
+			btnNewButton.setForeground(new Color(255, 255, 255));
+			btnNewButton.setBackground(new Color(0, 128, 255));
+			btnNewButton.setBounds(distancia , 38, 229, 50);
+			btnNewButton.setName(cuenta1.get(1));
+			btnNewButton.addMouseListener(ms);
+			panel.add(btnNewButton);
+			distancia+= 250;
+			
+		}
+		JButton AgregarCuenta = new JButton("+ Agregar Cuenta");
+		AgregarCuenta.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					VentanaCuenta frame = new VentanaCuenta();
+					frame.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
+		
+		AgregarCuenta.setForeground(new Color(0, 0, 0));
+		AgregarCuenta.setBackground(new Color(245, 245, 245));
+		AgregarCuenta.setBounds(distancia	, 38, 229, 50);
+		panel.add(AgregarCuenta);
 	}
+	
 }
