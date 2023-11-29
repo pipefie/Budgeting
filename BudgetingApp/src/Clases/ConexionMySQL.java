@@ -81,7 +81,7 @@ public class ConexionMySQL {
     }
     
     
-    public ArrayList<String> cargacuentas(String id) {
+    public ArrayList<ArrayList<String>> cargacuentas(String id) {
     	Connection conn = null;
     	
     	try {
@@ -90,28 +90,58 @@ public class ConexionMySQL {
         	String consulta = "SELECT * FROM cuentas WHERE idUsuario ='" +id+"'";
         	java.sql.Statement estado =  conn.createStatement();
 			ResultSet resultado = estado.executeQuery(consulta);
+			int x = 0;
+			ArrayList<ArrayList<String>> lista = new ArrayList<>();
 			while(resultado.next()) {
 				String idCuenta = resultado.getString("id");
 				String dinero = resultado.getString("dinero");
 				String tipodinero = resultado.getString("idmoneda");
 				String tipocuenta = resultado.getString("tipocuenta");
 				System.out.println(idCuenta + dinero +tipodinero );
-				ArrayList<String> lista = new ArrayList<>();
-				lista.add(id);
-				lista.add(idCuenta);
-				lista.add(dinero);
-				lista.add(tipocuenta);
-				lista.add(tipodinero);
-				return lista;
+				ArrayList<String> datos = new ArrayList<>();
+				datos.add(id);
+				datos.add(idCuenta);
+				datos.add(dinero);
+				datos.add(tipocuenta);
+				datos.add(tipodinero);
+				lista.add(datos);
+				x++;
 			}
-			System.out.println(resultado);
+			return lista;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
     } 
-    public ArrayList<String> registro(String correo,String contrasena,String nombre,String apellidos) {
+    public ArrayList<ArrayList<String>> cargartipocuentas() {
+    	Connection conn = null;
+    	
+    	try {
+    		conn = DriverManager.getConnection(url, username, password);
+      
+        	String consulta = "SELECT * FROM tipocuenta ";
+        	java.sql.Statement estado =  conn.createStatement();
+			ResultSet resultado = estado.executeQuery(consulta);
+			int x = 0;
+			ArrayList<ArrayList<String>> lista = new ArrayList<>();
+			while(resultado.next()) {
+				ArrayList<String> datos = new ArrayList<>();
+				String id = resultado.getString("id");
+				String nombre = resultado.getString("nombre");
+				datos.add(id);
+				datos.add(nombre);
+				lista.add(datos);
+				x++;
+			}
+			return lista;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+    } 
+public ArrayList<String> registro(String correo,String contrasena,String nombre,String apellidos) {
     	
     	String insertTableSQL = "INSERT INTO usuarios"
                 + "(correo,contrasena,nombre,apellidos) VALUES"
@@ -136,4 +166,30 @@ public class ConexionMySQL {
 
         }
 		return null;
+    
+}public void creacuenta(String idusuario,String tipocuenta,String tipomoneda,String dinero) {
+    	
+    	String insertTableSQL = "INSERT INTO cuentas"
+                + "(idUsuario,tipomoneda,tipocuenta,dinero) VALUES"
+                + "(?,?,?,?)";
+    	Connection conn;
+        try {
+        	conn = DriverManager.getConnection(url, username, password);
+        	PreparedStatement preparedStatement = conn.prepareStatement(insertTableSQL);
+        	preparedStatement.setString(1, idusuario);
+            preparedStatement.setString(2, tipomoneda);
+            preparedStatement.setString(3, tipocuenta);
+            preparedStatement.setString(4, dinero);
+
+            // execute insert SQL stetement
+            preparedStatement.executeUpdate();
+            
+            
+
+        } catch (SQLException e) {
+        	
+           e.printStackTrace();
+
+        }
+		
     }}

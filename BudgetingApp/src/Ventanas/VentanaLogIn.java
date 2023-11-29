@@ -218,6 +218,21 @@ public class VentanaLogIn extends JFrame {
 						JOptionPane.showMessageDialog(null, "Rellena todos los campos.");
 					}else {
 						//Codigo Login
+						ArrayList<String> datosusuario = conexion.inicioSesion(textFieldUsuario.getText(), passwordField.getText());
+						if(datosusuario != null) {
+							usuario = new Usuario();
+							usuario.setNombre(datosusuario.get(1));
+							usuario.setApellidos(datosusuario.get(2));
+							usuario.setCorreo(datosusuario.get(3));
+							usuario.setId(datosusuario.get(0));
+							VentanaPrincipal ventana = new VentanaPrincipal(usuario);
+							ventana.setVisible(true);
+							dispose();
+						}else {
+							 JOptionPane.showMessageDialog(null,"inicio de sesión fallido");
+						}
+						
+						 
 					}
 					
 				}
@@ -292,11 +307,12 @@ public class VentanaLogIn extends JFrame {
 							ArrayList<String> datosusuario = conexion.registro(textField_2.getText(),passwordField_1.getText(),textField.getText(),textField_1.getText());
 							 if(  datosusuario != null ) {
 								//pasar a la siguiente ventana con esto 
-								 
+								 usuario = new Usuario();
 								usuario.setNombre(datosusuario.get(1));
 								usuario.setApellidos(datosusuario.get(2));
 								usuario.setCorreo(datosusuario.get(3));
 								usuario.setId(datosusuario.get(0));
+								conexion.creacuenta(usuario.getId(),"1","1","0");
 								VentanaPrincipal ventana = new VentanaPrincipal(usuario);
 								ventana.setVisible(true);
 								dispose();
@@ -332,7 +348,7 @@ public class VentanaLogIn extends JFrame {
 	
 	public static boolean isValidPassword(String password)
     {
-        String regex = "^(?=.*[0-9])" + "(?=.*[a-z])(?=.*[A-Z])" + "(?=.*[@#$%^&+=])" + "(?=\\S+$).{8,20}$";
+        String regex = "^(?=.*[0-9])" + "(?=.*[a-z])(?=.*[A-Z])" + "(?=.*[@#$%^&+=-._])" + "(?=\\S+$).{8,20}$";
  
         Pattern p = Pattern.compile(regex);
  

@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Clases.ConexionMySQL;
+import Clases.Cuenta;
 import Clases.Usuario;
 
 import java.awt.Color;
@@ -33,7 +35,9 @@ public class VentanaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private static Usuario usuario;
+	private static Usuario usuario = new Usuario();
+	private static ArrayList<Cuenta> cuentas;
+	private static ConexionMySQL conn = new ConexionMySQL();
 
 	/**
 	 * Launch the application.
@@ -56,6 +60,8 @@ public class VentanaPrincipal extends JFrame {
 	 * @param arrayList 
 	 */
 	public VentanaPrincipal(Usuario usuario) {
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
 		setBounds(100, 100, 1280, 720);
@@ -92,23 +98,30 @@ public class VentanaPrincipal extends JFrame {
 		TusCuentas.setBounds(31, 11, 137, 25);
 		panel.add(TusCuentas);
 		
-		JButton btnNewButton = new JButton("Cuenta 1");
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setBackground(new Color(0, 128, 255));
-		btnNewButton.setBounds(31, 38, 229, 50);
-		panel.add(btnNewButton);
+		ArrayList<ArrayList<String>> cuentadatos = conn.cargacuentas(usuario.getId());
+		ArrayList<ArrayList<String>> tipocuentas = conn.cargartipocuentas();
+		 int distancia = 31;
+		for (int i = 0; i < cuentadatos.size(); i++) {	
+			
+			ArrayList<String> cuenta1 = cuentadatos.get(i);
+			String tipo = "";
+			for (int j = 0; j < tipocuentas.size(); j++) {
+				ArrayList<String> tipocuenta = tipocuentas.get(j);
+				System.out.println(tipocuenta);
+				if(cuenta1.get(3).equals(tipocuenta.get(0)) ) {
+					tipo = tipocuenta.get(1);
+				}
+			}
+			
+			JButton btnNewButton = new JButton("Cuenta "+ tipo);
+			btnNewButton.setForeground(new Color(255, 255, 255));
+			btnNewButton.setBackground(new Color(0, 128, 255));
+			btnNewButton.setBounds(distancia , 38, 229, 50);
+			btnNewButton.setName(cuenta1.get(0));
+			panel.add(btnNewButton);
+			distancia+= 250;
+		}
 		
-		JButton btnCuenta = new JButton("Cuenta 2");
-		btnCuenta.setForeground(new Color(255, 255, 255));
-		btnCuenta.setBackground(new Color(46, 202, 0));
-		btnCuenta.setBounds(277, 38, 229, 50);
-		panel.add(btnCuenta);
-		
-		JButton btnCuenta_2 = new JButton("Cuenta 3");
-		btnCuenta_2.setForeground(new Color(255, 255, 255));
-		btnCuenta_2.setBackground(new Color(198, 0, 0));
-		btnCuenta_2.setBounds(525, 38, 229, 50);
-		panel.add(btnCuenta_2);
 		
 		JButton AgregarCuenta = new JButton("+ Agregar Cuenta");
 		AgregarCuenta.addMouseListener(new MouseAdapter() {
@@ -124,7 +137,7 @@ public class VentanaPrincipal extends JFrame {
 		});
 		AgregarCuenta.setForeground(new Color(0, 0, 0));
 		AgregarCuenta.setBackground(new Color(245, 245, 245));
-		AgregarCuenta.setBounds(775, 38, 229, 50);
+		AgregarCuenta.setBounds(distancia	, 38, 229, 50);
 		panel.add(AgregarCuenta);
 		
 		JPanel panel_1 = new JPanel();
