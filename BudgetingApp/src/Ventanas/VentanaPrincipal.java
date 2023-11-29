@@ -365,6 +365,7 @@ public class VentanaPrincipal extends JFrame {
 					}
 				}
 			};
+		double balance = 0;
 		for (int i = 0; i < cuentadatos.size(); i++) {	
 			
 			ArrayList<String> cuenta1 = cuentadatos.get(i);
@@ -379,8 +380,9 @@ public class VentanaPrincipal extends JFrame {
 					dinero = cuenta1.get(2);
 					lblPosicinTotal_1.setText(dinero);
 				}
+				
 			}
-			
+		
 			JButton btnNewButton = new JButton("Cuenta "+ tipo);
 			btnNewButton.setForeground(new Color(255, 255, 255));
 			btnNewButton.setBackground(new Color(0, 128, 255));
@@ -389,8 +391,11 @@ public class VentanaPrincipal extends JFrame {
 			btnNewButton.addMouseListener(ms);
 			panel.add(btnNewButton);
 			distancia+= 250;
+			balance+= Double.parseDouble(cuenta1.get(2)) ;
 			
 		}
+		lblPosicinTotal_1_1.setText(Double.toString(balance));
+
 		JButton AgregarCuenta = new JButton("+ Agregar Cuenta");
 		AgregarCuenta.addMouseListener(new MouseAdapter() {
 			@Override

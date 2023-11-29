@@ -348,7 +348,8 @@ public class VentanaLogIn extends JFrame {
 	
 	public static boolean isValidPassword(String password)
     {
-        String regex = "^(?=.*[0-9])" + "(?=.*[a-z])(?=.*[A-Z])" + "(?=.*[@#$%^&+=-._])" + "(?=\\S+$).{8,20}$";
+		String regex = "^(?=.*[0-9])" + "(?=.*[a-z])(?=.*[A-Z])" + "(?=.*[@#$%^&+=-_\\.])" + "(?=.*\\S).{8,20}$";
+
  
         Pattern p = Pattern.compile(regex);
  

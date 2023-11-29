@@ -170,7 +170,7 @@ public ArrayList<String> registro(String correo,String contrasena,String nombre,
 }public void creacuenta(String idusuario,String tipocuenta,String tipomoneda,String dinero) {
     	
     	String insertTableSQL = "INSERT INTO cuentas"
-                + "(idUsuario,tipomoneda,tipocuenta,dinero) VALUES"
+                + "(idUsuario,idmoneda,tipocuenta,dinero) VALUES"
                 + "(?,?,?,?)";
     	Connection conn;
         try {
