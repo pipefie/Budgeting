@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-11-2023 a las 17:44:21
+-- Tiempo de generación: 30-11-2023 a las 16:25:26
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -54,7 +54,7 @@ CREATE TABLE `cuentas` (
   `id` int(11) NOT NULL,
   `idUsuario` int(11) NOT NULL,
   `tipoCuenta` int(11) NOT NULL,
-  `dinero` double NOT NULL,
+  `dinero` decimal(10,2) NOT NULL,
   `idmoneda` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -63,9 +63,12 @@ CREATE TABLE `cuentas` (
 --
 
 INSERT INTO `cuentas` (`id`, `idUsuario`, `tipoCuenta`, `dinero`, `idmoneda`) VALUES
-(3, 1, 2, 222, 4),
-(4, 1, 1, 0, 1),
-(5, 1, 3, 50, 1);
+(3, 1, 1, 222.00, 4),
+(4, 1, 2, 0.00, 1),
+(5, 1, 3, 50.00, 1),
+(6, 12, 1, 0.00, 1),
+(7, 13, 1, 0.00, 1),
+(8, 14, 1, 0.00, 1);
 
 -- --------------------------------------------------------
 
@@ -119,8 +122,8 @@ CREATE TABLE `tipomoneda` (
 --
 
 INSERT INTO `tipomoneda` (`id`, `nombre`) VALUES
-(1, 'euro'),
-(4, 'dolar');
+(1, 'EUR'),
+(4, 'USD');
 
 -- --------------------------------------------------------
 
@@ -148,7 +151,12 @@ INSERT INTO `usuarios` (`id`, `correo`, `contrasena`, `nombre`, `apellidos`) VAL
 (6, 'preuba2323@gm.co', '2323Aa,.-´ç+', '', ''),
 (7, 'dfe@asdf.co', '1234Aa,.-´ç+', 'nombre', 'apellido'),
 (8, 'debustos.dbp@sdaf.coo', '233A123a,.-´ç+', 'prueba1', 'p'),
-(9, 'debu.daf@gcr.co', '12234Aa,.-´ç+', 'prueba3', 'adf');
+(9, 'debu.daf@gcr.co', '12234Aa,.-´ç+', 'prueba3', 'adf'),
+(10, 'prueba@gm.co', 'Prueba1.', 'p', 'p'),
+(11, 'prueba2@prueba2.com', 'Prueba7.', 'asdf', 'asdf'),
+(12, 'busi@busi.busi', 'Busi012.', 'prueba', 'pr'),
+(13, 'asdf@fasdf.co', 'Prueba1.@', 'adsf', 'asdf'),
+(14, 'prueba@prue.co', 'David2002.', 'david', 'de bustos');
 
 --
 -- Índices para tablas volcadas
@@ -224,7 +232,7 @@ ALTER TABLE `actividad`
 -- AUTO_INCREMENT de la tabla `cuentas`
 --
 ALTER TABLE `cuentas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `movimientos`
@@ -248,7 +256,7 @@ ALTER TABLE `tipomoneda`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Restricciones para tablas volcadas
