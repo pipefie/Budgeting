@@ -1,11 +1,13 @@
 package Clases;
 import java.lang.reflect.Array;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -81,30 +83,31 @@ public class ConexionMySQL {
     }
     
     
-    public ArrayList<ArrayList<String>> cargacuentas(String id) {
+    public ArrayList<Cuenta> cargacuentas(String id) {
     	Connection conn = null;
     	
     	try {
     		conn = DriverManager.getConnection(url, username, password);
       
-        	String consulta = "SELECT * FROM cuentas WHERE idUsuario ='" +id+"'";
+        	String consulta = "SELECT cuentas.id,cuentas.dinero,tipocuenta.nombre,tipomoneda.nombre as nombremoneda FROM cuentas,tipocuenta,tipomoneda WHERE cuentas.idUsuario="+id+" and tipocuenta.id = cuentas.tipoCuenta and tipomoneda.id = cuentas.idmoneda;";
         	java.sql.Statement estado =  conn.createStatement();
 			ResultSet resultado = estado.executeQuery(consulta);
 			int x = 0;
-			ArrayList<ArrayList<String>> lista = new ArrayList<>();
+			ArrayList<Cuenta> lista = new ArrayList<>();
 			while(resultado.next()) {
 				String idCuenta = resultado.getString("id");
-				String dinero = resultado.getString("dinero");
-				String tipodinero = resultado.getString("idmoneda");
-				String tipocuenta = resultado.getString("tipocuenta");
+				BigDecimal dinero = resultado.getBigDecimal("dinero");
+				String tipodinero = resultado.getString("nombremoneda");
+				String tipocuenta = resultado.getString("nombre");
 				System.out.println(idCuenta + dinero +tipodinero );
-				ArrayList<String> datos = new ArrayList<>();
-				datos.add(id);
-				datos.add(idCuenta);
-				datos.add(dinero);
-				datos.add(tipocuenta);
-				datos.add(tipodinero);
-				lista.add(datos);
+				ArrayList<Cuenta> datos = new ArrayList<>();
+				Cuenta  cuenta= new Cuenta();
+				cuenta.setIdcuenta(idCuenta);
+				cuenta.setIdusuario(id);
+				cuenta.setDinero(dinero);
+				cuenta.setTipocuenta(TipoCuenta.valueOf(tipocuenta));
+				cuenta.setCurrency(Currency.getInstance(tipodinero));
+				lista.add(cuenta);
 				x++;
 			}
 			return lista;

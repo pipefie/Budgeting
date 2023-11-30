@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import Clases.ConexionMySQL;
 import Clases.Cuenta;
+import Clases.TipoCuenta;
 import Clases.Usuario;
 
 import java.awt.Color;
@@ -22,6 +23,7 @@ import javax.swing.JOptionPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.regex.*;
 import java.util.regex.Matcher;
@@ -37,7 +39,6 @@ public class VentanaPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static Usuario usuario = new Usuario();
-	private static ArrayList<Cuenta> cuentas;
 	private static ConexionMySQL conn = new ConexionMySQL();
 
 	/**
@@ -99,10 +100,10 @@ public class VentanaPrincipal extends JFrame {
 		TusCuentas.setBounds(31, 11, 137, 25);
 		panel.add(TusCuentas);
 		
-		ArrayList<ArrayList<String>> cuentadatos = conn.cargacuentas(usuario.getId());
+		usuario.setCuentasUsuario(conn.cargacuentas(usuario.getId()));
 		ArrayList<ArrayList<String>> tipocuentas = conn.cargartipocuentas();
 		 int distancia = 31;
-		 String dinero = "";
+		 BigDecimal dinero = new BigDecimal(0);
 		
 		
 		
@@ -357,44 +358,42 @@ public class VentanaPrincipal extends JFrame {
 					System.out.println(e.getComponent());
 					if(e.getComponent().getName() != null) {
 					String idcuenta = e.getComponent().getName();
-					for (int i = 0; i < cuentadatos.size(); i++) {
-						if(cuentadatos.get(i).get(1).equals(idcuenta)) {
-							lblPosicinTotal_1.setText(cuentadatos.get(i).get(2));
+					for (int i = 0; i < usuario.getCuentasUsuario().size(); i++) {
+						if(usuario.getCuentasUsuario().get(i).getIdcuenta().equals(idcuenta)) {
+							lblPosicinTotal_1.setText(usuario.getCuentasUsuario().get(i).getDinero().toString());
 						}
 					}
 					}
 				}
 			};
-		double balance = 0;
-		for (int i = 0; i < cuentadatos.size(); i++) {	
+		
+		for (int i = 0; i < usuario.getCuentasUsuario().size(); i++) {	
 			
-			ArrayList<String> cuenta1 = cuentadatos.get(i);
-			String tipo = "";
+			Cuenta cuenta1 = usuario.getCuentasUsuario().get(i);
+			
 			for (int j = 0; j < tipocuentas.size(); j++) {
 				ArrayList<String> tipocuenta = tipocuentas.get(j);
 				System.out.println(tipocuenta);
-				if(cuenta1.get(3).equals(tipocuenta.get(0)) ) {
-					tipo = tipocuenta.get(1);
-				}
-				if(cuenta1.get(3).equals("1")) {
-					dinero = cuenta1.get(2);
-					lblPosicinTotal_1.setText(dinero);
+				
+				if(cuenta1.getTipocuenta().equals(TipoCuenta.Corriente)) {
+					dinero = cuenta1.getDinero() ;
+					lblPosicinTotal_1.setText(dinero.toString());
 				}
 				
 			}
 		
-			JButton btnNewButton = new JButton("Cuenta "+ tipo);
+			JButton btnNewButton = new JButton("Cuenta "+ cuenta1.getTipocuenta());
 			btnNewButton.setForeground(new Color(255, 255, 255));
 			btnNewButton.setBackground(new Color(0, 128, 255));
 			btnNewButton.setBounds(distancia , 38, 229, 50);
-			btnNewButton.setName(cuenta1.get(1));
+			btnNewButton.setName(cuenta1.getIdcuenta());
 			btnNewButton.addMouseListener(ms);
 			panel.add(btnNewButton);
 			distancia+= 250;
-			balance+= Double.parseDouble(cuenta1.get(2)) ;
+			
 			
 		}
-		lblPosicinTotal_1_1.setText(Double.toString(balance));
+		
 
 		JButton AgregarCuenta = new JButton("+ Agregar Cuenta");
 		AgregarCuenta.addMouseListener(new MouseAdapter() {

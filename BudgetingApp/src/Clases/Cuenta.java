@@ -1,31 +1,27 @@
 package Clases;
 
+import java.math.BigDecimal;
 import java.util.Currency;
 
 public class Cuenta {
+	private String idcuenta;
 	private String nombreCuenta; //nuevo
 	private String pais; //nuevo
 	private Currency currency; //nuevo
-	private Usuario usuario; //me parece que deberíamos quitar usuario de aquí
+	private String idusuario; //me parece que deberíamos quitar usuario de aquí
 	private TipoCuenta tipocuenta;
-	private long dinero;
+	private BigDecimal dinero;
 	
 	public Cuenta() {}
 
-	public Cuenta(Usuario usuario, TipoCuenta tipocuenta, long dinero) {
+	public Cuenta(String usuario, TipoCuenta tipocuenta, BigDecimal dinero) {
 		super();
-		this.usuario = usuario;
+		this.idusuario = usuario;
 		this.tipocuenta = tipocuenta;
 		this.dinero = dinero;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
 
 	public TipoCuenta getTipocuenta() {
 		return tipocuenta;
@@ -35,12 +31,12 @@ public class Cuenta {
 		this.tipocuenta = tipocuenta;
 	}
 
-	public long getDinero() {
+	public BigDecimal getDinero() {
 		return dinero;
 	}
 
-	public void setDinero(long dinero) {
-		this.dinero = dinero;
+	public void setDinero(BigDecimal dinero2) {
+		this.dinero = dinero2;
 	}
 
 	public String getNombreCuenta() {
@@ -74,20 +70,36 @@ public class Cuenta {
 	
 	//metodos para añadir y restar del dinero de la cuenta
 	
-	public synchronized void aniadirDinero (long monto) {
+	public synchronized void aniadirDinero (BigDecimal monto) {
 		
-		dinero += monto;
+		dinero.add(monto) ;
 		
 	}
 	
-	public synchronized void quitarDinero (long monto) {
+	public synchronized void quitarDinero (BigDecimal monto) {
 		
-		if(dinero < monto) {
+		if(dinero.compareTo(dinero) < 0) {
 			return;
 		}
 		else {
-			dinero -= monto;
+			dinero.subtract(monto);
 		}
+	}
+
+	public String getIdcuenta() {
+		return idcuenta;
+	}
+
+	public void setIdcuenta(String idcuenta) {
+		this.idcuenta = idcuenta;
+	}
+
+	public String getIdusuario() {
+		return idusuario;
+	}
+
+	public void setIdusuario(String idusuario) {
+		this.idusuario = idusuario;
 	}
 	
 }
