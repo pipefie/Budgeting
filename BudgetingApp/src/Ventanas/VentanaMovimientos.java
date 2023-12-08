@@ -101,7 +101,7 @@ public class VentanaMovimientos extends JFrame {
 		btnGenerarRegistro.setForeground(new Color(255, 255, 255));
 		btnGenerarRegistro.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnGenerarRegistro.setBackground(new Color(255, 128, 0));
-		btnGenerarRegistro.setBounds(275, 470, 339, 37);
+		btnGenerarRegistro.setBounds(275, 462, 339, 37);
 		internalFrame.getContentPane().add(btnGenerarRegistro);
 		internalFrame.setVisible(true);
 		((javax.swing.plaf.basic.BasicInternalFrameUI)internalFrame.getUI()).setNorthPane(null);
