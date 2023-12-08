@@ -501,7 +501,7 @@ MouseListener ms2 = new MouseListener() {
 				}
 			}
 		};
-		lblNewLabel_1.addMouseListener(ms1);
-		lblNewLabel.addMouseListener(ms2);
+		lblNewLabel_1.addMouseListener(ms2);
+		lblNewLabel.addMouseListener(ms1);
 	}
 }
