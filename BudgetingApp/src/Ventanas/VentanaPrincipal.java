@@ -2,6 +2,7 @@ package Ventanas;
 
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.Rectangle;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,6 +14,8 @@ import Clases.TipoCuenta;
 import Clases.Usuario;
 
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JButton;
@@ -94,6 +97,7 @@ public class VentanaPrincipal extends JFrame {
 		panel.setBounds(0, 59, 1188, 111);
 		internalFrame.getContentPane().add(panel);
 		panel.setLayout(null);
+		
 		
 		JLabel TusCuentas = new JLabel("Cuentas: ");
 		TusCuentas.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -311,7 +315,9 @@ public class VentanaPrincipal extends JFrame {
 		((javax.swing.plaf.basic.BasicInternalFrameUI)internalFrame.getUI()).setNorthPane(null);
 		internalFrame.setBounds(47, 49, 1188, 635);
 		contentPane.add(internalFrame);
-		
+		ImageIcon imagearrow = new ImageIcon(new ImageIcon(VentanaLogIn.class.getResource("/Imagenes/flecha.png")).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+		ImageIcon imagearrow1 = new ImageIcon(new ImageIcon(VentanaLogIn.class.getResource("/Imagenes/flecha1.png")).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+
 		
 		JLabel lblExit = new JLabel("");
 		lblExit.addMouseListener(new MouseAdapter() {
@@ -412,6 +418,90 @@ public class VentanaPrincipal extends JFrame {
 		AgregarCuenta.setBackground(new Color(245, 245, 245));
 		AgregarCuenta.setBounds(distancia	, 38, 229, 50);
 		panel.add(AgregarCuenta);
+		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setBounds(10, 130, 47, 64);
+		contentPane.add(lblNewLabel_1);
+		lblNewLabel_1.setIcon(imagearrow1);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(1230, 130, 47, 64);
+		contentPane.add(lblNewLabel);
+		lblNewLabel.setIcon(imagearrow);
+		MouseListener ms1 = new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				Component[] componentes = panel.getComponents();
+				for (int i = 1; i < componentes.length; i++) {
+					Rectangle bounds = componentes[i].getBounds();
+					componentes[i].setBounds(bounds.x - 50,38, 229, 50);
+				}
+			}
+		};
+MouseListener ms2 = new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				Component[] componentes = panel.getComponents();
+				for (int i = 1; i < componentes.length; i++) {
+					
+					Rectangle bounds = componentes[i].getBounds();
+					componentes[i].setBounds(bounds.x +50 ,38, 229, 50);
+				}
+			}
+		};
+		lblNewLabel_1.addMouseListener(ms1);
+		lblNewLabel.addMouseListener(ms2);
 	}
-	
 }
