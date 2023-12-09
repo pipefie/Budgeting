@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.logging.*;
 import java.util.regex.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,6 +42,8 @@ public class VentanaLogIn extends JFrame {
 	private JTextField textField_2;
 	private ConexionMySQL conexion =  new ConexionMySQL();
 	private static Usuario usuario = new Usuario();
+	private static Logger logger;
+	
 
 	/**
 	 * Launch the application.
@@ -62,6 +65,15 @@ public class VentanaLogIn extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaLogIn() {
+		try {
+			logger = Logger.getLogger( "Ventanas" );
+			Handler h = new FileHandler( "VentanaLogIn.log.xml", true );
+			logger.addHandler( h ); 
+			logger.setLevel( Level.ALL );  
+			h.setLevel( Level.ALL );  
+			logger.getParent().getHandlers()[0].setLevel( Level.ALL );  
+		} catch (Exception e) {}
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
 		setBounds(100, 100, 1280, 720);
@@ -228,8 +240,10 @@ public class VentanaLogIn extends JFrame {
 							VentanaPrincipal ventana = new VentanaPrincipal(usuario);
 							ventana.setVisible(true);
 							dispose();
+							logger.log( Level.FINE, "El usuario " + usuario.getCorreo() + "ha iniciado sesion.");
 						}else {
 							 JOptionPane.showMessageDialog(null,"inicio de sesión fallido");
+							 logger.log( Level.WARNING, "Se ha producido un inicio de sesion fallido");
 						}
 						
 						 
@@ -281,6 +295,7 @@ public class VentanaLogIn extends JFrame {
 		lblExit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				logger.log( Level.WARNING, "Se cierra la aplicacion.");
 				System.exit(0);
 			}
 		});
@@ -316,10 +331,12 @@ public class VentanaLogIn extends JFrame {
 								VentanaPrincipal ventana = new VentanaPrincipal(usuario);
 								ventana.setVisible(true);
 								dispose();
+								logger.log( Level.INFO, "Se ha creado una cuenta nueva con el correo " + usuario.getCorreo());
 								 
 								 
 							 }else{
 								 JOptionPane.showMessageDialog(null,"cuenta existente");
+								 logger.log( Level.WARNING, "El usuario ha intentado crear una cuenta que ya existia.");
 							 }
 							
 						}
