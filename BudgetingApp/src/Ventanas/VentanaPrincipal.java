@@ -43,7 +43,7 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel contentPane;
 	private static Usuario usuario = new Usuario();
 	private static ConexionMySQL conn = new ConexionMySQL();
-
+	public static int distancia = 0;
 	/**
 	 * Launch the application.
 	 */
@@ -417,6 +417,7 @@ public class VentanaPrincipal extends JFrame {
 		AgregarCuenta.setForeground(new Color(0, 0, 0));
 		AgregarCuenta.setBackground(new Color(245, 245, 245));
 		AgregarCuenta.setBounds(distancia	, 38, 229, 50);
+		AgregarCuenta.setName(Integer.toString(distancia));
 		panel.add(AgregarCuenta);
 		
 		JLabel lblNewLabel_1 = new JLabel("New label");
@@ -459,13 +460,20 @@ public class VentanaPrincipal extends JFrame {
 				// TODO Auto-generated method stub
 				Component[] componentes = panel.getComponents();
 				for (int i = 1; i < componentes.length; i++) {
-					Rectangle bounds = componentes[i].getBounds();
-					componentes[i].setBounds(bounds.x - 50,38, 229, 50);
+					if(AgregarCuenta.getBounds().x <= 31) {
+						break;
+					}
+						Rectangle bounds = componentes[i].getBounds();
+						componentes[i].setBounds(bounds.x - 50,38, 229, 50);
+					
+					
 				}
 			}
 		};
 MouseListener ms2 = new MouseListener() {
 			
+		
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
@@ -495,9 +503,13 @@ MouseListener ms2 = new MouseListener() {
 				// TODO Auto-generated method stub
 				Component[] componentes = panel.getComponents();
 				for (int i = 1; i < componentes.length; i++) {
-					
+					System.out.println(AgregarCuenta.getBounds().x);
+					if(AgregarCuenta.getBounds().x >=Integer.parseInt(AgregarCuenta.getName())) {
+						break;
+					}
 					Rectangle bounds = componentes[i].getBounds();
 					componentes[i].setBounds(bounds.x +50 ,38, 229, 50);
+					
 				}
 			}
 		};
