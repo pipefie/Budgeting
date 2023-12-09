@@ -28,6 +28,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,9 +48,10 @@ public class VentanaPrincipal extends JFrame {
 	private static Usuario usuario = new Usuario();
 	private static ConexionMySQL conn = new ConexionMySQL();
 	public static int distancia = 0;
+	private static Logger logger;
 	/**
 	 * Launch the application.
-	 */
+	 *//*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -58,13 +63,21 @@ public class VentanaPrincipal extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 * @param arrayList 
 	 */
 	public VentanaPrincipal(Usuario usuario) {
+		try {
+			logger = Logger.getLogger( "Ventanas" );
+			Handler h = new FileHandler( "VentanaPrincipal.log.xml", true );
+			logger.addHandler( h ); 
+			logger.setLevel( Level.ALL );  
+			h.setLevel( Level.ALL );  
+			logger.getParent().getHandlers()[0].setLevel( Level.ALL );  
+		} catch (Exception e) {}
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -216,6 +229,7 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					logger.log( Level.FINEST, "El usuario quiere hacer un ingreso");
 					VentanaMovimientos frame = new VentanaMovimientos("INGRESO");
 					frame.setVisible(true);
 				} catch (Exception ex) {
@@ -235,6 +249,7 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					logger.log( Level.FINEST, "El usuario quiere hacer una transferencia");
 					VentanaMovimientos frame = new VentanaMovimientos("TRANSFERENCIA");
 					frame.setVisible(true);
 				} catch (Exception ex) {
@@ -254,6 +269,7 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					logger.log( Level.FINEST, "El usuario quiere hacer un nuevo gasto");
 					VentanaMovimientos frame = new VentanaMovimientos("GASTO");
 					frame.setVisible(true);
 				} catch (Exception ex) {
@@ -273,6 +289,7 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					logger.log( Level.FINE, "El usuario quiere agregar una cuenta");
 					VentanaCuenta frame = new VentanaCuenta();
 					frame.setVisible(true);
 				} catch (Exception ex) {
@@ -292,6 +309,7 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					logger.log( Level.WARNING, "El usuario cierra la sesion");
 					dispose();
 					VentanaLogIn frame = new VentanaLogIn();
 					frame.setVisible(true);
@@ -361,6 +379,7 @@ public class VentanaPrincipal extends JFrame {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					// TODO Auto-generated method stub
+					logger.log( Level.FINEST, "El usuario ha seleccionado una cuenta");
 					System.out.println(e.getComponent());
 					if(e.getComponent().getName() != null) {
 					String idcuenta = e.getComponent().getName();
@@ -406,6 +425,7 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					logger.log( Level.FINE, "El usuario quiere ainadir una cuenta nueva");
 					VentanaCuenta frame = new VentanaCuenta();
 					frame.setVisible(true);
 				} catch (Exception ex) {
