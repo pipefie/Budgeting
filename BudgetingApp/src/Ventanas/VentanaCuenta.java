@@ -25,6 +25,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -52,6 +56,7 @@ public class VentanaCuenta extends JFrame {
 	private JTextField textPais;
 	private JTextField textFieldPais;
 	private NumberFormat dineroFormat;
+	private static Logger logger;
 	
 	//default constructor 
 	public VentanaCuenta() {
@@ -84,6 +89,15 @@ public class VentanaCuenta extends JFrame {
 	 * Create the frame.
 	 */
 	public void CreacionCuenta() {
+		try {
+			logger = Logger.getLogger( "Ventanas" );
+			Handler h = new FileHandler( "VentanaCuenta.log.xml", true );
+			logger.addHandler( h ); 
+			logger.setLevel( Level.ALL );  
+			h.setLevel( Level.ALL );  
+			logger.getParent().getHandlers()[0].setLevel( Level.ALL );  
+		} catch (Exception e) {}
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
 		setBounds(100, 100, 1280, 720);
@@ -114,6 +128,7 @@ public class VentanaCuenta extends JFrame {
 		btnCancelar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				logger.log( Level.INFO, "Se cancela la operacion.");
 				dispose();
 			}
 		});
@@ -186,15 +201,15 @@ public class VentanaCuenta extends JFrame {
 
 				ArrayList<Cuenta> cuentasUser = user.getCuentasUsuario();
 
-				cuenta.setUsuario(user);
+				//cuenta.setUsuario(user);
 				cuenta.setNombreCuenta(textNomCuenta.getText());
 				cuenta.setCurrency(Currency.getInstance((String) currenciesModel.getSelectedItem()));
 				cuenta.setPais(textFieldPais.getText());
 				cuenta.setTipocuenta((TipoCuenta)tipoCuentaModel.getSelectedItem());
-				cuenta.setDinero(Long.parseLong(textFieldDinero.getText()));
+				//cuenta.setDinero(Long.parseLong(textFieldDinero.getText()));
 
 				cuentasUser.add(cuenta);
-
+				logger.log( Level.INFO, "Se ha ainadido una cuenta nueva");
 
 			}
 		});
