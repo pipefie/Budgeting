@@ -16,6 +16,10 @@ import javax.swing.JOptionPane;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,6 +36,7 @@ public class VentanaMovimientos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private static Logger logger;
 
 	/**
 	 * Launch the application.
@@ -53,6 +58,16 @@ public class VentanaMovimientos extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaMovimientos(String Operacion) {
+		
+		try {
+			logger = Logger.getLogger( "Ventanas" );
+			Handler h = new FileHandler( "VentanaMovimientos.log.xml", true );
+			logger.addHandler( h ); 
+			logger.setLevel( Level.ALL );  
+			h.setLevel( Level.ALL );  
+			logger.getParent().getHandlers()[0].setLevel( Level.ALL );  
+		} catch (Exception e) {}
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
 		setBounds(100, 100, 1280, 720);
@@ -95,6 +110,7 @@ public class VentanaMovimientos extends JFrame {
 		btnGenerarRegistro.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				logger.log( Level.FINE, "El usuario ha realizado una operacion");
 				dispose();
 			}
 		});
@@ -113,11 +129,15 @@ public class VentanaMovimientos extends JFrame {
 		lblBarra.setIcon(imageIngB);
 		lblBarra.setBounds(255, 44, 370, 37);
 		if (Operacion == "INGRESO") {
+			logger.log( Level.FINEST, "El usuario quiere hacer un ingreso");
 			esIngreso(lblBarra, panel, btnGenerarRegistro);
 		}
 		if (Operacion == "GASTO") {
+			logger.log( Level.FINEST, "El usuario quiere hacer un gasto");
 			esGasto(lblBarra, panel, btnGenerarRegistro);
-		}if (Operacion == "TRANSFERENCIA") {
+		}
+		if (Operacion == "TRANSFERENCIA") {
+			logger.log( Level.FINEST, "El usuario quiere hacer una transferencia");
 			esTrans(lblBarra, panel, btnGenerarRegistro);
 		}
 		
@@ -200,6 +220,7 @@ public class VentanaMovimientos extends JFrame {
 		lblIng.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				logger.log( Level.FINEST, "El usuario quiere hacer un ingreso");
 				esIngreso(lblBarra, panel, btnGenerarRegistro);
 			}
 		});
@@ -207,6 +228,7 @@ public class VentanaMovimientos extends JFrame {
 		lblGast.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				logger.log( Level.FINEST, "El usuario quiere hacer un gasto");
 				esGasto(lblBarra, panel, btnGenerarRegistro);
 			}
 		});
@@ -214,6 +236,7 @@ public class VentanaMovimientos extends JFrame {
 		lblTrans.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				logger.log( Level.FINEST, "El usuario quiere hacer una transferencia");
 				esTrans(lblBarra, panel, btnGenerarRegistro);
 			}
 		});

@@ -2,6 +2,7 @@ package Ventanas;
 
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.Rectangle;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,6 +14,8 @@ import Clases.TipoCuenta;
 import Clases.Usuario;
 
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JButton;
@@ -25,6 +28,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,10 +47,11 @@ public class VentanaPrincipal extends JFrame {
 	private JPanel contentPane;
 	private static Usuario usuario = new Usuario();
 	private static ConexionMySQL conn = new ConexionMySQL();
-
+	public static int distancia = 0;
+	private static Logger logger;
 	/**
 	 * Launch the application.
-	 */
+	 *//*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -55,13 +63,21 @@ public class VentanaPrincipal extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 * @param arrayList 
 	 */
 	public VentanaPrincipal(Usuario usuario) {
+		try {
+			logger = Logger.getLogger( "Ventanas" );
+			Handler h = new FileHandler( "VentanaPrincipal.log.xml", true );
+			logger.addHandler( h ); 
+			logger.setLevel( Level.ALL );  
+			h.setLevel( Level.ALL );  
+			logger.getParent().getHandlers()[0].setLevel( Level.ALL );  
+		} catch (Exception e) {}
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,6 +110,7 @@ public class VentanaPrincipal extends JFrame {
 		panel.setBounds(0, 59, 1188, 111);
 		internalFrame.getContentPane().add(panel);
 		panel.setLayout(null);
+		
 		
 		JLabel TusCuentas = new JLabel("Cuentas: ");
 		TusCuentas.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -212,6 +229,7 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					logger.log( Level.FINEST, "El usuario quiere hacer un ingreso");
 					VentanaMovimientos frame = new VentanaMovimientos("INGRESO");
 					frame.setVisible(true);
 				} catch (Exception ex) {
@@ -231,6 +249,7 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					logger.log( Level.FINEST, "El usuario quiere hacer una transferencia");
 					VentanaMovimientos frame = new VentanaMovimientos("TRANSFERENCIA");
 					frame.setVisible(true);
 				} catch (Exception ex) {
@@ -250,6 +269,7 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					logger.log( Level.FINEST, "El usuario quiere hacer un nuevo gasto");
 					VentanaMovimientos frame = new VentanaMovimientos("GASTO");
 					frame.setVisible(true);
 				} catch (Exception ex) {
@@ -269,6 +289,7 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					logger.log( Level.FINE, "El usuario quiere agregar una cuenta");
 					VentanaCuenta frame = new VentanaCuenta();
 					frame.setVisible(true);
 				} catch (Exception ex) {
@@ -288,6 +309,7 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					logger.log( Level.WARNING, "El usuario cierra la sesion");
 					dispose();
 					VentanaLogIn frame = new VentanaLogIn();
 					frame.setVisible(true);
@@ -311,7 +333,9 @@ public class VentanaPrincipal extends JFrame {
 		((javax.swing.plaf.basic.BasicInternalFrameUI)internalFrame.getUI()).setNorthPane(null);
 		internalFrame.setBounds(47, 49, 1188, 635);
 		contentPane.add(internalFrame);
-		
+		ImageIcon imagearrow = new ImageIcon(new ImageIcon(VentanaLogIn.class.getResource("/Imagenes/flecha.png")).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+		ImageIcon imagearrow1 = new ImageIcon(new ImageIcon(VentanaLogIn.class.getResource("/Imagenes/flecha1.png")).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+
 		
 		JLabel lblExit = new JLabel("");
 		lblExit.addMouseListener(new MouseAdapter() {
@@ -355,18 +379,20 @@ public class VentanaPrincipal extends JFrame {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					// TODO Auto-generated method stub
+					logger.log( Level.FINEST, "El usuario ha seleccionado una cuenta");
 					System.out.println(e.getComponent());
 					if(e.getComponent().getName() != null) {
 					String idcuenta = e.getComponent().getName();
 					for (int i = 0; i < usuario.getCuentasUsuario().size(); i++) {
 						if(usuario.getCuentasUsuario().get(i).getIdcuenta().equals(idcuenta)) {
-							lblPosicinTotal_1.setText(usuario.getCuentasUsuario().get(i).getDinero().toString());
+							lblPosicinTotal_1_1.setText(usuario.getCuentasUsuario().get(i).getDinero().toString());
 						}
 					}
 					}
 				}
 			};
 		
+		BigDecimal saldo_total = new BigDecimal(0);
 		for (int i = 0; i < usuario.getCuentasUsuario().size(); i++) {	
 			
 			Cuenta cuenta1 = usuario.getCuentasUsuario().get(i);
@@ -377,7 +403,7 @@ public class VentanaPrincipal extends JFrame {
 				
 				if(cuenta1.getTipocuenta().equals(TipoCuenta.Corriente)) {
 					dinero = cuenta1.getDinero() ;
-					lblPosicinTotal_1.setText(dinero.toString());
+					lblPosicinTotal_1_1.setText(dinero.toString());
 				}
 				
 			}
@@ -390,9 +416,9 @@ public class VentanaPrincipal extends JFrame {
 			btnNewButton.addMouseListener(ms);
 			panel.add(btnNewButton);
 			distancia+= 250;
-			
-			
+			saldo_total=saldo_total.add(cuenta1.getDinero());
 		}
+		lblPosicinTotal_1.setText(saldo_total.toString());
 		
 
 		JButton AgregarCuenta = new JButton("+ Agregar Cuenta");
@@ -400,6 +426,7 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
+					logger.log( Level.FINE, "El usuario quiere ainadir una cuenta nueva");
 					VentanaCuenta frame = new VentanaCuenta();
 					frame.setVisible(true);
 				} catch (Exception ex) {
@@ -411,7 +438,104 @@ public class VentanaPrincipal extends JFrame {
 		AgregarCuenta.setForeground(new Color(0, 0, 0));
 		AgregarCuenta.setBackground(new Color(245, 245, 245));
 		AgregarCuenta.setBounds(distancia	, 38, 229, 50);
+		AgregarCuenta.setName(Integer.toString(distancia));
 		panel.add(AgregarCuenta);
+		AgregarCuenta.setVisible(false);
+		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setBounds(10, 130, 47, 64);
+		contentPane.add(lblNewLabel_1);
+		lblNewLabel_1.setIcon(imagearrow1);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(1230, 130, 47, 64);
+		contentPane.add(lblNewLabel);
+		lblNewLabel.setIcon(imagearrow);
+		MouseListener ms1 = new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				Component[] componentes = panel.getComponents();
+				for (int i = 1; i < componentes.length; i++) {
+					if(AgregarCuenta.getBounds().x <1200) {
+						break;
+					}
+						Rectangle bounds = componentes[i].getBounds();
+						componentes[i].setBounds(bounds.x - 50,38, 229, 50);
+					
+					
+				}
+			}
+		};
+MouseListener ms2 = new MouseListener() {
+			
+		
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				Component[] componentes = panel.getComponents();
+				for (int i = 1; i < componentes.length; i++) {
+					System.out.println(AgregarCuenta.getBounds().x);
+					if(AgregarCuenta.getBounds().x >=Integer.parseInt(AgregarCuenta.getName())) {
+						break;
+					}
+					Rectangle bounds = componentes[i].getBounds();
+					componentes[i].setBounds(bounds.x +50 ,38, 229, 50);
+					
+				}
+			}
+		};
+		lblNewLabel_1.addMouseListener(ms2);
+		lblNewLabel.addMouseListener(ms1);
 	}
-	
 }

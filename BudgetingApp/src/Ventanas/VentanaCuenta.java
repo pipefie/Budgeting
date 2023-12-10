@@ -27,6 +27,10 @@ import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,6 +58,7 @@ public class VentanaCuenta extends JFrame {
 	private JTextField textPais;
 	private JTextField textFieldPais;
 	private NumberFormat dineroFormat;
+	private static Logger logger;
 	
 	private ConexionMySQL conexion = new ConexionMySQL();
 	
@@ -105,6 +110,15 @@ public class VentanaCuenta extends JFrame {
 	 * Create the frame.
 	 */
 	public void CreacionCuenta() {
+		try {
+			logger = Logger.getLogger( "Ventanas" );
+			Handler h = new FileHandler( "VentanaCuenta.log.xml", true );
+			logger.addHandler( h ); 
+			logger.setLevel( Level.ALL );  
+			h.setLevel( Level.ALL );  
+			logger.getParent().getHandlers()[0].setLevel( Level.ALL );  
+		} catch (Exception e) {}
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
 		setBounds(100, 100, 1280, 720);
@@ -135,6 +149,7 @@ public class VentanaCuenta extends JFrame {
 		btnCancelar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				logger.log( Level.INFO, "Se cancela la operacion.");
 				dispose();
 			}
 		});
@@ -207,17 +222,6 @@ public class VentanaCuenta extends JFrame {
 				}
 
 				ArrayList<Cuenta> cuentasUser = user.getCuentasUsuario();
-
-				cuenta.setNombreCuenta(textNomCuenta.getText());
-				Currency moneda = Currency.getInstance((String) currenciesModel.getSelectedItem());
-				cuenta.setCurrency(moneda);
-				cuenta.setPais(textFieldPais.getText());
-				TipoCuenta tipo = (TipoCuenta)tipoCuentaModel.getSelectedItem();
-				cuenta.setTipocuenta(tipo);
-				cuenta.setDinero(new BigDecimal(textFieldDinero.getText()));
-
-				cuentasUser.add(cuenta);
-				conexion.creacuenta(userID, cuenta.IDtipoCuenta(tipo) , IDCurrency((String) currenciesModel.getSelectedItem()), new BigDecimal(textFieldDinero.getText()));
 			}
 		});
 		btnCrearCuenta.setForeground(new Color(0, 0, 0));
