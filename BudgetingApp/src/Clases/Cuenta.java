@@ -8,7 +8,7 @@ public class Cuenta {
 	private String nombreCuenta; //nuevo
 	private String pais; //nuevo
 	private Currency currency; //nuevo
-	private String idusuario; //me parece que deberíamos quitar usuario de aquí
+	private String idusuario; 
 	private TipoCuenta tipocuenta;
 	private BigDecimal dinero;
 	
@@ -102,4 +102,17 @@ public class Cuenta {
 		this.idusuario = idusuario;
 	}
 	
+	public int IDtipoCuenta (TipoCuenta tipoCuenta) {
+		switch (tipoCuenta) {
+		case Corriente:
+			return 1;
+		case Ahorro :
+			return 2;
+		case Facturas:
+			return 3;
+		case Prestamo:
+			return 4;
+		}
+		return 0;
+	}
 }

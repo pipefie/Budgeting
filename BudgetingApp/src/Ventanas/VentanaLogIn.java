@@ -312,7 +312,7 @@ public class VentanaLogIn extends JFrame {
 								usuario.setApellidos(datosusuario.get(2));
 								usuario.setCorreo(datosusuario.get(3));
 								usuario.setId(datosusuario.get(0));
-								conexion.creacuenta(usuario.getId(),"1","1","0");
+	//							conexion.creacuenta(usuario.getId(),"1","1","0");
 								VentanaPrincipal ventana = new VentanaPrincipal(usuario);
 								ventana.setVisible(true);
 								dispose();

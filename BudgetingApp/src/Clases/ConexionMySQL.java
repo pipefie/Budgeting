@@ -1,14 +1,14 @@
 package Clases;
 import java.lang.reflect.Array;
+import java.util.*;
+import java.util.Date;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Currency;
-import java.util.List;
+import java.sql.*;
 
 import javax.swing.JOptionPane;
 
@@ -92,7 +92,7 @@ public class ConexionMySQL {
         	String consulta = "SELECT cuentas.id,cuentas.dinero,tipocuenta.nombre,tipomoneda.nombre as nombremoneda FROM cuentas,tipocuenta,tipomoneda WHERE cuentas.idUsuario="+id+" and tipocuenta.id = cuentas.tipoCuenta and tipomoneda.id = cuentas.idmoneda;";
         	java.sql.Statement estado =  conn.createStatement();
 			ResultSet resultado = estado.executeQuery(consulta);
-			int x = 0;
+		
 			ArrayList<Cuenta> lista = new ArrayList<>();
 			while(resultado.next()) {
 				String idCuenta = resultado.getString("id");
@@ -108,7 +108,6 @@ public class ConexionMySQL {
 				cuenta.setTipocuenta(TipoCuenta.valueOf(tipocuenta));
 				cuenta.setCurrency(Currency.getInstance(tipodinero));
 				lista.add(cuenta);
-				x++;
 			}
 			return lista;
 		} catch (Exception e) {
@@ -126,7 +125,6 @@ public class ConexionMySQL {
         	String consulta = "SELECT * FROM tipocuenta ";
         	java.sql.Statement estado =  conn.createStatement();
 			ResultSet resultado = estado.executeQuery(consulta);
-			int x = 0;
 			ArrayList<ArrayList<String>> lista = new ArrayList<>();
 			while(resultado.next()) {
 				ArrayList<String> datos = new ArrayList<>();
@@ -135,7 +133,6 @@ public class ConexionMySQL {
 				datos.add(id);
 				datos.add(nombre);
 				lista.add(datos);
-				x++;
 			}
 			return lista;
 		} catch (Exception e) {
@@ -144,45 +141,76 @@ public class ConexionMySQL {
 		}
 		return null;
     } 
-public ArrayList<String> registro(String correo,String contrasena,String nombre,String apellidos) {
-    	
-    	String insertTableSQL = "INSERT INTO usuarios"
-                + "(correo,contrasena,nombre,apellidos) VALUES"
+   
+	public ArrayList<String> registro(String correo,String contrasena,String nombre,String apellidos) {
+	    	
+	    	String insertTableSQL = "INSERT INTO usuarios"
+	                + "(correo,contrasena,nombre,apellidos) VALUES"
+	                + "(?,?,?,?)";
+	    	Connection conn;
+	        try {
+	        	conn = DriverManager.getConnection(url, username, password);
+	        	PreparedStatement preparedStatement = conn.prepareStatement(insertTableSQL);
+	        	preparedStatement.setString(1, correo);
+	            preparedStatement.setString(2, contrasena);
+	            preparedStatement.setString(3, nombre);
+	            preparedStatement.setString(4, apellidos);
+	
+	            // execute insert SQL stetement
+	            preparedStatement.executeUpdate();
+	            System.out.println("Se inserto correctamente");
+	            return this.inicioSesion(correo, contrasena);
+	
+	        } catch (SQLException e) {
+	        	
+	           
+	
+	        }
+			return null;   
+	}
+
+	public void creacuenta(String idusuario,int tipocuenta, int tipomoneda, BigDecimal dinero) {
+	    	
+			Integer IDUsuario = Integer.parseInt(idusuario);
+	    	String insertTableSQL = "INSERT INTO cuentas"
+	                + "(idUsuario,tipocuenta,dinero,idmoneda) VALUES"
+	                + "(?,?,?,?)";
+	    	Connection conn;
+	        try {
+	        	conn = DriverManager.getConnection(url, username, password);
+	        	PreparedStatement preparedStatement = conn.prepareStatement(insertTableSQL);
+	        	preparedStatement.setInt(1, IDUsuario);
+	            preparedStatement.setInt(2, tipocuenta);
+	            preparedStatement.setBigDecimal(3, dinero);
+	            preparedStatement.setInt(4, tipomoneda );
+	
+	            // execute insert SQL stetement
+	            preparedStatement.executeUpdate();
+	            
+	            
+	
+	        } catch (SQLException e) {
+	        	
+	           e.printStackTrace();
+	
+	        }
+			
+	    }
+	
+	public void subirMovimiento (int idaccion, int idcuenta, double dinero, Date fecha) {
+		
+    	String insertTableSQL = "INSERT INTO movimientos"
+                + "(idaccion,idcuenta,dinero, fecha) VALUES"
                 + "(?,?,?,?)";
     	Connection conn;
         try {
         	conn = DriverManager.getConnection(url, username, password);
         	PreparedStatement preparedStatement = conn.prepareStatement(insertTableSQL);
-        	preparedStatement.setString(1, correo);
-            preparedStatement.setString(2, contrasena);
-            preparedStatement.setString(3, nombre);
-            preparedStatement.setString(4, apellidos);
-
-            // execute insert SQL stetement
-            preparedStatement.executeUpdate();
-            System.out.println("Se inserto correctamente");
-            return this.inicioSesion(correo, contrasena);
-
-        } catch (SQLException e) {
-        	
-           
-
-        }
-		return null;
-    
-}public void creacuenta(String idusuario,String tipocuenta,String tipomoneda,String dinero) {
-    	
-    	String insertTableSQL = "INSERT INTO cuentas"
-                + "(idUsuario,idmoneda,tipocuenta,dinero) VALUES"
-                + "(?,?,?,?)";
-    	Connection conn;
-        try {
-        	conn = DriverManager.getConnection(url, username, password);
-        	PreparedStatement preparedStatement = conn.prepareStatement(insertTableSQL);
-        	preparedStatement.setString(1, idusuario);
-            preparedStatement.setString(2, tipomoneda);
-            preparedStatement.setString(3, tipocuenta);
-            preparedStatement.setString(4, dinero);
+        	preparedStatement.setInt(1, idaccion);
+            preparedStatement.setInt(2, idcuenta);
+            preparedStatement.setDouble(3, dinero);
+            java.sql.Date dateMov = new java.sql.Date(fecha.getTime());
+            preparedStatement.setDate(4, dateMov);
 
             // execute insert SQL stetement
             preparedStatement.executeUpdate();
@@ -195,4 +223,47 @@ public ArrayList<String> registro(String correo,String contrasena,String nombre,
 
         }
 		
-    }}
+	}
+	
+	public void consultarMovimientos (int userId) {
+		
+		Connection conn;
+		try {
+			conn = DriverManager.getConnection(url, username, password);
+		      
+        	String query = "SELECT usuarios.nombre, usuarios.apellidos, usuarios.correo, cuentas.id AS idCuenta, cuentas.nombreCuenta as NombreCuenta,cuentas.tipoCuenta, tipocuenta.nombre as TipoCuenta,cuentas.dinero AS saldoCuenta,"
+        			+ "    movimientos.id AS idMovimiento,"
+        			+ "    movimientos.dinero AS montoMovimiento,"
+        			+ "    acciones.id AS idAccion,"
+        			+ "    acciones.nombre AS nombreAccion,"
+        			+ "    movimientos.fecha"
+        			+ "FROM usuarios"
+        			+ "JOIN cuentas ON usuarios.id = cuentas.idUsuario"
+        			+ "JOIN tipocuenta on tipocuenta.id = cuentas.tipoCuenta"
+        			+ "JOIN movimientos ON cuentas.id = movimientos.idcuenta"
+        			+ "JOIN acciones ON movimientos.idaccion = acciones.id"
+        			+ "WHERE usuarios.id = " + userId
+        			+ "order by movimientos.fecha;"; 
+        	
+        	PreparedStatement preparedStatement = conn.prepareStatement(query);
+        	preparedStatement.setInt(1, userId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            	
+            while (resultSet.next()) {
+            	
+            	//aqui falta
+                    	
+               	}
+                    	
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			e.getCause();
+		}
+		
+		
+	}
+}
+
+

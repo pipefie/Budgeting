@@ -1,24 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-<<<<<<< Upstream, based on branch 'master' of https://github.com/pipefie/Budgeting.git
-=======
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
->>>>>>> d9a94d3 Añadir perspectiva Database development
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
-<<<<<<< Upstream, based on branch 'master' of https://github.com/pipefie/Budgeting.git
 	<classpathentry kind="lib" path="lib/mysql-connector-j-8.2.0.jar"/>
-=======
->>>>>>> d9a94d3 Añadir perspectiva Database development
 	<classpathentry kind="lib" path="jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="miglayout15-swing.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

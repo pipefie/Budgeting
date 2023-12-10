@@ -183,6 +183,8 @@ public class VentanaMovimientos extends JFrame {
 		dateChooser.setBounds(482, 287, 212, 30);
 		internalFrame.getContentPane().add(dateChooser);
 		
+		
+		
 		JTextArea textArea = new JTextArea();
 		textArea.setBackground(new Color(211, 211, 211));
 		textArea.setBounds(189, 351, 505, 100);

@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Clases.ConexionMySQL;
 import Clases.Cuenta;
 import Clases.TipoCuenta;
 import Clases.Usuario;
@@ -23,6 +24,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.regex.*;
@@ -53,6 +55,8 @@ public class VentanaCuenta extends JFrame {
 	private JTextField textFieldPais;
 	private NumberFormat dineroFormat;
 	
+	private ConexionMySQL conexion = new ConexionMySQL();
+	
 	//default constructor 
 	public VentanaCuenta() {
 		CreacionCuenta();
@@ -62,6 +66,23 @@ public class VentanaCuenta extends JFrame {
 	public VentanaCuenta(Usuario user) {
 		this.user = user;
 		CreacionCuenta();
+	}
+	
+	public int IDCurrency(String currency) {
+		
+		switch (currency) {
+		case "EUR": 
+			return 1;
+		case "USD":
+			return 2;
+		case "COP":
+			return 3;
+		case "CHF":
+			return 4;
+		case "CNY":
+			return 5;
+		}
+		return 0;
 	}
 
 	/**
@@ -178,7 +199,8 @@ public class VentanaCuenta extends JFrame {
 		JButton btnCrearCuenta = new JButton("Crear Cuenta");
 		btnCrearCuenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				
+				String userID = user.getId();
 				cuenta = new Cuenta();
 				if (user.getCuentasUsuario() == null) {
 					user.setCuentasUsuario(new ArrayList<Cuenta>());
@@ -186,16 +208,16 @@ public class VentanaCuenta extends JFrame {
 
 				ArrayList<Cuenta> cuentasUser = user.getCuentasUsuario();
 
-				cuenta.setUsuario(user);
 				cuenta.setNombreCuenta(textNomCuenta.getText());
-				cuenta.setCurrency(Currency.getInstance((String) currenciesModel.getSelectedItem()));
+				Currency moneda = Currency.getInstance((String) currenciesModel.getSelectedItem());
+				cuenta.setCurrency(moneda);
 				cuenta.setPais(textFieldPais.getText());
-				cuenta.setTipocuenta((TipoCuenta)tipoCuentaModel.getSelectedItem());
-				cuenta.setDinero(Long.parseLong(textFieldDinero.getText()));
+				TipoCuenta tipo = (TipoCuenta)tipoCuentaModel.getSelectedItem();
+				cuenta.setTipocuenta(tipo);
+				cuenta.setDinero(new BigDecimal(textFieldDinero.getText()));
 
 				cuentasUser.add(cuenta);
-
-
+				conexion.creacuenta(userID, cuenta.IDtipoCuenta(tipo) , IDCurrency((String) currenciesModel.getSelectedItem()), new BigDecimal(textFieldDinero.getText()));
 			}
 		});
 		btnCrearCuenta.setForeground(new Color(0, 0, 0));
@@ -220,3 +242,5 @@ public class VentanaCuenta extends JFrame {
 
 	}
 }
+
+

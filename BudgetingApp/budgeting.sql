@@ -7,10 +7,12 @@
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
+drop database if exists budgeting;
+create database budgeting character set utf8 collate utf8_general_ci;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
+use budgeting;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -33,7 +35,11 @@ CREATE TABLE `acciones` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
-
+insert into acciones values 
+(1, "Ingresar"),
+(2, "Retirar"),
+(3, "Transferencia"),
+(4, "Invertir");
 --
 -- Estructura de tabla para la tabla `actividad`
 --
@@ -52,6 +58,8 @@ CREATE TABLE `actividad` (
 
 CREATE TABLE `cuentas` (
   `id` int(11) NOT NULL,
+  nombreCuenta varchar(50) not null,
+  pais varchar(50) not null,
   `idUsuario` int(11) NOT NULL,
   `tipoCuenta` int(11) NOT NULL,
   `dinero` decimal(10,2) NOT NULL,
@@ -62,13 +70,13 @@ CREATE TABLE `cuentas` (
 -- Volcado de datos para la tabla `cuentas`
 --
 
-INSERT INTO `cuentas` (`id`, `idUsuario`, `tipoCuenta`, `dinero`, `idmoneda`) VALUES
-(3, 1, 1, 222.00, 4),
-(4, 1, 2, 0.00, 1),
-(5, 1, 3, 50.00, 1),
-(6, 12, 1, 0.00, 1),
-(7, 13, 1, 0.00, 1),
-(8, 14, 1, 0.00, 1);
+INSERT INTO `cuentas` (`id`, nombreCuenta, pais, `idUsuario`, `tipoCuenta`, `dinero`, `idmoneda`) VALUES
+(3, 'Cuenta1', 'Estados Unidos' , 1, 1, 222.00, 2),
+(4, 'Cuenta2' , 'Alemania', 1, 2, 1000.00, 1),
+(5, 'Cuenta3' , 'España' , 1, 3, 50.00, 1),
+(6, 'Cuenta4' ,'Luxemburgo' , 12, 1, 0.00, 1),
+(7, 'Cuenta5' ,'Italia' , 13, 1, 0.00, 1),
+(8, 'Cuenta6', 'España', 14, 1, 0.00, 1);
 
 -- --------------------------------------------------------
 
@@ -80,12 +88,13 @@ CREATE TABLE `movimientos` (
   `id` int(11) NOT NULL,
   `idaccion` int(11) NOT NULL,
   `idcuenta` int(11) NOT NULL,
-  `dinero` double NOT NULL,
-  `idactividad` int(11) NOT NULL,
+  `dinero` decimal(10,2) NOT NULL,
+#  `idactividad` int(11) NOT NULL,  este no me parece necesario porque el objeto acitvidad vuelve a referenciar a acción
   `fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
+
 
 --
 -- Estructura de tabla para la tabla `tipocuenta`
@@ -123,7 +132,11 @@ CREATE TABLE `tipomoneda` (
 
 INSERT INTO `tipomoneda` (`id`, `nombre`) VALUES
 (1, 'EUR'),
-(4, 'USD');
+(2, 'USD'),
+(3, 'COP'),
+(4, 'CHF'),
+(5, 'CNY');
+
 
 -- --------------------------------------------------------
 
@@ -190,8 +203,8 @@ ALTER TABLE `cuentas`
 ALTER TABLE `movimientos`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idaccion` (`idaccion`),
-  ADD KEY `idcuenta` (`idcuenta`),
-  ADD KEY `idactividad` (`idactividad`);
+  ADD KEY `idcuenta` (`idcuenta`);
+#  ADD KEY `idactividad` (`idactividad`);
 
 --
 -- Indices de la tabla `tipocuenta`
@@ -281,10 +294,117 @@ ALTER TABLE `cuentas`
 --
 ALTER TABLE `movimientos`
   ADD CONSTRAINT `movimientos_ibfk_1` FOREIGN KEY (`idcuenta`) REFERENCES `cuentas` (`id`),
-  ADD CONSTRAINT `movimientos_ibfk_2` FOREIGN KEY (`idaccion`) REFERENCES `acciones` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `movimientos_ibfk_3` FOREIGN KEY (`idactividad`) REFERENCES `actividad` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `movimientos_ibfk_2` FOREIGN KEY (`idaccion`) REFERENCES `acciones` (`id`) ON UPDATE CASCADE;
+#  ADD CONSTRAINT `movimientos_ibfk_3` FOREIGN KEY (`idactividad`) REFERENCES `actividad` (`id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+
+
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
+VALUES (1, 3, 100.00, '2023-12-09');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
+VALUES (2, 3, 20.00, '2023-12-10');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
+VALUES (1, 4, 50.00, '2023-12-11');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
+VALUES (3, 5, 30.00, '2023-12-12');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
+VALUES (4, 5, 80.00, '2023-12-13');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
+VALUES (1, 3, 150.00, '2023-12-14');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
+VALUES (2, 4, 200.00, '2023-12-15');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
+VALUES (3, 4, 30.00, '2023-12-16');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
+VALUES (4, 5, 50.00, '2023-12-17');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
+VALUES (1, 5, 120.00, '2023-12-18');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
+VALUES (1, 3, 300.00, '2023-12-19');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
+VALUES (2, 3, -50.00, '2023-12-20');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
+VALUES (4, 4, 150.00, '2023-12-21');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
+VALUES (3, 5, -80.00, '2023-12-22');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
+VALUES (2, 5, -30.00, '2023-12-23');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (1, 3, 200.00, '2012-05-15');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (2, 3, -40.00, '2013-02-20');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (4, 4, 120.00, '2014-08-10');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (3, 4, -60.00, '2016-11-25');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (2, 4, -25.00, '2018-04-03');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (1, 4, 300.00, '2019-09-12');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (3, 4, -75.00, '2020-02-28');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (4, 4, 50.00, '2021-05-07');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (1, 5, 180.00, '2022-08-15');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (2, 5, -90.00, '2023-01-22');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (4, 5, 200.00, '2023-06-30');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (1, 5, 120.00, '2003-07-18');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (2, 5, -30.00, '2004-02-25');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (4, 5, 80.00, '2005-10-14');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (3, 5, -50.00, '2007-03-21');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (2, 5, -15.00, '2009-01-05');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (1, 3, 240.00, '2010-04-30');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (3, 3, -60.00, '2011-09-09');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (4, 3, 40.00, '2012-12-16');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (1, 3, 150.00, '2014-06-03');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (2, 3, -75.00, '2016-02-17');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (4, 3, 160.00, '2017-08-24');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (1, 3, 110.00, '2018-11-11');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (3, 3, -45.00, '2019-05-29');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (4, 4, 90.00, '2020-10-06');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (1, 5, 200.00, '2021-12-23');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (2, 5, -80.00, '2004-03-03');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (3, 4, -20.00, '2005-09-19');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (4, 4, 130.00, '2007-11-27');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (1, 4, 75.00, '2009-07-14');
+INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (3, 5, -35.00, '2011-01-30');
+
+
+SELECT 
+    usuarios.nombre, 
+    usuarios.apellidos,
+    cuentas.id AS idCuenta, 
+    cuentas.nombreCuenta as NombreCuenta,
+    cuentas.tipoCuenta, 
+    tipocuenta.nombre as TipoCuenta,
+    cuentas.dinero AS saldoCuenta,
+    movimientos.id AS idMovimiento, 
+    movimientos.dinero AS montoMovimiento,
+    acciones.id AS idAccion,
+    acciones.nombre AS nombreAccion
+FROM usuarios
+JOIN cuentas ON usuarios.id = cuentas.idUsuario
+JOIN tipocuenta on tipocuenta.id = cuentas.tipoCuenta
+JOIN movimientos ON cuentas.id = movimientos.idcuenta
+JOIN acciones ON movimientos.idaccion = acciones.id
+WHERE usuarios.id = 1;
+
+SELECT 
+    usuarios.nombre, 
+    usuarios.apellidos,
+    usuarios.correo,
+    cuentas.id AS idCuenta, 
+    cuentas.nombreCuenta as NombreCuenta,
+    cuentas.tipoCuenta, 
+    tipocuenta.nombre as TipoCuenta,
+    cuentas.dinero AS saldoCuenta,
+    movimientos.id AS idMovimiento, 
+    movimientos.dinero AS montoMovimiento,
+    acciones.id AS idAccion,
+    acciones.nombre AS nombreAccion,
+    movimientos.fecha
+FROM usuarios
+JOIN cuentas ON usuarios.id = cuentas.idUsuario
+JOIN tipocuenta on tipocuenta.id = cuentas.tipoCuenta
+JOIN movimientos ON cuentas.id = movimientos.idcuenta
+JOIN acciones ON movimientos.idaccion = acciones.id
+WHERE usuarios.id = 1
+order by movimientos.fecha;
