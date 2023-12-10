@@ -416,7 +416,7 @@ public class VentanaPrincipal extends JFrame {
 			btnNewButton.addMouseListener(ms);
 			panel.add(btnNewButton);
 			distancia+= 250;
-			saldo_total.add(cuenta1.getDinero());
+			saldo_total=saldo_total.add(cuenta1.getDinero());
 		}
 		lblPosicinTotal_1.setText(saldo_total.toString());
 		
