@@ -440,6 +440,7 @@ public class VentanaPrincipal extends JFrame {
 		AgregarCuenta.setBounds(distancia	, 38, 229, 50);
 		AgregarCuenta.setName(Integer.toString(distancia));
 		panel.add(AgregarCuenta);
+		AgregarCuenta.setVisible(false);
 		
 		JLabel lblNewLabel_1 = new JLabel("New label");
 		lblNewLabel_1.setBounds(10, 130, 47, 64);
@@ -481,7 +482,7 @@ public class VentanaPrincipal extends JFrame {
 				// TODO Auto-generated method stub
 				Component[] componentes = panel.getComponents();
 				for (int i = 1; i < componentes.length; i++) {
-					if(AgregarCuenta.getBounds().x <= 31) {
+					if(AgregarCuenta.getBounds().x <1200) {
 						break;
 					}
 						Rectangle bounds = componentes[i].getBounds();
