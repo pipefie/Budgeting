@@ -385,13 +385,14 @@ public class VentanaPrincipal extends JFrame {
 					String idcuenta = e.getComponent().getName();
 					for (int i = 0; i < usuario.getCuentasUsuario().size(); i++) {
 						if(usuario.getCuentasUsuario().get(i).getIdcuenta().equals(idcuenta)) {
-							lblPosicinTotal_1.setText(usuario.getCuentasUsuario().get(i).getDinero().toString());
+							lblPosicinTotal_1_1.setText(usuario.getCuentasUsuario().get(i).getDinero().toString());
 						}
 					}
 					}
 				}
 			};
 		
+		BigDecimal saldo_total = new BigDecimal(0);
 		for (int i = 0; i < usuario.getCuentasUsuario().size(); i++) {	
 			
 			Cuenta cuenta1 = usuario.getCuentasUsuario().get(i);
@@ -402,7 +403,7 @@ public class VentanaPrincipal extends JFrame {
 				
 				if(cuenta1.getTipocuenta().equals(TipoCuenta.Corriente)) {
 					dinero = cuenta1.getDinero() ;
-					lblPosicinTotal_1.setText(dinero.toString());
+					lblPosicinTotal_1_1.setText(dinero.toString());
 				}
 				
 			}
@@ -415,9 +416,9 @@ public class VentanaPrincipal extends JFrame {
 			btnNewButton.addMouseListener(ms);
 			panel.add(btnNewButton);
 			distancia+= 250;
-			
-			
+			saldo_total.add(cuenta1.getDinero());
 		}
+		lblPosicinTotal_1.setText(saldo_total.toString());
 		
 
 		JButton AgregarCuenta = new JButton("+ Agregar Cuenta");
