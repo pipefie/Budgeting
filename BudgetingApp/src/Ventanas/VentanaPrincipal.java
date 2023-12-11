@@ -60,6 +60,8 @@ import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
+import javax.swing.SwingConstants;
+
 
 public class VentanaPrincipal extends JFrame implements DataObserver {
 
@@ -188,10 +190,14 @@ public class VentanaPrincipal extends JFrame implements DataObserver {
 		lblMovimientosltimos.setBounds(10, 67, 109, 17);
 		panel_1.add(lblMovimientosltimos);
 		
+
 		lblPosicinTotal_1_1 = new JLabel("<balance>");
+
+		JLabel lblPosicinTotal_1_1 = new JLabel("<balance>");
+		lblPosicinTotal_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPosicinTotal_1_1.setForeground(new Color(210, 0, 0));
 		lblPosicinTotal_1_1.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblPosicinTotal_1_1.setBounds(245, 66, 137, 17);
+		lblPosicinTotal_1_1.setBounds(235, 79, 137, 17);
 		panel_1.add(lblPosicinTotal_1_1);
 		
 		JLabel lblltimosDas = new JLabel("(últimos 31 días)");
@@ -218,12 +224,6 @@ public class VentanaPrincipal extends JFrame implements DataObserver {
 		btnNewButton_1.setBounds(10, 122, 362, 32);
 		panel_1.add(btnNewButton_1);
 		
-		JLabel lblPosicinTotal_1_2 = new JLabel("<euros>");
-		lblPosicinTotal_1_2.setForeground(new Color(0, 0, 0));
-		lblPosicinTotal_1_2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblPosicinTotal_1_2.setBounds(315, 103, 67, 17);
-		panel_1.add(lblPosicinTotal_1_2);
-		
 		JButton btnNewButton_1_1 = new JButton("Grafico2");
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -232,12 +232,6 @@ public class VentanaPrincipal extends JFrame implements DataObserver {
 		});
 		btnNewButton_1_1.setBounds(10, 182, 362, 32);
 		panel_1.add(btnNewButton_1_1);
-		
-		JLabel lblPosicinTotal_1_2_1 = new JLabel("<euros>");
-		lblPosicinTotal_1_2_1.setForeground(Color.BLACK);
-		lblPosicinTotal_1_2_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblPosicinTotal_1_2_1.setBounds(315, 163, 67, 17);
-		panel_1.add(lblPosicinTotal_1_2_1);
 		
 		JPanel panel_1_1 = new JPanel();
 		panel_1_1.setLayout(new BorderLayout());
@@ -336,6 +330,7 @@ public class VentanaPrincipal extends JFrame implements DataObserver {
 						if(usuario.getCuentasUsuario().get(i).getIdcuenta().equals(idcuenta)) {
 							lblPosicinTotal_1_1.setText(usuario.getCuentasUsuario().get(i).getDinero().toString());
 							cuentaUser = usuario.getCuentasUsuario().get(i);
+
 						}
 					}
 					}
