@@ -229,7 +229,7 @@ public class VentanaCuenta extends JFrame {
 					String userID = user.getId();
 					cuenta = new Cuenta();
 					cuenta.setCurrency(Currency.getInstance( currenciesModel.getSelectedItem().toString() ));
-					cuenta.setDinero(new BigDecimal(textFieldDinero.getText()));
+					cuenta.setDinero(new BigDecimal(Double.valueOf(textFieldDinero.getText())));
 					cuenta.setIdcuenta("");
 					cuenta.setIdusuario(userID);
 					cuenta.setNombreCuenta(textNomCuenta.getText());
