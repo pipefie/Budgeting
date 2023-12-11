@@ -51,8 +51,8 @@ public class VentanaMovimientos extends JFrame {
 	private static Logger logger;
 	private Usuario user;
 	private Transaccion transaccion;
-	private ConexionMySQL conn;
-	private String[] currencies = {"USD","EUR","COP","CHF","CNY"};
+	private ConexionMySQL conn = new ConexionMySQL();
+	private ArrayList<Currency> currencies = conn.cargaCurrency();
 
 	/**
 	 * Launch the application.
@@ -127,15 +127,7 @@ public class VentanaMovimientos extends JFrame {
 
 		// modelo combobox cuentas
 		
-		DefaultComboBoxModel comboModelCuenta = new DefaultComboBoxModel<>(user.getCuentasUsuario().toArray());
 		
-		JComboBox comboCuenta = new JComboBox(comboModelCuenta);
-		comboCuenta.setForeground(new Color(0, 0, 0));
-		comboCuenta.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		comboCuenta.setBackground(new Color(255, 255, 255));
-		comboCuenta.setBounds(317, 122, 269, 30);
-		panel.add(comboCuenta);
-		comboCuenta.setSelectedIndex(-1);
 		
 		JLabel lblNewLabel = new JLabel("Cuenta:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -155,7 +147,11 @@ public class VentanaMovimientos extends JFrame {
 		lblCantidad.setBounds(317, 172, 101, 14);
 		panel.add(lblCantidad);
 		
-		DefaultComboBoxModel modeloDivisa = new DefaultComboBoxModel<>(currencies);
+		DefaultComboBoxModel modeloDivisa = new DefaultComboBoxModel<>();
+		for (int i = 0; i < currencies.size(); i++) {
+			modeloDivisa.addElement(currencies.get(i));
+		}
+		
 		JComboBox comboBoxDivisa = new JComboBox(modeloDivisa);
 		comboBoxDivisa.setForeground(Color.BLACK);
 		comboBoxDivisa.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -217,6 +213,16 @@ public class VentanaMovimientos extends JFrame {
 		btnBack.setForeground(new Color(255, 255, 255));
 		btnBack.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnBack.setBackground(new Color(255, 128, 0));
+		
+		DefaultComboBoxModel comboModelCuenta = new DefaultComboBoxModel<>(user.getCuentasUsuario().toArray());
+		JComboBox comboCuenta = new JComboBox(comboModelCuenta);
+		comboCuenta.setForeground(new Color(0, 0, 0));
+		comboCuenta.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		comboCuenta.setBackground(new Color(255, 255, 255));
+		comboCuenta.setBounds(317, 122, 269, 30);
+		panel.add(comboCuenta);
+		comboCuenta.setSelectedIndex(-1);
+		comboCuenta.addActionListener(e -> comboBoxDivisa.setSelectedItem(((Cuenta) comboCuenta.getSelectedItem()).getCurrency()));
 		btnBack.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -236,7 +242,7 @@ public class VentanaMovimientos extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 	
-				if (comboCuenta.getSelectedIndex() == -1 || comboBoxDivisa.getSelectedIndex() == -1 || comboBoxCategoria.getSelectedIndex() == -1) {
+				if (comboCuenta.getSelectedIndex() == -1  || comboBoxCategoria.getSelectedIndex() == -1) {
 					
 					JOptionPane.showMessageDialog(null, "Rellena todos los campos.");
 				}
@@ -247,7 +253,7 @@ public class VentanaMovimientos extends JFrame {
 					transaccion.setCategoryofTransaction((CategoryofTransaction)comboBoxCategoria.getSelectedItem());
 					transaccion.setComentarios(descripcion.getText());
 					transaccion.setCuentaOrigen(cuenta);
-					transaccion.setCurrencyTransaccion(Currency.getInstance((String)comboBoxDivisa.getSelectedItem()));
+					transaccion.setCurrencyTransaccion((Currency)comboBoxDivisa.getSelectedItem());
 					transaccion.setFechaHora(dateChooser.getDate());
 					
 					if(Double.valueOf(String.valueOf(spinnerCantidad.getValue()))> 0) {

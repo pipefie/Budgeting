@@ -90,16 +90,17 @@ public class ConexionMySQL {
         	String consulta = "SELECT * FROM tipomoneda";
         	java.sql.Statement estado =  conn.createStatement();
 			ResultSet resultado = estado.executeQuery(consulta);
+			ArrayList<Currency> lista = new ArrayList<>();
 			while(resultado.next()) {
 				
-
-				ArrayList<Currency> lista = new ArrayList<>();
 				String tipodinero = resultado.getString("nombre");
 				Currency curr = Currency.getInstance(tipodinero);
-				return lista;
+				lista.add(curr);
+				
 				
 			}
-			System.out.println(resultado);
+			return lista;
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
