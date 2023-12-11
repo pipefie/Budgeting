@@ -1,9 +1,11 @@
 package Ventanas;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -14,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Font;
 
 public class VentanaUsuario extends JFrame {
 
@@ -34,51 +37,72 @@ public class VentanaUsuario extends JFrame {
 	 */
 	public VentanaUsuario(Usuario user, ConexionMySQL conn) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setUndecorated(true);
+		setBounds(100, 100, 1280, 720);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setResizable(true);
+
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JInternalFrame internalFrame = new JInternalFrame("New JInternalFrame");
+		internalFrame.setBorder(null);
+		internalFrame.getContentPane().setBackground(new Color(255, 255, 255));
+		internalFrame.getContentPane().setLayout(null);
+		internalFrame.setVisible(true);
+		((javax.swing.plaf.basic.BasicInternalFrameUI)internalFrame.getUI()).setNorthPane(null);
+		internalFrame.setBounds(177, 140, 876, 372);
+		contentPane.add(internalFrame);
+		
+		JPanel panelCubreLogIn = new JPanel();
+		panelCubreLogIn.setBounds(0, 0, 434, 529);
+		internalFrame.getContentPane().add(panelCubreLogIn);
+		panelCubreLogIn.setBackground(new Color(255, 128, 64));
+		
 		txtNombre = new JTextField();
 		txtNombre.setText(user.getNombre());
-		txtNombre.setBounds(173, 50, 116, 22);
-		contentPane.add(txtNombre);
+		txtNombre.setBounds(593, 62, 209, 22);
+		internalFrame.getContentPane().add(txtNombre);
 		txtNombre.setColumns(10);
 		
 		txtApellido = new JTextField();
 		txtApellido.setText(user.getApellidos());
-		txtApellido.setBounds(173, 85, 116, 22);
-		contentPane.add(txtApellido);
+		txtApellido.setBounds(593, 109, 209, 22);
+		internalFrame.getContentPane().add(txtApellido);
 		txtApellido.setColumns(10);
 		
 		txtContrasea = new JTextField();
 		txtContrasea.setText(user.getContrasena());
-		txtContrasea.setBounds(173, 155, 116, 22);
-		contentPane.add(txtContrasea);
+		txtContrasea.setBounds(593, 203, 209, 22);
+		internalFrame.getContentPane().add(txtContrasea);
 		txtContrasea.setColumns(10);
 		
 		txtEmail = new JTextField();
 		txtEmail.setText(user.getCorreo());
-		txtEmail.setBounds(173, 120, 116, 22);
-		contentPane.add(txtEmail);
+		txtEmail.setBounds(593, 155, 209, 22);
+		internalFrame.getContentPane().add(txtEmail);
 		txtEmail.setColumns(10);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setBounds(47, 54, 56, 16);
-		contentPane.add(lblNombre);
+		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNombre.setBounds(467, 66, 97, 16);
+		internalFrame.getContentPane().add(lblNombre);
 		
 		JLabel lblApellido = new JLabel("Apellido:");
-		lblApellido.setBounds(47, 89, 56, 16);
-		contentPane.add(lblApellido);
+		lblApellido.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblApellido.setBounds(467, 113, 97, 16);
+		internalFrame.getContentPane().add(lblApellido);
 		
 		lblEmail = new JLabel("Email:");
-		lblEmail.setBounds(47, 123, 56, 16);
-		contentPane.add(lblEmail);
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblEmail.setBounds(467, 158, 97, 16);
+		internalFrame.getContentPane().add(lblEmail);
 		
 		lblContrasea = new JLabel("Contraseña:");
-		lblContrasea.setBounds(47, 158, 70, 16);
-		contentPane.add(lblContrasea);
+		lblContrasea.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblContrasea.setBounds(467, 206, 97, 16);
+		internalFrame.getContentPane().add(lblContrasea);
 		
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addMouseListener(new MouseAdapter() {
@@ -89,8 +113,9 @@ public class VentanaUsuario extends JFrame {
 				dispose();
 			}
 		});
-		btnVolver.setBounds(47, 204, 97, 25);
-		contentPane.add(btnVolver);
+		btnVolver.setBounds(467, 252, 97, 38);
+		btnVolver.setBackground(new Color(255, 128, 64));
+		internalFrame.getContentPane().add(btnVolver);
 		
 		JButton btnGuardarCambios = new JButton("Guardar Cambios");
 		btnGuardarCambios.addMouseListener(new MouseAdapter() {
@@ -105,7 +130,13 @@ public class VentanaUsuario extends JFrame {
 				dispose();
 			}
 		});
-		btnGuardarCambios.setBounds(235, 204, 147, 25);
-		contentPane.add(btnGuardarCambios);
+		btnGuardarCambios.setBounds(574, 252, 228, 38);
+		btnGuardarCambios.setBackground(new Color(255, 128, 64));
+		internalFrame.getContentPane().add(btnGuardarCambios);
+		
+		JLabel lblNewLabel = new JLabel("Usuario");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNewLabel.setBounds(467, 26, 123, 14);
+		internalFrame.getContentPane().add(lblNewLabel);
 	}
 }
