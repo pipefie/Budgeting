@@ -269,7 +269,7 @@ public class VentanaMovimientos extends JFrame {
 						// el negativo o positivo del monto de la transacción es solo para saber si es entrada o salida de dinero
 						cuenta.quitarDinero(new BigDecimal(Double.valueOf(String.valueOf(spinnerCantidad.getValue()))*-1));
 					}
-					conn.subirMovimiento(comboBoxCategoria.getSelectedIndex()+1, Integer.parseInt(cuenta.getIdcuenta()), (double)spinnerCantidad.getValue(), dateChooser.getDate());
+					conn.subirMovimiento(comboBoxCategoria.getSelectedIndex()+1, Integer.parseInt(cuenta.getIdcuenta()), Double.valueOf(String.valueOf(spinnerCantidad.getValue())), dateChooser.getDate());
 					conn.actualizarSaldo(cuenta.getIdcuenta(), cuenta.getDinero());
 					
 					if (dataObserver != null) {

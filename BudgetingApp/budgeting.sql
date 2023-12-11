@@ -81,7 +81,7 @@ CREATE TABLE `actividad` (
 
 CREATE TABLE `cuentas` (
   `id` int(11) NOT NULL,
-  nombreCuenta varchar(50) not null,
+  nombreCuenta varchar(50) default "Cuenta 0",
   pais varchar(50) not null,
   `idUsuario` int(11) NOT NULL,
   `tipoCuenta` int(11) NOT NULL,

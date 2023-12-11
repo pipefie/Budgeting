@@ -477,6 +477,13 @@ public class VentanaPrincipal extends JFrame implements DataObserver {
 		internalFrame.getContentPane().add(lblCerrarSesin);
 		
 		JLabel lblCerrarSesin_1 = new JLabel();
+		lblCerrarSesin_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				VentanaUsuario datosUsu =  new VentanaUsuario(usuario, conn);
+				datosUsu.setVisible(true);
+				dispose();			}
+		});
 		lblCerrarSesin_1.setBounds(990, 6, 61, 50);
 		internalFrame.getContentPane().add(lblCerrarSesin_1);
 		lblCerrarSesin_1.setForeground(new Color(255, 128, 64));
