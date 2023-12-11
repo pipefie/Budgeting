@@ -11,7 +11,7 @@ class UsuarioTest {
 		try {
 			Usuario usuario = new Usuario("nombre", "apellidos", "correo@gmail.com", "contrasena");
 		}catch (Exception e) {
-		fail("Not yet implemented");
+		fail("No Funciona");
 		}
 	}
 
