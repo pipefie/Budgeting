@@ -36,6 +36,7 @@ import com.toedter.calendar.JDateChooser;
 import Clases.CategoryofTransaction;
 import Clases.ConexionMySQL;
 import Clases.Cuenta;
+import Clases.DataObserver;
 import Clases.Transaccion;
 import Clases.Usuario;
 import javax.swing.JTextArea;
@@ -53,7 +54,8 @@ public class VentanaMovimientos extends JFrame {
 	private Transaccion transaccion;
 	private ConexionMySQL conn = new ConexionMySQL();
 	private ArrayList<Currency> currencies = conn.cargaCurrency();
-
+	private VentanaPrincipal principal;
+	private DataObserver dataObserver;
 	/**
 	 * Launch the application.
 	 *//*
@@ -73,11 +75,12 @@ public class VentanaMovimientos extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaMovimientos(String Operacion, Usuario usuarioCuenta, ConexionMySQL conn) {
+	
+	public VentanaMovimientos(String Operacion, Usuario usuarioCuenta, ConexionMySQL conn, VentanaPrincipal principal) {
 		
 		this.user = usuarioCuenta;
-		
-		
+		this.principal = principal;
+	        
 		try {
 			logger = Logger.getLogger( "Ventanas" );
 			Handler h = new FileHandler( "VentanaMovimientos.log.xml", true );
@@ -213,6 +216,18 @@ public class VentanaMovimientos extends JFrame {
 		btnBack.setForeground(new Color(255, 255, 255));
 		btnBack.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnBack.setBackground(new Color(255, 128, 0));
+		btnBack.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				logger.log( Level.FINEST, "El usuario canceló la operación");
+				VentanaPrincipal principal = new VentanaPrincipal(usuarioCuenta, conn);
+				principal.setVisible(true);
+				dispose();
+			}
+			
+		});
 		
 		DefaultComboBoxModel comboModelCuenta = new DefaultComboBoxModel<>(user.getCuentasUsuario().toArray());
 		JComboBox comboCuenta = new JComboBox(comboModelCuenta);
@@ -223,18 +238,7 @@ public class VentanaMovimientos extends JFrame {
 		panel.add(comboCuenta);
 		comboCuenta.setSelectedIndex(-1);
 		comboCuenta.addActionListener(e -> comboBoxDivisa.setSelectedItem(((Cuenta) comboCuenta.getSelectedItem()).getCurrency()));
-		btnBack.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				logger.log( Level.FINEST, "El usuario canceló la operación");
-				dispose();
-				VentanaPrincipal principal = new VentanaPrincipal(usuarioCuenta, conn);
-				principal.setVisible(true);
-			}
-			
-		});
+		
 		
 		JButton btnGenerarRegistro = new JButton("Generar Registro");
 		panel_1.add(btnGenerarRegistro);
@@ -268,7 +272,9 @@ public class VentanaMovimientos extends JFrame {
 					conn.subirMovimiento(comboBoxCategoria.getSelectedIndex()+1, Integer.parseInt(cuenta.getIdcuenta()), (double)spinnerCantidad.getValue(), dateChooser.getDate());
 					conn.actualizarSaldo(cuenta.getIdcuenta(), cuenta.getDinero());
 					
-				
+					if (dataObserver != null) {
+			            dataObserver.updateData();}
+					
 				}
 				logger.log( Level.FINE, "El usuario ha realizado una operacion");
 				VentanaPrincipal principal = new VentanaPrincipal(user, conn);
@@ -352,6 +358,12 @@ public class VentanaMovimientos extends JFrame {
 		lblExit.setIcon(imageIcon);
 
 	}
+	
+    private void notifyVentanaPrincipal() {
+        if (principal != null) {
+        	principal.updateData();
+        	}
+        }
 	
 	public void esGasto(JLabel label, JPanel panel, JButton btnGenerarRegistro)
     {

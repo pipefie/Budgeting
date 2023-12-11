@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T14:13:29.452896900Z</date>
+  <millis>1702304009452</millis>
+  <nanos>896900</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+<record>
+  <date>2023-12-11T14:13:56.055286600Z</date>
+  <millis>1702304036055</millis>
+  <nanos>286600</nanos>
+  <sequence>1</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$4</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario quiere hacer un ingreso</message>
+</record>
+<record>
+  <date>2023-12-11T14:13:56.140925500Z</date>
+  <millis>1702304036140</millis>
+  <nanos>925500</nanos>
+  <sequence>2</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaMovimientos</class>
+  <method>&lt;init&gt;</method>
+  <thread>19</thread>
+  <message>El usuario quiere hacer un ingreso</message>
+</record>
+<record>
+  <date>2023-12-11T14:13:57.118696600Z</date>
+  <millis>1702304037118</millis>
+  <nanos>696600</nanos>
+  <sequence>3</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaMovimientos$1</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario canceló la operación</message>
+</record>
+<record>
+  <date>2023-12-11T14:13:57.622742900Z</date>
+  <millis>1702304037622</millis>
+  <nanos>742900</nanos>
+  <sequence>4</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$6</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario quiere hacer un nuevo gasto</message>
+</record>
+<record>
+  <date>2023-12-11T14:13:57.658020Z</date>
+  <millis>1702304037658</millis>
+  <nanos>20000</nanos>
+  <sequence>5</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaMovimientos</class>
+  <method>&lt;init&gt;</method>
+  <thread>19</thread>
+  <message>El usuario quiere hacer un gasto</message>
+</record>
+<record>
+  <date>2023-12-11T14:13:58.758654900Z</date>
+  <millis>1702304038758</millis>
+  <nanos>654900</nanos>
+  <sequence>6</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaMovimientos$1</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario canceló la operación</message>
+</record>
+<record>
+  <date>2023-12-11T14:13:59.362611200Z</date>
+  <millis>1702304039362</millis>
+  <nanos>611200</nanos>
+  <sequence>7</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$5</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario quiere hacer una transferencia</message>
+</record>
+<record>
+  <date>2023-12-11T14:13:59.384126500Z</date>
+  <millis>1702304039384</millis>
+  <nanos>126500</nanos>
+  <sequence>8</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaMovimientos</class>
+  <method>&lt;init&gt;</method>
+  <thread>19</thread>
+  <message>El usuario quiere hacer una transferencia</message>
+</record>
+<record>
+  <date>2023-12-11T14:14:00.157024700Z</date>
+  <millis>1702304040157</millis>
+  <nanos>24700</nanos>
+  <sequence>9</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaMovimientos$1</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario canceló la operación</message>
+</record>
+<record>
+  <date>2023-12-11T14:14:00.887391400Z</date>
+  <millis>1702304040887</millis>
+  <nanos>391400</nanos>
+  <sequence>10</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaPrincipal$7</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario quiere agregar una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T14:14:02.119962700Z</date>
+  <millis>1702304042119</millis>
+  <nanos>962700</nanos>
+  <sequence>11</sequence>
+  <logger>Ventanas</logger>
+  <level>INFO</level>
+  <class>Ventanas.VentanaCuenta$1</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>Se cancela la operacion.</message>
+</record>
+<record>
+  <date>2023-12-11T14:14:04.243790700Z</date>
+  <millis>1702304044243</millis>
+  <nanos>790700</nanos>
+  <sequence>12</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T14:14:05.122676500Z</date>
+  <millis>1702304045122</millis>
+  <nanos>676500</nanos>
+  <sequence>13</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T14:14:05.750126600Z</date>
+  <millis>1702304045750</millis>
+  <nanos>126600</nanos>
+  <sequence>14</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T14:14:07.053483300Z</date>
+  <millis>1702304047053</millis>
+  <nanos>483300</nanos>
+  <sequence>15</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T14:22:39.476089500Z</date>
+  <millis>1702304559476</millis>
+  <nanos>89500</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+<record>
+  <date>2023-12-11T14:23:35.834440200Z</date>
+  <millis>1702304615834</millis>
+  <nanos>440200</nanos>
+  <sequence>1</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$4</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario quiere hacer un ingreso</message>
+</record>
+<record>
+  <date>2023-12-11T14:23:35.918883100Z</date>
+  <millis>1702304615918</millis>
+  <nanos>883100</nanos>
+  <sequence>2</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaMovimientos</class>
+  <method>&lt;init&gt;</method>
+  <thread>19</thread>
+  <message>El usuario quiere hacer un ingreso</message>
+</record>
+<record>
+  <date>2023-12-11T14:24:03.520065600Z</date>
+  <millis>1702304643520</millis>
+  <nanos>65600</nanos>
+  <sequence>3</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaMovimientos$2</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha realizado una operacion</message>
+</record>
+<record>
+  <date>2023-12-11T14:24:08.715471800Z</date>
+  <millis>1702304648715</millis>
+  <nanos>471800</nanos>
+  <sequence>4</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T14:55:24.555223100Z</date>
+  <millis>1702306524555</millis>
+  <nanos>223100</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T14:57:41.503081100Z</date>
+  <millis>1702306661503</millis>
+  <nanos>81100</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T15:00:07.295089400Z</date>
+  <millis>1702306807295</millis>
+  <nanos>89400</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T15:11:22.978909600Z</date>
+  <millis>1702307482978</millis>
+  <nanos>909600</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+<record>
+  <date>2023-12-11T15:11:41.961781700Z</date>
+  <millis>1702307501961</millis>
+  <nanos>781700</nanos>
+  <sequence>1</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$6</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario quiere hacer un nuevo gasto</message>
+</record>
+<record>
+  <date>2023-12-11T15:11:42.048145700Z</date>
+  <millis>1702307502048</millis>
+  <nanos>145700</nanos>
+  <sequence>2</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaMovimientos</class>
+  <method>&lt;init&gt;</method>
+  <thread>19</thread>
+  <message>El usuario quiere hacer un gasto</message>
+</record>
+<record>
+  <date>2023-12-11T15:12:00.513544500Z</date>
+  <millis>1702307520513</millis>
+  <nanos>544500</nanos>
+  <sequence>3</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaMovimientos$2</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha realizado una operacion</message>
+</record>
+<record>
+  <date>2023-12-11T15:12:21.806443400Z</date>
+  <millis>1702307541806</millis>
+  <nanos>443400</nanos>
+  <sequence>4</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T15:12:22.498099500Z</date>
+  <millis>1702307542498</millis>
+  <nanos>99500</nanos>
+  <sequence>5</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T15:12:23.118334800Z</date>
+  <millis>1702307543118</millis>
+  <nanos>334800</nanos>
+  <sequence>6</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T15:12:23.773287600Z</date>
+  <millis>1702307543773</millis>
+  <nanos>287600</nanos>
+  <sequence>7</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T15:12:24.676213200Z</date>
+  <millis>1702307544676</millis>
+  <nanos>213200</nanos>
+  <sequence>8</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T15:12:25.576740800Z</date>
+  <millis>1702307545576</millis>
+  <nanos>740800</nanos>
+  <sequence>9</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T15:12:28.927098700Z</date>
+  <millis>1702307548927</millis>
+  <nanos>98700</nanos>
+  <sequence>10</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$4</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario quiere hacer un ingreso</message>
+</record>
+<record>
+  <date>2023-12-11T15:12:28.950629500Z</date>
+  <millis>1702307548950</millis>
+  <nanos>629500</nanos>
+  <sequence>11</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaMovimientos</class>
+  <method>&lt;init&gt;</method>
+  <thread>19</thread>
+  <message>El usuario quiere hacer un ingreso</message>
+</record>
+<record>
+  <date>2023-12-11T15:12:47.859507Z</date>
+  <millis>1702307567859</millis>
+  <nanos>507000</nanos>
+  <sequence>12</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaMovimientos$2</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha realizado una operacion</message>
+</record>
+<record>
+  <date>2023-12-11T15:12:55.217028200Z</date>
+  <millis>1702307575217</millis>
+  <nanos>28200</nanos>
+  <sequence>13</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T15:12:56.271317100Z</date>
+  <millis>1702307576271</millis>
+  <nanos>317100</nanos>
+  <sequence>14</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T15:12:57.005234800Z</date>
+  <millis>1702307577005</millis>
+  <nanos>234800</nanos>
+  <sequence>15</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T15:15:13.098918700Z</date>
+  <millis>1702307713098</millis>
+  <nanos>918700</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+<record>
+  <date>2023-12-11T15:15:26.180680200Z</date>
+  <millis>1702307726180</millis>
+  <nanos>680200</nanos>
+  <sequence>1</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$6</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario quiere hacer un nuevo gasto</message>
+</record>
+<record>
+  <date>2023-12-11T15:15:26.266591800Z</date>
+  <millis>1702307726266</millis>
+  <nanos>591800</nanos>
+  <sequence>2</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaMovimientos</class>
+  <method>&lt;init&gt;</method>
+  <thread>19</thread>
+  <message>El usuario quiere hacer un gasto</message>
+</record>
+<record>
+  <date>2023-12-11T15:15:49.115768Z</date>
+  <millis>1702307749115</millis>
+  <nanos>768000</nanos>
+  <sequence>3</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaMovimientos$2</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha realizado una operacion</message>
+</record>
+<record>
+  <date>2023-12-11T15:15:53.511003900Z</date>
+  <millis>1702307753511</millis>
+  <nanos>3900</nanos>
+  <sequence>4</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T15:15:54.007032500Z</date>
+  <millis>1702307754007</millis>
+  <nanos>32500</nanos>
+  <sequence>5</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T15:15:55.015798200Z</date>
+  <millis>1702307755015</millis>
+  <nanos>798200</nanos>
+  <sequence>6</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T15:15:55.682100500Z</date>
+  <millis>1702307755682</millis>
+  <nanos>100500</nanos>
+  <sequence>7</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T15:35:39.197928Z</date>
+  <millis>1702308939197</millis>
+  <nanos>928000</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+<record>
+  <date>2023-12-11T15:35:48.399589900Z</date>
+  <millis>1702308948399</millis>
+  <nanos>589900</nanos>
+  <sequence>1</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$4</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario quiere hacer un ingreso</message>
+</record>
+<record>
+  <date>2023-12-11T15:35:48.482445300Z</date>
+  <millis>1702308948482</millis>
+  <nanos>445300</nanos>
+  <sequence>2</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaMovimientos</class>
+  <method>&lt;init&gt;</method>
+  <thread>19</thread>
+  <message>El usuario quiere hacer un ingreso</message>
+</record>
+<record>
+  <date>2023-12-11T15:35:50.848599300Z</date>
+  <millis>1702308950848</millis>
+  <nanos>599300</nanos>
+  <sequence>3</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaMovimientos$1</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario canceló la operación</message>
+</record>
+<record>
+  <date>2023-12-11T15:35:52.844139Z</date>
+  <millis>1702308952844</millis>
+  <nanos>139000</nanos>
+  <sequence>4</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$6</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario quiere hacer un nuevo gasto</message>
+</record>
+<record>
+  <date>2023-12-11T15:35:52.882761300Z</date>
+  <millis>1702308952882</millis>
+  <nanos>761300</nanos>
+  <sequence>5</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaMovimientos</class>
+  <method>&lt;init&gt;</method>
+  <thread>19</thread>
+  <message>El usuario quiere hacer un gasto</message>
+</record>
+<record>
+  <date>2023-12-11T15:36:07.469634700Z</date>
+  <millis>1702308967469</millis>
+  <nanos>634700</nanos>
+  <sequence>6</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaMovimientos$2</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha realizado una operacion</message>
+</record>
+<record>
+  <date>2023-12-11T15:36:20.568658600Z</date>
+  <millis>1702308980568</millis>
+  <nanos>658600</nanos>
+  <sequence>7</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T15:36:21.501162500Z</date>
+  <millis>1702308981501</millis>
+  <nanos>162500</nanos>
+  <sequence>8</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T15:36:22.077460Z</date>
+  <millis>1702308982077</millis>
+  <nanos>460000</nanos>
+  <sequence>9</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T15:36:24.923869700Z</date>
+  <millis>1702308984923</millis>
+  <nanos>869700</nanos>
+  <sequence>10</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T15:36:25.930689800Z</date>
+  <millis>1702308985930</millis>
+  <nanos>689800</nanos>
+  <sequence>11</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+</log>

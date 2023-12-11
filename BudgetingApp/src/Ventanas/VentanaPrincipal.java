@@ -1,31 +1,26 @@
 package Ventanas;
 
 import java.awt.EventQueue;
-
 import java.awt.Image;
 import java.awt.Rectangle;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
 import Clases.ConexionMySQL;
 import Clases.Cuenta;
+import Clases.DataObserver;
 import Clases.TipoCuenta;
 import Clases.Usuario;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-
 import javax.swing.JTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -41,19 +36,15 @@ import java.util.logging.Logger;
 import java.util.regex.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
-
 import java.awt.Font;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import org.jfree.*;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -66,13 +57,11 @@ import org.jfree.chart.axis.DateTickUnitType;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PiePlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
-public class VentanaPrincipal extends JFrame {
+public class VentanaPrincipal extends JFrame implements DataObserver {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -81,6 +70,10 @@ public class VentanaPrincipal extends JFrame {
 	public static int distancia = 0;
 	private static Logger logger;
 	private static Cuenta cuentaUser;
+	private static JLabel lblPosicinTotal_1;
+	private static JLabel lblPosicinTotal_1_1;
+	private static JTable tabla;
+	
 	/**
 	 * Launch the application.
 	 *//*
@@ -102,8 +95,19 @@ public class VentanaPrincipal extends JFrame {
 	 * @param arrayList 
 	 */
 	public VentanaPrincipal(Usuario usuario, ConexionMySQL conn) {
+		
+		
 		this.usuario = usuario;
 		this.conn = conn;
+		
+		/*
+		 * creaacion del mapa de cuentas del usuario, donde la clave es cada cuenta del usuario
+		 * y el valor es una lista de los movimientos realizados con dicha cuenta, la lista de movimientos almacena
+		 * el mapa de movimientos donde la clave es la columna que consultamos del usuario y su respectivo valor, por tanto,
+		 * tenemos entradas <'nombre', nombre_usuario>, <montoMovimiento, monto>, etc.
+		 */
+		Map<Integer, List<Map<String, Object>>> mapaMovimientosUsuario = conn.consultarMovimientos(usuario.getId());
+		
 		try {
 			logger = Logger.getLogger( "Ventanas" );
 			Handler h = new FileHandler( "VentanaPrincipal.log.xml", true );
@@ -161,13 +165,7 @@ public class VentanaPrincipal extends JFrame {
 		internalFrame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
-		/*
-		 * creaacion del mapa de cuentas del usuario, donde la clave es cada cuenta del usuario
-		 * y el valor es una lista de los movimientos realizados con dicha cuenta, la lista de movimientos almacena
-		 * el mapa de movimientos donde la clave es la columna que consultamos del usuario y su respectivo valor, por tanto,
-		 * tenemos entradas <'nombre', nombre_usuario>, <montoMovimiento, monto>, etc.
-		 */
-		Map<Integer, List<Map<String, Object>>> mapaMovimientosUsuario = conn.consultarMovimientos(usuario.getId());
+
 		
 		JLabel lblPosicinTotal = new JLabel("Posición Total:");
 		lblPosicinTotal.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -190,7 +188,7 @@ public class VentanaPrincipal extends JFrame {
 		lblMovimientosltimos.setBounds(10, 67, 109, 17);
 		panel_1.add(lblMovimientosltimos);
 		
-		JLabel lblPosicinTotal_1_1 = new JLabel("<balance>");
+		lblPosicinTotal_1_1 = new JLabel("<balance>");
 		lblPosicinTotal_1_1.setForeground(new Color(210, 0, 0));
 		lblPosicinTotal_1_1.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblPosicinTotal_1_1.setBounds(245, 66, 137, 17);
@@ -267,7 +265,7 @@ public class VentanaPrincipal extends JFrame {
 		internalFrame.getContentPane().add(panel_1_2);
 
 		DefaultTableModel modeloTabla = new DefaultTableModel(new Object[]{"Fecha", "Descripción", "Cantidad", "Cuenta"}, 0);
-		JTable tabla = new JTable(modeloTabla);
+		tabla = new JTable(modeloTabla);
 		JScrollPane scrollPane = new JScrollPane(tabla);
 		panel_1_2.add(scrollPane, BorderLayout.CENTER);
 
@@ -338,7 +336,6 @@ public class VentanaPrincipal extends JFrame {
 						if(usuario.getCuentasUsuario().get(i).getIdcuenta().equals(idcuenta)) {
 							lblPosicinTotal_1_1.setText(usuario.getCuentasUsuario().get(i).getDinero().toString());
 							cuentaUser = usuario.getCuentasUsuario().get(i);
-							lblSaldo.setText(cuentaUser.getDinero().toString());
 						}
 					}
 					}
@@ -384,7 +381,7 @@ public class VentanaPrincipal extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					logger.log( Level.FINEST, "El usuario quiere hacer un ingreso");
-					VentanaMovimientos frame = new VentanaMovimientos("INGRESO", usuario, conn);
+					VentanaMovimientos frame = new VentanaMovimientos("INGRESO", usuario, conn, VentanaPrincipal.this);
 					frame.setVisible(true);
 					
 					
@@ -406,7 +403,7 @@ public class VentanaPrincipal extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					logger.log( Level.FINEST, "El usuario quiere hacer una transferencia");
-					VentanaMovimientos frame = new VentanaMovimientos("TRANSFERENCIA", usuario, conn);
+					VentanaMovimientos frame = new VentanaMovimientos("TRANSFERENCIA", usuario, conn,VentanaPrincipal.this);
 					frame.setVisible(true);
 					dispose();
 				} catch (Exception ex) {
@@ -421,13 +418,14 @@ public class VentanaPrincipal extends JFrame {
 		btnNewButton_2_1.setIcon(imageTrans);
 		panel_2.add(btnNewButton_2_1);
 		
+
 		JButton btnNewButton_2_1_1 = new JButton("Nuevo Gasto");
 		btnNewButton_2_1_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
 					logger.log( Level.FINEST, "El usuario quiere hacer un nuevo gasto");
-					VentanaMovimientos frame = new VentanaMovimientos("GASTO", usuario, conn);
+					VentanaMovimientos frame = new VentanaMovimientos("GASTO", usuario, conn, VentanaPrincipal.this);
 					frame.setVisible(true);
 					dispose();
 				} catch (Exception ex) {
@@ -626,6 +624,7 @@ public class VentanaPrincipal extends JFrame {
 		};
 		lblNewLabel_1.addMouseListener(ms2);
 		lblNewLabel.addMouseListener(ms1);
+		
 	}
 	
 	  private void displayLineChart(String chartType) {
@@ -740,4 +739,41 @@ public class VentanaPrincipal extends JFrame {
 
 	        return chart;
 	    }
+	    
+	    private void updateMainWindow() {
+	    	Map<Integer, List<Map<String, Object>>> mapaMovimientosUsuario = conn.consultarMovimientos(usuario.getId());
+	        // Refresh user data and account movements
+	        BigDecimal saldo_total = new BigDecimal(0);
+
+	        // Update saldo and total position
+	        for (Cuenta cuenta : usuario.getCuentasUsuario()) {
+	            saldo_total = saldo_total.add(cuenta.getDinero());
+	        }
+	        lblPosicinTotal_1_1.setText(saldo_total.toString());
+
+	        // Update the selected account information if available
+	        if (cuentaUser != null) {
+	        	lblPosicinTotal_1_1.setText(cuentaUser.getDinero().toString());
+	        }
+
+	        DefaultTableModel modeloTabla = (DefaultTableModel) tabla.getModel();
+	        modeloTabla.setRowCount(0); // Clear the existing rows
+	        for (List<Map<String, Object>> movementsAcc : mapaMovimientosUsuario.values()) {
+	            for (Map<String, Object> movement : movementsAcc) {
+	                Object[] rowData = {
+	                        movement.get("fecha"),
+	                        movement.get("Comentarios"),
+	                        movement.get("montoMovimiento"),
+	                        movement.get("NombreCuenta")
+	                        };
+	                modeloTabla.addRow(rowData);
+	                }
+	            }
+	        }
+
+		@Override
+		public void updateData() {
+			updateMainWindow();
+		}
 }
+
