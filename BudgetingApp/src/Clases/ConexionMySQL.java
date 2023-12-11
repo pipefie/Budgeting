@@ -116,7 +116,7 @@ public class ConexionMySQL {
       
 //        	String consulta = "SELECT cuentas.id,cuentas.dinero,tipocuenta.nombre,tipomoneda.nombre as nombremoneda FROM cuentas,tipocuenta,tipomoneda WHERE cuentas.idUsuario="+id+" and tipocuenta.id = cuentas.tipoCuenta and tipomoneda.id = cuentas.idmoneda;";
     		
-    		String consulta = "SELECT cuentas.id, cuentas.nombreCuenta, cuentas.pais ,cuentas.dinero,tipocuenta.nombre AS tipoCuenta, tipomoneda.nombre as divisa \r\n"
+    		String consulta = "SELECT cuentas.id, cuentas.nombreCuenta ,cuentas.dinero,tipocuenta.nombre AS tipoCuenta, tipomoneda.nombre as divisa \r\n"
     				+ "FROM cuentas,tipocuenta,tipomoneda \r\n"
     				+ "WHERE cuentas.idUsuario="+id+" and tipocuenta.id = cuentas.tipoCuenta and tipomoneda.id = cuentas.idmoneda;";
         	java.sql.Statement estado =  conn.createStatement();
@@ -126,7 +126,6 @@ public class ConexionMySQL {
 			while(resultado.next()) {
 				String idCuenta = resultado.getString("id");
 				String nomCuenta = resultado.getString("nombreCuenta");
-				String paisCuenta = resultado.getString("pais");
 				BigDecimal dinero = resultado.getBigDecimal("dinero");
 				String tipodinero = resultado.getString("divisa");
 				String tipocuenta = resultado.getString("tipoCuenta");
