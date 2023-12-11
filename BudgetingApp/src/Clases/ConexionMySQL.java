@@ -228,10 +228,10 @@ public class ConexionMySQL {
 			
 	    }
 	
-	public void subirMovimiento (int idaccion, int idcuenta, double dinero, Date fecha) {
+	public void subirMovimiento (int idaccion, int idcuenta, double dinero, Date fecha, String descripcion {
 		
     	String insertTableSQL = "INSERT INTO movimientos"
-                + "(idaccion,idcuenta,dinero, fecha) VALUES"
+                + "(idaccion,idcuenta,dinero,descripcion,fecha) VALUES"
                 + "(?,?,?,?)";
     	Connection conn;
         try {
@@ -241,7 +241,8 @@ public class ConexionMySQL {
             preparedStatement.setInt(2, idcuenta);
             preparedStatement.setDouble(3, dinero);
             java.sql.Date dateMov = new java.sql.Date(fecha.getTime());
-            preparedStatement.setDate(4, dateMov);
+            preparedStatement.setDate(5, dateMov);
+            preparedStatement.setString(4, descripcion);
 
             // execute insert SQL stetement
             preparedStatement.executeUpdate();
