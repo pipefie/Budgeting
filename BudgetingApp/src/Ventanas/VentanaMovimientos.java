@@ -271,6 +271,8 @@ public class VentanaMovimientos extends JFrame {
 				
 				}
 				logger.log( Level.FINE, "El usuario ha realizado una operacion");
+				VentanaPrincipal principal = new VentanaPrincipal(user, conn);
+				principal.setVisible(true);
 				dispose();
 			}
 		});
