@@ -252,7 +252,7 @@ public class VentanaMovimientos extends JFrame {
 					
 					conn.subirMovimiento(comboBoxCategoria.getSelectedIndex()+1, Integer.parseInt(cuenta.getIdcuenta()), (double)spinnerCantidad.getValue(), dateChooser.getDate());
 					
-					if((long)spinnerCantidad.getValue()> 0) {
+					if(Double.valueOf(String.valueOf(spinnerCantidad.getValue()))> 0) {
 						cuenta.aniadirDinero(new BigDecimal(Double.valueOf(String.valueOf(spinnerCantidad.getValue()))));
 					}
 					else {
