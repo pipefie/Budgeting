@@ -6,7 +6,6 @@ import java.util.Currency;
 public class Cuenta {
 	private String idcuenta;
 	private String nombreCuenta; //nuevo
-	private String pais; //nuevo
 	private Currency currency; //nuevo
 	private String idusuario; 
 	private TipoCuenta tipocuenta;
@@ -45,14 +44,6 @@ public class Cuenta {
 
 	public void setNombreCuenta(String nombreCuenta) {
 		this.nombreCuenta = nombreCuenta;
-	}
-
-	public String getPais() {
-		return pais;
-	}
-
-	public void setPais(String pais) {
-		this.pais = pais;
 	}
 
 	public Currency getCurrency() {

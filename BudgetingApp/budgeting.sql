@@ -82,7 +82,6 @@ CREATE TABLE `actividad` (
 CREATE TABLE `cuentas` (
   `id` int(11) NOT NULL,
   nombreCuenta varchar(50) default "Cuenta 0",
-  pais varchar(50) not null,
   `idUsuario` int(11) NOT NULL,
   `tipoCuenta` int(11) NOT NULL,
   `dinero` decimal(10,2) NOT NULL,
@@ -93,13 +92,13 @@ CREATE TABLE `cuentas` (
 -- Volcado de datos para la tabla `cuentas`
 --
 
-INSERT INTO `cuentas` (`id`, nombreCuenta, pais, `idUsuario`, `tipoCuenta`, `dinero`, `idmoneda`) VALUES
-(3, 'Cuenta1', 'Estados Unidos' , 1, 1, 222.00, 2),
-(4, 'Cuenta2' , 'Alemania', 1, 2, 1000.00, 1),
-(5, 'Cuenta3' , 'España' , 1, 3, 50.00, 1),
-(6, 'Cuenta4' ,'Luxemburgo' , 12, 1, 0.00, 1),
-(7, 'Cuenta5' ,'Italia' , 13, 1, 0.00, 1),
-(8, 'Cuenta6', 'España', 14, 1, 0.00, 1);
+INSERT INTO `cuentas` (`id`, nombreCuenta, `idUsuario`, `tipoCuenta`, `dinero`, `idmoneda`) VALUES
+(3, 'Cuenta1', 1, 1, 222.00, 2),
+(4, 'Cuenta2' , 1, 2, 1000.00, 1),
+(5, 'Cuenta3' , 1, 3, 50.00, 1),
+(6, 'Cuenta4' , 12, 1, 0.00, 1),
+(7, 'Cuenta5' , 13, 1, 0.00, 1),
+(8, 'Cuenta6', 14, 1, 0.00, 1);
 
 -- --------------------------------------------------------
 

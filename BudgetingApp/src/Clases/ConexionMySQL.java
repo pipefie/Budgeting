@@ -139,7 +139,6 @@ public class ConexionMySQL {
 				cuenta.setTipocuenta(TipoCuenta.valueOf(tipocuenta));
 				cuenta.setCurrency(Currency.getInstance(tipodinero));
 				cuenta.setNombreCuenta(nomCuenta);
-				cuenta.setPais(paisCuenta);
 				lista.add(cuenta);
 			}
 			return lista;

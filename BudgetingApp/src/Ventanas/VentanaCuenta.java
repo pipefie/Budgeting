@@ -233,7 +233,6 @@ public class VentanaCuenta extends JFrame {
 					cuenta.setIdcuenta("");
 					cuenta.setIdusuario(userID);
 					cuenta.setNombreCuenta(textNomCuenta.getText());
-					cuenta.setPais(textFieldPais.getText());
 					cuenta.setTipocuenta((TipoCuenta)tipoCuentaModel.getSelectedItem());
 					
 					if (user.getCuentasUsuario() == null) {
