@@ -741,3 +741,63 @@
   <message>El usuario prueba@gmail.comha iniciado sesion.</message>
 </record>
 </log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T12:15:51.286434200Z</date>
+  <millis>1702296951286</millis>
+  <nanos>434200</nanos>
+  <sequence>1</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T12:15:52.270823Z</date>
+  <millis>1702296952270</millis>
+  <nanos>823000</nanos>
+  <sequence>2</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T12:16:02.229584300Z</date>
+  <millis>1702296962229</millis>
+  <nanos>584300</nanos>
+  <sequence>3</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+<record>
+  <date>2023-12-11T12:16:05.208730600Z</date>
+  <millis>1702296965208</millis>
+  <nanos>730600</nanos>
+  <sequence>4</sequence>
+  <logger>Ventanas</logger>
+  <level>FINEST</level>
+  <class>Ventanas.VentanaPrincipal$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario ha seleccionado una cuenta</message>
+</record>
+</log>

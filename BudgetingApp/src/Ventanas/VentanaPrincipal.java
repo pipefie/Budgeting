@@ -30,6 +30,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.FileHandler;
@@ -53,9 +54,19 @@ import org.jfree.*;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.axis.DateAxis;
+import org.jfree.chart.axis.DateTickUnit;
+import org.jfree.chart.axis.DateTickUnitType;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -227,14 +238,23 @@ public class VentanaPrincipal extends JFrame {
 		panel_1.add(lblPosicinTotal_1_2_1);
 		
 		JPanel panel_1_1 = new JPanel();
-		panel_1_1.setLayout(null);
+		panel_1_1.setLayout(new BorderLayout());
 		panel_1_1.setBounds(423, 191, 338, 234);
 		internalFrame.getContentPane().add(panel_1_1);
+		
+		ChartPanel pieChart = displayPieChart(usuario.getId());
+		
+		if (pieChart != null) {
+		    panel_1_1.add(pieChart, BorderLayout.CENTER);
+		} else {
+		    JLabel noDataLabel = new JLabel("No data available.");
+		    panel_1_1.add(noDataLabel, BorderLayout.CENTER);
+		}
 		
 		JLabel lblEvolucin = new JLabel("Evolución:");
 		lblEvolucin.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblEvolucin.setBounds(10, 11, 137, 17);
-		panel_1_1.add(lblEvolucin);
+		panel_1_1.add(lblEvolucin, BorderLayout.NORTH);
 		
 		JPanel panel_1_2 = new JPanel();
 		panel_1_2.setLayout(null);
@@ -573,55 +593,116 @@ public class VentanaPrincipal extends JFrame {
 		lblNewLabel.addMouseListener(ms1);
 	}
 	
-    private void displayLineChart(String chartType) {
-        Map<Integer, List<Map<String, Object>>> mapaMovimientosUsuario = conn.consultarMovimientos(usuario.getId());
+	  private void displayLineChart(String chartType) {
+	        Map<Integer, List<Map<String, Object>>> mapaMovimientosUsuario = conn.consultarMovimientos(usuario.getId());
 
-        CategoryDataset dataset = createDataset(mapaMovimientosUsuario, chartType);
-        JFreeChart chart = createChart(dataset, chartType);
+	        CategoryDataset dataset = createDataset(mapaMovimientosUsuario, chartType);
+	        JFreeChart chart = createChart(dataset, chartType);
 
-        JFrame chartFrame = new JFrame(chartType + " Chart");
-        ChartPanel chartPanel = new ChartPanel(chart);
-        chartFrame.setContentPane(chartPanel);
-        chartFrame.setSize(800, 600);
-        chartFrame.setLocationRelativeTo(null);
-        chartFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        chartFrame.setVisible(true);
-    }
+	        JFrame chartFrame = new JFrame(chartType + " Chart");
+	        ChartPanel chartPanel = new ChartPanel(chart);
+	        chartFrame.setContentPane(chartPanel);
+	        chartFrame.setSize(800, 600);
+	        chartFrame.setLocationRelativeTo(null);
+	        chartFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+	        chartFrame.setVisible(true);
+	    }
+	    
 
-    private CategoryDataset createDataset(Map<Integer, List<Map<String, Object>>> accountMovements, String chartType) {
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+	    private CategoryDataset createDataset(Map<Integer, List<Map<String, Object>>> accountMovements, String chartType) {
+	        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        for (Map.Entry<Integer, List<Map<String, Object>>> entry : accountMovements.entrySet()) {
-            int accountId = entry.getKey();
-            List<Map<String, Object>> movements = entry.getValue();
+	        for (Map.Entry<Integer, List<Map<String, Object>>> entry : accountMovements.entrySet()) {
+	            int accountId = entry.getKey();
+	            List<Map<String, Object>> movements = entry.getValue();
 
-            for (Map<String, Object> movement : movements) {
-                String date = movement.get("fecha").toString();
-                double amount = (double) movement.get("montoMovimiento");
+	            for (Map<String, Object> movement : movements) {
+	                Date date = (Date) movement.get("fecha");
+	                double amount = (double) movement.get("montoMovimiento");
 
-                // Depending on the chart type, add values to the dataset
-                if ((chartType.equals("Income") && amount >= 0) || (chartType.equals("Expense") && amount < 0)) {
-                    dataset.addValue(amount, "Account " + accountId, date);
-                }
-            }
-        }
+	                if ((chartType.equals("Income") && amount >= 0) || (chartType.equals("Expense") && amount < 0)) {
+	                    dataset.addValue(amount, "Account " + accountId, date);
+	                }
+	            }
+	        }
 
-        return dataset;
-    }
+	        return dataset;
+	    }
 
-    private JFreeChart createChart(CategoryDataset dataset, String chartType) {
-        String title = chartType.equals("Income") ? "Income Movements" : "Expense Movements";
-        String yAxisLabel = chartType.equals("Income") ? "Income Amount" : "Expense Amount";
+	    private JFreeChart createChart(CategoryDataset dataset, String chartType) {
+	        String title = chartType.equals("Income") ? "Income Movements" : "Expense Movements";
+	        String yAxisLabel = chartType.equals("Income") ? "Income Amount" : "Expense Amount";
 
-        return ChartFactory.createLineChart(
-                title,
-                "Date",
-                yAxisLabel,
-                dataset,
-                PlotOrientation.VERTICAL,
-                true,
-                true,
-                false
-        );
-    }
+	        JFreeChart chart = ChartFactory.createLineChart(
+	                title,
+	                "Date",
+	                yAxisLabel,
+	                dataset
+	        );
+
+	        CategoryPlot plot = (CategoryPlot) chart.getPlot();
+	        NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
+	        yAxis.setAutoRangeIncludesZero(false);
+
+	        CategoryAxis xAxis = (CategoryAxis) plot.getDomainAxis();
+	        xAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+
+	        return chart;
+	    }
+	    
+	    private ChartPanel displayPieChart(String userId) {
+	        try {
+	            Map<Integer, List<Map<String, Object>>> accountMovements = conn.consultarMovimientos(userId);
+	            DefaultPieDataset pieDataset = createPieDataset(accountMovements);
+	            JFreeChart pieChart = createPieChart(pieDataset, "Income vs Expense");
+	            
+	            if (pieDataset.getKeys().isEmpty()) {
+	                return new ChartPanel(new JFreeChart(null)); // Empty chart
+	            } else {
+	                return new ChartPanel(pieChart);
+	            }
+
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        return null;
+	    } 
+	    
+	    private DefaultPieDataset createPieDataset(Map<Integer, List<Map<String, Object>>> accountMovements) {
+	        DefaultPieDataset pieDataset = new DefaultPieDataset();
+	        double totalIncome = 0;
+	        double totalExpense = 0;
+
+	        for (List<Map<String, Object>> movements : accountMovements.values()) {
+	            for (Map<String, Object> movement : movements) {
+	                double amount = (double) movement.get("montoMovimiento");
+	                if (amount >= 0) {
+	                    totalIncome += amount;
+	                } else {
+	                    totalExpense += Math.abs(amount);
+	                }
+	            }
+	        }
+
+	        pieDataset.setValue("Income", totalIncome);
+	        pieDataset.setValue("Expense", totalExpense);
+
+	        return pieDataset;
+	    }
+
+	    private JFreeChart createPieChart(DefaultPieDataset dataset, String title) {
+	        JFreeChart chart = ChartFactory.createPieChart(
+	                title,
+	                dataset,
+	                true,
+	                true,
+	                false
+	        );
+
+	        PiePlot plot = (PiePlot) chart.getPlot();
+	        plot.setSectionPaint("Income", Color.GREEN); // You can set colors for each section
+	        plot.setSectionPaint("Expense", Color.RED);
+
+	        return chart;
+	    }
 }
