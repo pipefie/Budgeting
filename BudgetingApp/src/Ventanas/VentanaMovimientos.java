@@ -224,7 +224,8 @@ public class VentanaMovimientos extends JFrame {
 				// TODO Auto-generated method stub
 				logger.log( Level.FINEST, "El usuario canceló la operación");
 				dispose();
-				
+				VentanaPrincipal principal = new VentanaPrincipal(usuarioCuenta, conn);
+				principal.setVisible(true);
 			}
 			
 		});
