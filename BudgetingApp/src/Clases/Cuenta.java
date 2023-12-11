@@ -65,7 +65,7 @@ public class Cuenta {
 
 	@Override
 	public String toString() {
-		return "Cuenta: " + nombreCuenta + ", dinero: " + dinero +" "+ currency;
+		return getNombreCuenta();
 	}
 	
 	//metodos para añadir y restar del dinero de la cuenta

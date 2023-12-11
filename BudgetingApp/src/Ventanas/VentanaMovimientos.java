@@ -223,9 +223,8 @@ public class VentanaMovimientos extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				logger.log( Level.FINEST, "El usuario canceló la operación");
-				VentanaPrincipal principal = new VentanaPrincipal(usuarioCuenta, conn);
-				principal.setVisible(true);
 				dispose();
+				
 			}
 			
 		});
