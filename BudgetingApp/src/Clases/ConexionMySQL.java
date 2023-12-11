@@ -89,16 +89,22 @@ public class ConexionMySQL {
     	try {
     		conn = DriverManager.getConnection(url, username, password);
       
-        	String consulta = "SELECT cuentas.id,cuentas.dinero,tipocuenta.nombre,tipomoneda.nombre as nombremoneda FROM cuentas,tipocuenta,tipomoneda WHERE cuentas.idUsuario="+id+" and tipocuenta.id = cuentas.tipoCuenta and tipomoneda.id = cuentas.idmoneda;";
+//        	String consulta = "SELECT cuentas.id,cuentas.dinero,tipocuenta.nombre,tipomoneda.nombre as nombremoneda FROM cuentas,tipocuenta,tipomoneda WHERE cuentas.idUsuario="+id+" and tipocuenta.id = cuentas.tipoCuenta and tipomoneda.id = cuentas.idmoneda;";
+    		
+    		String consulta = "SELECT cuentas.id, cuentas.nombreCuenta, cuentas.pais ,cuentas.dinero,tipocuenta.nombre AS tipoCuenta, tipomoneda.nombre as divisa \r\n"
+    				+ "FROM cuentas,tipocuenta,tipomoneda \r\n"
+    				+ "WHERE cuentas.idUsuario="+id+" and tipocuenta.id = cuentas.tipoCuenta and tipomoneda.id = cuentas.idmoneda;";
         	java.sql.Statement estado =  conn.createStatement();
 			ResultSet resultado = estado.executeQuery(consulta);
 		
 			ArrayList<Cuenta> lista = new ArrayList<>();
 			while(resultado.next()) {
 				String idCuenta = resultado.getString("id");
+				String nomCuenta = resultado.getString("nombreCuenta");
+				String paisCuenta = resultado.getString("pais");
 				BigDecimal dinero = resultado.getBigDecimal("dinero");
-				String tipodinero = resultado.getString("nombremoneda");
-				String tipocuenta = resultado.getString("nombre");
+				String tipodinero = resultado.getString("divisa");
+				String tipocuenta = resultado.getString("tipoCuenta");
 				System.out.println(idCuenta + dinero +tipodinero );
 				ArrayList<Cuenta> datos = new ArrayList<>();
 				Cuenta  cuenta= new Cuenta();
@@ -107,6 +113,8 @@ public class ConexionMySQL {
 				cuenta.setDinero(dinero);
 				cuenta.setTipocuenta(TipoCuenta.valueOf(tipocuenta));
 				cuenta.setCurrency(Currency.getInstance(tipodinero));
+				cuenta.setNombreCuenta(nomCuenta);
+				cuenta.setPais(paisCuenta);
 				lista.add(cuenta);
 			}
 			return lista;
@@ -225,9 +233,20 @@ public class ConexionMySQL {
 		
 	}
 	
-	public void consultarMovimientos (int userId) {
+	/*
+	 * Función que devuelve un mapa de todas las transacciones de un usuario (userId)
+	 * que tiene por clave el id de la cuenta desde las que se ham hecho dichos movimientos 
+	 * y como valor tiene un ArrayList con todos los "mapas" de transacciones que tiene por clave - valor,
+	 * cada atributo de información relevante
+	 */
+	
+	public Map<Integer, List<Map<String, Object>>> consultarMovimientos (int userId) {
+		
+	
 		
 		Connection conn;
+		Map<Integer, List<Map<String, Object>>> accountMovements = new HashMap<>();
+		
 		try {
 			conn = DriverManager.getConnection(url, username, password);
 		      
@@ -251,8 +270,24 @@ public class ConexionMySQL {
             ResultSet resultSet = preparedStatement.executeQuery();
             	
             while (resultSet.next()) {
-            	
-            	//aqui falta
+
+            	 Map<String, Object> movementInfo = new HashMap<>();
+                 movementInfo.put("nombre", resultSet.getString("nombre"));
+                 movementInfo.put("apellidos", resultSet.getString("apellidos"));
+                 movementInfo.put("correo", resultSet.getString("correo"));
+                 movementInfo.put("idCuenta", resultSet.getInt("idCuenta"));
+                 movementInfo.put("NombreCuenta", resultSet.getString("NombreCuenta"));
+                 movementInfo.put("tipoCuenta", resultSet.getInt("tipoCuenta"));
+                 movementInfo.put("TipoCuenta", resultSet.getString("TipoCuenta"));
+                 movementInfo.put("saldoCuenta", resultSet.getDouble("saldoCuenta"));
+                 movementInfo.put("idMovimiento", resultSet.getInt("idMovimiento"));
+                 movementInfo.put("montoMovimiento", resultSet.getDouble("montoMovimiento"));
+                 movementInfo.put("idAccion", resultSet.getInt("idAccion"));
+                 movementInfo.put("nombreAccion", resultSet.getString("nombreAccion"));
+                 movementInfo.put("fecha", resultSet.getDate("fecha"));
+
+                 int accountId = resultSet.getInt("idCuenta");
+                 accountMovements.computeIfAbsent(accountId, k -> new ArrayList<>()).add(movementInfo);
                     	
                	}
                     	
@@ -262,7 +297,7 @@ public class ConexionMySQL {
 			e.getCause();
 		}
 		
-		
+		return accountMovements;
 	}
 }
 

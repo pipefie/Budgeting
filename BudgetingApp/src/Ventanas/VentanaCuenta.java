@@ -27,6 +27,9 @@ import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -60,7 +63,7 @@ public class VentanaCuenta extends JFrame {
 	private NumberFormat dineroFormat;
 	private static Logger logger;
 	
-	private ConexionMySQL conexion = new ConexionMySQL();
+	private ConexionMySQL conexion;
 	
 	//default constructor 
 	public VentanaCuenta() {
@@ -68,8 +71,9 @@ public class VentanaCuenta extends JFrame {
 	}
 
 	//constructor for users with more than one account
-	public VentanaCuenta(Usuario user) {
+	public VentanaCuenta(Usuario user, ConexionMySQL conexion) {
 		this.user = user;
+		this.conexion = conexion;
 		CreacionCuenta();
 	}
 	
@@ -150,6 +154,8 @@ public class VentanaCuenta extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				logger.log( Level.INFO, "Se cancela la operacion.");
+				VentanaPrincipal principal = new VentanaPrincipal(user, conexion);
+				principal.setVisible(true);
 				dispose();
 			}
 		});
@@ -215,13 +221,35 @@ public class VentanaCuenta extends JFrame {
 		btnCrearCuenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				String userID = user.getId();
-				cuenta = new Cuenta();
-				if (user.getCuentasUsuario() == null) {
-					user.setCuentasUsuario(new ArrayList<Cuenta>());
+				if (textFieldDinero.getText().isEmpty() || textNomCuenta.getText().isEmpty() || textFieldPais.getText().isEmpty() || textFieldDinero.getText().isEmpty()
+						|| currenciesComboBox.getSelectedIndex()==-1 || tipoCuentaBox.getSelectedIndex() == -1 ) {
+					JOptionPane.showMessageDialog(null, "Rellena todos los campos.");
 				}
-
-				ArrayList<Cuenta> cuentasUser = user.getCuentasUsuario();
+				else {
+					String userID = user.getId();
+					cuenta = new Cuenta();
+					cuenta.setCurrency(Currency.getInstance( currenciesModel.getSelectedItem().toString() ));
+					cuenta.setDinero(new BigDecimal(textFieldDinero.getText()));
+					cuenta.setIdcuenta("");
+					cuenta.setIdusuario(userID);
+					cuenta.setNombreCuenta(textNomCuenta.getText());
+					cuenta.setPais(textFieldPais.getText());
+					cuenta.setTipocuenta((TipoCuenta)tipoCuentaModel.getSelectedItem());
+					
+					if (user.getCuentasUsuario() == null) {
+						ArrayList<Cuenta> listaAcc = new ArrayList<>();
+						user.setCuentasUsuario(listaAcc);
+					}
+					
+					conexion.creacuenta(userID, tipoCuentaBox.getSelectedIndex()+1, IDCurrency(cuenta.getCurrency().toString()), new BigDecimal(textFieldDinero.getText()));
+					ArrayList<Cuenta> cuentasUser = user.getCuentasUsuario();
+					cuentasUser.add(cuenta);
+					logger.log(Level.INFO, "Se ha creado existosamente una cuenta");
+					JOptionPane.showMessageDialog(null, "Se ha creado tu cuenta");
+					VentanaPrincipal ventana = new VentanaPrincipal(user, conexion);
+					ventana.setVisible(true);
+					dispose();
+				}
 			}
 		});
 		btnCrearCuenta.setForeground(new Color(0, 0, 0));

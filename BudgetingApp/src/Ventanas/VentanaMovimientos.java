@@ -2,20 +2,24 @@ package Ventanas;
 
 import java.awt.EventQueue;
 import java.awt.Image;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JInternalFrame;
 import javax.swing.JButton;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Date;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -23,20 +27,32 @@ import java.util.logging.Logger;
 import java.util.regex.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.swing.JSplitPane;
 import java.awt.Font;
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import com.toedter.calendar.JDateChooser;
+import Clases.CategoryofTransaction;
+import Clases.ConexionMySQL;
+import Clases.Cuenta;
+import Clases.Transaccion;
+import Clases.Usuario;
 import javax.swing.JTextArea;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
 public class VentanaMovimientos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static Logger logger;
+	private Usuario user;
+	private Transaccion transaccion;
+	private ConexionMySQL conn;
+	private String[] currencies = {"USD","EUR","COP","CHF","CNY"};
 
 	/**
 	 * Launch the application.
@@ -57,7 +73,10 @@ public class VentanaMovimientos extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaMovimientos(String Operacion) {
+	public VentanaMovimientos(String Operacion, Usuario usuarioCuenta, ConexionMySQL conn) {
+		
+		this.user = usuarioCuenta;
+		
 		
 		try {
 			logger = Logger.getLogger( "Ventanas" );
@@ -105,11 +124,142 @@ public class VentanaMovimientos extends JFrame {
 		JLabel lblTrans = new JLabel("");
 		lblTrans.setBounds(501, 44, 125, 37);
 		panel.add(lblTrans);
+
+		// modelo combobox cuentas
+		
+		DefaultComboBoxModel comboModelCuenta = new DefaultComboBoxModel<>(user.getCuentasUsuario().toArray());
+		
+		JComboBox comboCuenta = new JComboBox(comboModelCuenta);
+		comboCuenta.setForeground(new Color(0, 0, 0));
+		comboCuenta.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		comboCuenta.setBackground(new Color(255, 255, 255));
+		comboCuenta.setBounds(317, 122, 269, 30);
+		panel.add(comboCuenta);
+		comboCuenta.setSelectedIndex(-1);
+		
+		JLabel lblNewLabel = new JLabel("Cuenta:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setBounds(317, 104, 101, 14);
+		panel.add(lblNewLabel);
+		
+		
+		SpinnerNumberModel spinnerModel = new SpinnerNumberModel(0,-9999999L,9999999999L,1);
+		JSpinner spinnerCantidad = new JSpinner(spinnerModel);
+		spinnerCantidad.setBounds(317, 190, 173, 30);
+		panel.add(spinnerCantidad);
+		
+		JLabel lblCantidad = new JLabel("Cantidad:");
+		lblCantidad.setForeground(Color.WHITE);
+		lblCantidad.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCantidad.setBounds(317, 172, 101, 14);
+		panel.add(lblCantidad);
+		
+		DefaultComboBoxModel modeloDivisa = new DefaultComboBoxModel<>(currencies);
+		JComboBox comboBoxDivisa = new JComboBox(modeloDivisa);
+		comboBoxDivisa.setForeground(Color.BLACK);
+		comboBoxDivisa.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		comboBoxDivisa.setBackground(Color.WHITE);
+		comboBoxDivisa.setBounds(501, 190, 85, 30);
+		panel.add(comboBoxDivisa);
+		comboBoxDivisa.setSelectedIndex(-1);
+		
+		JLabel lblCurrencia = new JLabel("Divisa:");
+		lblCurrencia.setForeground(Color.WHITE);
+		lblCurrencia.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCurrencia.setBounds(501, 172, 85, 14);
+		panel.add(lblCurrencia);
+		
+		JLabel lblNewLabel_1 = new JLabel("Categoría:");
+		lblNewLabel_1.setForeground(new Color(0, 0, 0));
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(189, 269, 101, 14);
+		internalFrame.getContentPane().add(lblNewLabel_1);
+		
+		DefaultComboBoxModel modelComboCat = new DefaultComboBoxModel<>(CategoryofTransaction.values());
+		JComboBox comboBoxCategoria = new JComboBox(modelComboCat);
+		comboBoxCategoria.setForeground(Color.BLACK);
+		comboBoxCategoria.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		comboBoxCategoria.setBackground(Color.WHITE);
+		comboBoxCategoria.setBounds(189, 287, 269, 30);
+		internalFrame.getContentPane().add(comboBoxCategoria);
+		comboBoxCategoria.setSelectedIndex(-1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Fecha:");
+		lblNewLabel_1_1.setForeground(Color.BLACK);
+		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1_1.setBounds(482, 269, 101, 14);
+		internalFrame.getContentPane().add(lblNewLabel_1_1);
+		
+		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(482, 287, 212, 30);
+		internalFrame.getContentPane().add(dateChooser);
+		
+		JTextArea descripcion = new JTextArea();
+		descripcion.setBackground(new Color(211, 211, 211));
+		descripcion.setBounds(189, 351, 505, 100);
+		internalFrame.getContentPane().add(descripcion);
+		
+		JLabel lblNewLabel_1_2 = new JLabel("Descripción:");
+		lblNewLabel_1_2.setForeground(Color.BLACK);
+		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1_2.setBounds(189, 332, 101, 14);
+		internalFrame.getContentPane().add(lblNewLabel_1_2);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(275, 462, 339, 37);
+		internalFrame.getContentPane().add(panel_1);
+		panel_1.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		JButton btnBack = new JButton("Cancelar");
+		panel_1.add(btnBack);
+		btnBack.setForeground(new Color(255, 255, 255));
+		btnBack.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnBack.setBackground(new Color(255, 128, 0));
+		btnBack.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				VentanaPrincipal principal = new VentanaPrincipal(usuarioCuenta, conn);
+				principal.setVisible(true);
+				dispose();
+			}
+			
+		});
 		
 		JButton btnGenerarRegistro = new JButton("Generar Registro");
+		panel_1.add(btnGenerarRegistro);
 		btnGenerarRegistro.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+	
+				if (comboCuenta.getSelectedIndex() == -1 || comboBoxDivisa.getSelectedIndex() == -1 || comboBoxCategoria.getSelectedIndex() == -1) {
+					
+					JOptionPane.showMessageDialog(null, "Rellena todos los campos.");
+				}
+				else {
+					transaccion = new Transaccion(); 
+					Cuenta cuenta = (Cuenta)comboCuenta.getSelectedItem();
+					transaccion.setCantidadTransaccion(new BigDecimal((long)spinnerCantidad.getValue()));
+					transaccion.setCategoryofTransaction((CategoryofTransaction)comboBoxCategoria.getSelectedItem());
+					transaccion.setComentarios(descripcion.getText());
+					transaccion.setCuentaOrigen(cuenta);
+					transaccion.setCurrencyTransaccion(Currency.getInstance((String)comboBoxDivisa.getSelectedItem()));
+					transaccion.setFechaHora(dateChooser.getDate());
+					
+					conn.subirMovimiento(comboBoxCategoria.getSelectedIndex()+1, Integer.parseInt(cuenta.getIdcuenta()), (double)spinnerCantidad.getValue(), dateChooser.getDate());
+					
+					if((long)spinnerCantidad.getValue()> 0) {
+						cuenta.aniadirDinero(new BigDecimal((long)spinnerCantidad.getValue()));
+					}
+					else {
+						cuenta.quitarDinero(new BigDecimal((long)spinnerCantidad.getValue()*-1));
+					}
+					
+				
+				}
 				logger.log( Level.FINE, "El usuario ha realizado una operacion");
 				dispose();
 			}
@@ -117,8 +267,6 @@ public class VentanaMovimientos extends JFrame {
 		btnGenerarRegistro.setForeground(new Color(255, 255, 255));
 		btnGenerarRegistro.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnGenerarRegistro.setBackground(new Color(255, 128, 0));
-		btnGenerarRegistro.setBounds(275, 462, 339, 37);
-		internalFrame.getContentPane().add(btnGenerarRegistro);
 		internalFrame.setVisible(true);
 		((javax.swing.plaf.basic.BasicInternalFrameUI)internalFrame.getUI()).setNorthPane(null);
 		internalFrame.setBounds(189, 87, 912, 533);
@@ -131,90 +279,25 @@ public class VentanaMovimientos extends JFrame {
 		if (Operacion == "INGRESO") {
 			logger.log( Level.FINEST, "El usuario quiere hacer un ingreso");
 			esIngreso(lblBarra, panel, btnGenerarRegistro);
+
 		}
 		if (Operacion == "GASTO") {
 			logger.log( Level.FINEST, "El usuario quiere hacer un gasto");
 			esGasto(lblBarra, panel, btnGenerarRegistro);
+			
+		
+
 		}
 		if (Operacion == "TRANSFERENCIA") {
 			logger.log( Level.FINEST, "El usuario quiere hacer una transferencia");
 			esTrans(lblBarra, panel, btnGenerarRegistro);
+			String[] tiposTransferencia = {"internacional", "nacional", "Mis Cuentas"};
+		//	modelComboCat = new DefaultComboBoxModel<>(tiposTransferencia);
+			
 		}
 		
 
 		panel.add(lblBarra);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setForeground(new Color(0, 0, 0));
-		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		comboBox.setBackground(new Color(255, 255, 255));
-		comboBox.setBounds(317, 122, 269, 30);
-		panel.add(comboBox);
-		
-		JLabel lblNewLabel = new JLabel("Cuenta:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setBounds(317, 104, 101, 14);
-		panel.add(lblNewLabel);
-		
-		JSpinner spinner = new JSpinner();
-		spinner.setBounds(317, 190, 173, 30);
-		panel.add(spinner);
-		
-		JLabel lblCantidad = new JLabel("Cantidad:");
-		lblCantidad.setForeground(Color.WHITE);
-		lblCantidad.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblCantidad.setBounds(317, 172, 101, 14);
-		panel.add(lblCantidad);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setForeground(Color.BLACK);
-		comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		comboBox_1.setBackground(Color.WHITE);
-		comboBox_1.setBounds(501, 190, 85, 30);
-		panel.add(comboBox_1);
-		
-		JLabel lblCurrencia = new JLabel("Currencia:");
-		lblCurrencia.setForeground(Color.WHITE);
-		lblCurrencia.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblCurrencia.setBounds(501, 172, 85, 14);
-		panel.add(lblCurrencia);
-		
-		JLabel lblNewLabel_1 = new JLabel("Categoría:");
-		lblNewLabel_1.setForeground(new Color(0, 0, 0));
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1.setBounds(189, 269, 101, 14);
-		internalFrame.getContentPane().add(lblNewLabel_1);
-		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setForeground(Color.BLACK);
-		comboBox_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		comboBox_2.setBackground(Color.WHITE);
-		comboBox_2.setBounds(189, 287, 269, 30);
-		internalFrame.getContentPane().add(comboBox_2);
-		
-		JLabel lblNewLabel_1_1 = new JLabel("Fecha:");
-		lblNewLabel_1_1.setForeground(Color.BLACK);
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_1.setBounds(482, 269, 101, 14);
-		internalFrame.getContentPane().add(lblNewLabel_1_1);
-		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(482, 287, 212, 30);
-		internalFrame.getContentPane().add(dateChooser);
-		
-		
-		
-		JTextArea textArea = new JTextArea();
-		textArea.setBackground(new Color(211, 211, 211));
-		textArea.setBounds(189, 351, 505, 100);
-		internalFrame.getContentPane().add(textArea);
-		
-		JLabel lblNewLabel_1_2 = new JLabel("Descripción:");
-		lblNewLabel_1_2.setForeground(Color.BLACK);
-		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1_2.setBounds(189, 332, 101, 14);
-		internalFrame.getContentPane().add(lblNewLabel_1_2);
 		
 		//Botones de menu (escucha)
 		lblIng.addMouseListener(new MouseAdapter() {

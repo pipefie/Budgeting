@@ -1,38 +1,26 @@
 package Clases;
 
 import java.util.Currency;
+import java.util.Date;
+import java.math.BigDecimal;
 import java.time.*;
 
 public class Transaccion {
 	private Cuenta cuentaOrigen;
-	private Cuenta cuentaDestino;
-	private String destino; //en caso que la transaccion no sea a una cuenta posteriormente guardada en la app sino a otra entidad o lo que sea 
-	private Acciones accion;
-	private long cantidadTransaccion;
+	private BigDecimal cantidadTransaccion;
 	private Currency currencyTransaccion;
+	private CategoryofTransaction categoryofTransaction;
 	private String comentarios;
-	private LocalDateTime fechaHora;
+	private Date fechaHora;
 	public Transaccion() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	//constructor para transaccion con ambas cuentas en la app
-	public Transaccion(Cuenta cuentaOrigen, Cuenta cuentaDestino, long cantidadTransaccion,  
-			Currency currencyTransaccion, String comentarios, LocalDateTime fechaHora) {
+	public Transaccion(Cuenta cuentaOrigen,  BigDecimal cantidadTransaccion,  
+			Currency currencyTransaccion, String comentarios, Date fechaHora, CategoryofTransaction categoryofTransaction) {
 		super();
 		this.cuentaOrigen = cuentaOrigen;
-		this.cuentaDestino = cuentaDestino;
-		this.cantidadTransaccion = cantidadTransaccion;
-		this.currencyTransaccion = currencyTransaccion;
-		this.comentarios = comentarios;
-		this.fechaHora = fechaHora;
-	}
-	//constructor para transaccion con destino diferente
-	public Transaccion(Cuenta cuentaOrigen, String destino, long cantidadTransaccion,
-			Currency currencyTransaccion, String comentarios, LocalDateTime fechaHora) {
-		super();
-		this.cuentaOrigen = cuentaOrigen;
-		this.destino = destino;
 		this.cantidadTransaccion = cantidadTransaccion;
 		this.currencyTransaccion = currencyTransaccion;
 		this.comentarios = comentarios;
@@ -45,22 +33,10 @@ public class Transaccion {
 	public void setCuentaOrigen(Cuenta cuentaOrigen) {
 		this.cuentaOrigen = cuentaOrigen;
 	}
-	public Cuenta getCuentaDestino() {
-		return cuentaDestino;
-	}
-	public void setCuentaDestino(Cuenta cuentaDestino) {
-		this.cuentaDestino = cuentaDestino;
-	}
-	public String getDestino() {
-		return destino;
-	}
-	public void setDestino(String destino) {
-		this.destino = destino;
-	}
-	public long getCantidadTransaccion() {
+	public BigDecimal getCantidadTransaccion() {
 		return cantidadTransaccion;
 	}
-	public void setCantidadTransaccion(long cantidadTransaccion) {
+	public void setCantidadTransaccion(BigDecimal cantidadTransaccion) {
 		this.cantidadTransaccion = cantidadTransaccion;
 	}
 	public Currency getCurrencyTransaccion() {
@@ -69,31 +45,30 @@ public class Transaccion {
 	public void setCurrencyTransaccion(Currency currencyTransaccion) {
 		this.currencyTransaccion = currencyTransaccion;
 	}
+	public CategoryofTransaction getCategoryofTransaction() {
+		return categoryofTransaction;
+	}
+	public void setCategoryofTransaction(CategoryofTransaction categoryofTransaction) {
+		this.categoryofTransaction = categoryofTransaction;
+	}
 	public String getComentarios() {
 		return comentarios;
 	}
 	public void setComentarios(String comentarios) {
 		this.comentarios = comentarios;
 	}
-	public LocalDateTime getFechaHora() {
+	public Date getFechaHora() {
 		return fechaHora;
 	}
-	public void setFechaHora(LocalDateTime fechaHora) {
+	public void setFechaHora(Date fechaHora) {
 		this.fechaHora = fechaHora;
 	}
-	public Acciones getAccion() {
-		return accion;
-	}
-	public void setAccion(Acciones accion) {
-		this.accion = accion;
-	}
-	
 	@Override
 	public String toString() {
-		return "Transaccion: " + accion + ", cantidad: " + cantidadTransaccion
-				+ ", moneda: " + currencyTransaccion + ", Fecha/hora" + fechaHora;
+		return "Transaccion [cuentaOrigen=" + cuentaOrigen + ", cantidadTransaccion=" + cantidadTransaccion
+				+ ", currencyTransaccion=" + currencyTransaccion + ", categoryofTransaction=" + categoryofTransaction
+				+ ", comentarios=" + comentarios + ", fechaHora=" + fechaHora + "]";
 	}
-	
-	
+
 
 }

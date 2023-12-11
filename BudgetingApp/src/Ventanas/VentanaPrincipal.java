@@ -45,10 +45,11 @@ public class VentanaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private static Usuario usuario = new Usuario();
-	private static ConexionMySQL conn = new ConexionMySQL();
+	private static Usuario usuario;
+	private static ConexionMySQL conn;
 	public static int distancia = 0;
 	private static Logger logger;
+	private static Cuenta cuentaUser;
 	/**
 	 * Launch the application.
 	 *//*
@@ -69,7 +70,7 @@ public class VentanaPrincipal extends JFrame {
 	 * Create the frame.
 	 * @param arrayList 
 	 */
-	public VentanaPrincipal(Usuario usuario) {
+	public VentanaPrincipal(Usuario usuario, ConexionMySQL conn) {
 		try {
 			logger = Logger.getLogger( "Ventanas" );
 			Handler h = new FileHandler( "VentanaPrincipal.log.xml", true );
@@ -117,16 +118,11 @@ public class VentanaPrincipal extends JFrame {
 		TusCuentas.setBounds(31, 11, 137, 25);
 		panel.add(TusCuentas);
 		
-		usuario.setCuentasUsuario(conn.cargacuentas(usuario.getId()));
+		
 		ArrayList<ArrayList<String>> tipocuentas = conn.cargartipocuentas();
 		 int distancia = 31;
 		 BigDecimal dinero = new BigDecimal(0);
-		
-		
-		
-		
-		
-		
+
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(21, 191, 382, 234);
 		internalFrame.getContentPane().add(panel_1);
@@ -219,6 +215,77 @@ public class VentanaPrincipal extends JFrame {
 		internalFrame.getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
+		 MouseListener ms = new MouseListener() {
+				
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					logger.log( Level.FINEST, "El usuario ha seleccionado una cuenta");
+					System.out.println(e.getComponent());
+					if(e.getComponent().getName() != null) {
+					String idcuenta = e.getComponent().getName();
+					for (int i = 0; i < usuario.getCuentasUsuario().size(); i++) {
+						if(usuario.getCuentasUsuario().get(i).getIdcuenta().equals(idcuenta)) {
+							lblPosicinTotal_1_1.setText(usuario.getCuentasUsuario().get(i).getDinero().toString());
+							cuentaUser = usuario.getCuentasUsuario().get(i);
+						}
+					}
+					}
+				}
+			};
+		
+		BigDecimal saldo_total = new BigDecimal(0);
+		for (int i = 0; i < usuario.getCuentasUsuario().size(); i++) {	
+			
+			Cuenta cuenta1 = usuario.getCuentasUsuario().get(i);
+			
+			for (int j = 0; j < tipocuentas.size(); j++) {
+				ArrayList<String> tipocuenta = tipocuentas.get(j);
+				System.out.println(tipocuenta);
+				
+				if(cuenta1.getTipocuenta().equals(TipoCuenta.Corriente)) {
+					dinero = cuenta1.getDinero() ;
+					lblPosicinTotal_1_1.setText(dinero.toString());
+				}
+				
+			}
+		
+			JButton btnNewButton = new JButton("Cuenta "+ cuenta1.getTipocuenta());
+			btnNewButton.setForeground(new Color(255, 255, 255));
+			btnNewButton.setBackground(new Color(0, 128, 255));
+			btnNewButton.setBounds(distancia , 38, 229, 50);
+			btnNewButton.setName(cuenta1.getIdcuenta());
+			btnNewButton.addMouseListener(ms);
+			panel.add(btnNewButton);
+			distancia+= 250;
+			saldo_total=saldo_total.add(cuenta1.getDinero());
+		}
+		lblPosicinTotal_1.setText(saldo_total.toString());
+		
 		JLabel lblOperaciones = new JLabel("Operaciones:");
 		lblOperaciones.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblOperaciones.setBounds(34, 11, 137, 25);
@@ -230,8 +297,10 @@ public class VentanaPrincipal extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					logger.log( Level.FINEST, "El usuario quiere hacer un ingreso");
-					VentanaMovimientos frame = new VentanaMovimientos("INGRESO");
+					VentanaMovimientos frame = new VentanaMovimientos("INGRESO", usuario, conn);
 					frame.setVisible(true);
+					
+					
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -250,7 +319,7 @@ public class VentanaPrincipal extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					logger.log( Level.FINEST, "El usuario quiere hacer una transferencia");
-					VentanaMovimientos frame = new VentanaMovimientos("TRANSFERENCIA");
+					VentanaMovimientos frame = new VentanaMovimientos("TRANSFERENCIA", usuario, conn);
 					frame.setVisible(true);
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -270,7 +339,7 @@ public class VentanaPrincipal extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					logger.log( Level.FINEST, "El usuario quiere hacer un nuevo gasto");
-					VentanaMovimientos frame = new VentanaMovimientos("GASTO");
+					VentanaMovimientos frame = new VentanaMovimientos("GASTO", usuario, conn);
 					frame.setVisible(true);
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -290,7 +359,7 @@ public class VentanaPrincipal extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					logger.log( Level.FINE, "El usuario quiere agregar una cuenta");
-					VentanaCuenta frame = new VentanaCuenta();
+					VentanaCuenta frame = new VentanaCuenta(usuario, conn);
 					frame.setVisible(true);
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -350,75 +419,7 @@ public class VentanaPrincipal extends JFrame {
 		
 		ImageIcon imageIcon = new ImageIcon(new ImageIcon(VentanaPrincipal.class.getResource("/Imagenes/X.png")).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
 		lblExit.setIcon(imageIcon);
-		 MouseListener ms = new MouseListener() {
-				
-				@Override
-				public void mouseReleased(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void mousePressed(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void mouseExited(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					// TODO Auto-generated method stub
-					logger.log( Level.FINEST, "El usuario ha seleccionado una cuenta");
-					System.out.println(e.getComponent());
-					if(e.getComponent().getName() != null) {
-					String idcuenta = e.getComponent().getName();
-					for (int i = 0; i < usuario.getCuentasUsuario().size(); i++) {
-						if(usuario.getCuentasUsuario().get(i).getIdcuenta().equals(idcuenta)) {
-							lblPosicinTotal_1_1.setText(usuario.getCuentasUsuario().get(i).getDinero().toString());
-						}
-					}
-					}
-				}
-			};
-		
-		BigDecimal saldo_total = new BigDecimal(0);
-		for (int i = 0; i < usuario.getCuentasUsuario().size(); i++) {	
-			
-			Cuenta cuenta1 = usuario.getCuentasUsuario().get(i);
-			
-			for (int j = 0; j < tipocuentas.size(); j++) {
-				ArrayList<String> tipocuenta = tipocuentas.get(j);
-				System.out.println(tipocuenta);
-				
-				if(cuenta1.getTipocuenta().equals(TipoCuenta.Corriente)) {
-					dinero = cuenta1.getDinero() ;
-					lblPosicinTotal_1_1.setText(dinero.toString());
-				}
-				
-			}
-		
-			JButton btnNewButton = new JButton("Cuenta "+ cuenta1.getTipocuenta());
-			btnNewButton.setForeground(new Color(255, 255, 255));
-			btnNewButton.setBackground(new Color(0, 128, 255));
-			btnNewButton.setBounds(distancia , 38, 229, 50);
-			btnNewButton.setName(cuenta1.getIdcuenta());
-			btnNewButton.addMouseListener(ms);
-			panel.add(btnNewButton);
-			distancia+= 250;
-			saldo_total=saldo_total.add(cuenta1.getDinero());
-		}
-		lblPosicinTotal_1.setText(saldo_total.toString());
+
 		
 
 		JButton AgregarCuenta = new JButton("+ Agregar Cuenta");
@@ -427,7 +428,7 @@ public class VentanaPrincipal extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					logger.log( Level.FINE, "El usuario quiere ainadir una cuenta nueva");
-					VentanaCuenta frame = new VentanaCuenta();
+					VentanaCuenta frame = new VentanaCuenta(usuario, conn);
 					frame.setVisible(true);
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -492,10 +493,7 @@ public class VentanaPrincipal extends JFrame {
 				}
 			}
 		};
-MouseListener ms2 = new MouseListener() {
-			
-		
-
+		MouseListener ms2 = new MouseListener() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub

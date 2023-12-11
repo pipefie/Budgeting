@@ -237,7 +237,8 @@ public class VentanaLogIn extends JFrame {
 							usuario.setApellidos(datosusuario.get(2));
 							usuario.setCorreo(datosusuario.get(3));
 							usuario.setId(datosusuario.get(0));
-							VentanaPrincipal ventana = new VentanaPrincipal(usuario);
+							usuario.setCuentasUsuario(conexion.cargacuentas(usuario.getId()));
+							VentanaPrincipal ventana = new VentanaPrincipal(usuario, conexion);
 							ventana.setVisible(true);
 							dispose();
 							logger.log( Level.FINE, "El usuario " + usuario.getCorreo() + "ha iniciado sesion.");
@@ -328,8 +329,8 @@ public class VentanaLogIn extends JFrame {
 								usuario.setCorreo(datosusuario.get(3));
 								usuario.setId(datosusuario.get(0));
 	//							conexion.creacuenta(usuario.getId(),"1","1","0");
-								VentanaPrincipal ventana = new VentanaPrincipal(usuario);
-								ventana.setVisible(true);
+								VentanaCuenta nuevaCuenta = new VentanaCuenta(usuario, conexion);
+								nuevaCuenta.setVisible(true);
 								dispose();
 								logger.log( Level.INFO, "Se ha creado una cuenta nueva con el correo " + usuario.getCorreo());
 								 
