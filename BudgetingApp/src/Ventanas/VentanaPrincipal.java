@@ -1,6 +1,7 @@
 package Ventanas;
 
 import java.awt.EventQueue;
+
 import java.awt.Image;
 import java.awt.Rectangle;
 
@@ -13,6 +14,7 @@ import Clases.Cuenta;
 import Clases.TipoCuenta;
 import Clases.Usuario;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 
@@ -28,6 +30,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -40,6 +44,18 @@ import javax.swing.JSplitPane;
 import java.awt.Font;
 import javax.swing.JPasswordField;
 import javax.swing.UIManager;
+import javax.swing.WindowConstants;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import org.jfree.*;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -71,6 +87,8 @@ public class VentanaPrincipal extends JFrame {
 	 * @param arrayList 
 	 */
 	public VentanaPrincipal(Usuario usuario, ConexionMySQL conn) {
+		this.usuario = usuario;
+		this.conn = conn;
 		try {
 			logger = Logger.getLogger( "Ventanas" );
 			Handler h = new FileHandler( "VentanaPrincipal.log.xml", true );
@@ -128,6 +146,14 @@ public class VentanaPrincipal extends JFrame {
 		internalFrame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
+		/*
+		 * creaacion del mapa de cuentas del usuario, donde la clave es cada cuenta del usuario
+		 * y el valor es una lista de los movimientos realizados con dicha cuenta, la lista de movimientos almacena
+		 * el mapa de movimientos donde la clave es la columna que consultamos del usuario y su respectivo valor, por tanto,
+		 * tenemos entradas <'nombre', nombre_usuario>, <montoMovimiento, monto>, etc.
+		 */
+		Map<Integer, List<Map<String, Object>>> mapaMovimientosUsuario = conn.consultarMovimientos(usuario.getId());
+		
 		JLabel lblPosicinTotal = new JLabel("Posición Total:");
 		lblPosicinTotal.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblPosicinTotal.setBounds(10, 11, 137, 17);
@@ -171,6 +197,11 @@ public class VentanaPrincipal extends JFrame {
 		panel_1.add(lblGastoss);
 		
 		JButton btnNewButton_1 = new JButton("Grafico1");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				displayLineChart("Income");
+			}
+		});
 		btnNewButton_1.setBounds(10, 122, 362, 32);
 		panel_1.add(btnNewButton_1);
 		
@@ -181,6 +212,11 @@ public class VentanaPrincipal extends JFrame {
 		panel_1.add(lblPosicinTotal_1_2);
 		
 		JButton btnNewButton_1_1 = new JButton("Grafico2");
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				displayLineChart("Expense");
+			}
+		});
 		btnNewButton_1_1.setBounds(10, 182, 362, 32);
 		panel_1.add(btnNewButton_1_1);
 		
@@ -536,4 +572,56 @@ public class VentanaPrincipal extends JFrame {
 		lblNewLabel_1.addMouseListener(ms2);
 		lblNewLabel.addMouseListener(ms1);
 	}
+	
+    private void displayLineChart(String chartType) {
+        Map<Integer, List<Map<String, Object>>> mapaMovimientosUsuario = conn.consultarMovimientos(usuario.getId());
+
+        CategoryDataset dataset = createDataset(mapaMovimientosUsuario, chartType);
+        JFreeChart chart = createChart(dataset, chartType);
+
+        JFrame chartFrame = new JFrame(chartType + " Chart");
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartFrame.setContentPane(chartPanel);
+        chartFrame.setSize(800, 600);
+        chartFrame.setLocationRelativeTo(null);
+        chartFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        chartFrame.setVisible(true);
+    }
+
+    private CategoryDataset createDataset(Map<Integer, List<Map<String, Object>>> accountMovements, String chartType) {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        for (Map.Entry<Integer, List<Map<String, Object>>> entry : accountMovements.entrySet()) {
+            int accountId = entry.getKey();
+            List<Map<String, Object>> movements = entry.getValue();
+
+            for (Map<String, Object> movement : movements) {
+                String date = movement.get("fecha").toString();
+                double amount = (double) movement.get("montoMovimiento");
+
+                // Depending on the chart type, add values to the dataset
+                if ((chartType.equals("Income") && amount >= 0) || (chartType.equals("Expense") && amount < 0)) {
+                    dataset.addValue(amount, "Account " + accountId, date);
+                }
+            }
+        }
+
+        return dataset;
+    }
+
+    private JFreeChart createChart(CategoryDataset dataset, String chartType) {
+        String title = chartType.equals("Income") ? "Income Movements" : "Expense Movements";
+        String yAxisLabel = chartType.equals("Income") ? "Income Amount" : "Expense Amount";
+
+        return ChartFactory.createLineChart(
+                title,
+                "Date",
+                yAxisLabel,
+                dataset,
+                PlotOrientation.VERTICAL,
+                true,
+                true,
+                false
+        );
+    }
 }

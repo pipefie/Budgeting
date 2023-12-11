@@ -222,6 +222,7 @@ public class VentanaMovimientos extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
+				logger.log( Level.FINEST, "El usuario canceló la operación");
 				VentanaPrincipal principal = new VentanaPrincipal(usuarioCuenta, conn);
 				principal.setVisible(true);
 				dispose();
@@ -242,7 +243,7 @@ public class VentanaMovimientos extends JFrame {
 				else {
 					transaccion = new Transaccion(); 
 					Cuenta cuenta = (Cuenta)comboCuenta.getSelectedItem();
-					transaccion.setCantidadTransaccion(new BigDecimal((long)spinnerCantidad.getValue()));
+					transaccion.setCantidadTransaccion(new BigDecimal(Double.valueOf(String.valueOf(spinnerCantidad.getValue()))));
 					transaccion.setCategoryofTransaction((CategoryofTransaction)comboBoxCategoria.getSelectedItem());
 					transaccion.setComentarios(descripcion.getText());
 					transaccion.setCuentaOrigen(cuenta);
@@ -252,12 +253,15 @@ public class VentanaMovimientos extends JFrame {
 					conn.subirMovimiento(comboBoxCategoria.getSelectedIndex()+1, Integer.parseInt(cuenta.getIdcuenta()), (double)spinnerCantidad.getValue(), dateChooser.getDate());
 					
 					if((long)spinnerCantidad.getValue()> 0) {
-						cuenta.aniadirDinero(new BigDecimal((long)spinnerCantidad.getValue()));
+						cuenta.aniadirDinero(new BigDecimal(Double.valueOf(String.valueOf(spinnerCantidad.getValue()))));
 					}
 					else {
-						cuenta.quitarDinero(new BigDecimal((long)spinnerCantidad.getValue()*-1));
+						//aqui multiplico por menso 1 porque los valores llegan negativos al ser un gasto o lo que sea y 
+						// el método quitarDinero tiene implementada la funcion .substract(dinero) que resta el monto por ende hay que volverlo positivo
+						// el negativo o positivo del monto de la transacción es solo para saber si es entrada o salida de dinero
+						cuenta.quitarDinero(new BigDecimal(Double.valueOf(String.valueOf(spinnerCantidad.getValue()))*-1));
 					}
-					
+					conn.actualizarSaldo(cuenta.getIdcuenta(), cuenta.getDinero());
 				
 				}
 				logger.log( Level.FINE, "El usuario ha realizado una operacion");

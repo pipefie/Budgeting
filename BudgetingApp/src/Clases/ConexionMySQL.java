@@ -240,7 +240,7 @@ public class ConexionMySQL {
 	 * cada atributo de información relevante
 	 */
 	
-	public Map<Integer, List<Map<String, Object>>> consultarMovimientos (int userId) {
+	public Map<Integer, List<Map<String, Object>>> consultarMovimientos (String userId) {
 		
 	
 		
@@ -250,22 +250,22 @@ public class ConexionMySQL {
 		try {
 			conn = DriverManager.getConnection(url, username, password);
 		      
-        	String query = "SELECT usuarios.nombre, usuarios.apellidos, usuarios.correo, cuentas.id AS idCuenta, cuentas.nombreCuenta as NombreCuenta,cuentas.tipoCuenta, tipocuenta.nombre as TipoCuenta,cuentas.dinero AS saldoCuenta,"
-        			+ "    movimientos.id AS idMovimiento,"
-        			+ "    movimientos.dinero AS montoMovimiento,"
-        			+ "    acciones.id AS idAccion,"
-        			+ "    acciones.nombre AS nombreAccion,"
-        			+ "    movimientos.fecha"
-        			+ "FROM usuarios"
-        			+ "JOIN cuentas ON usuarios.id = cuentas.idUsuario"
-        			+ "JOIN tipocuenta on tipocuenta.id = cuentas.tipoCuenta"
-        			+ "JOIN movimientos ON cuentas.id = movimientos.idcuenta"
-        			+ "JOIN acciones ON movimientos.idaccion = acciones.id"
-        			+ "WHERE usuarios.id = " + userId
-        			+ "order by movimientos.fecha;"; 
+			String query = "SELECT usuarios.nombre, usuarios.apellidos, usuarios.correo, cuentas.id AS idCuenta, cuentas.nombreCuenta as NombreCuenta, cuentas.tipoCuenta, tipocuenta.nombre as TipoCuenta, cuentas.dinero AS saldoCuenta, "
+			        + "movimientos.id AS idMovimiento, "
+			        + "movimientos.dinero AS montoMovimiento, "
+			        + "acciones.id AS idAccion, "
+			        + "acciones.nombre AS nombreAccion, "
+			        + "movimientos.fecha "
+			        + "FROM usuarios "
+			        + "JOIN cuentas ON usuarios.id = cuentas.idUsuario "
+			        + "JOIN tipocuenta ON tipocuenta.id = cuentas.tipoCuenta "
+			        + "JOIN movimientos ON cuentas.id = movimientos.idcuenta "
+			        + "JOIN acciones ON movimientos.idaccion = acciones.id "
+			        + "WHERE usuarios.id = ? "
+			        + "ORDER BY movimientos.fecha;";
         	
         	PreparedStatement preparedStatement = conn.prepareStatement(query);
-        	preparedStatement.setInt(1, userId);
+        	preparedStatement.setString(1, userId);               
 
             ResultSet resultSet = preparedStatement.executeQuery();
             	
@@ -298,6 +298,44 @@ public class ConexionMySQL {
 		}
 		
 		return accountMovements;
+	}
+	
+	public void actualizarSaldo(String idCuenta, BigDecimal saldo) {
+
+	    Connection conn = null;
+	    PreparedStatement statement = null;
+
+	    try {
+	        conn = DriverManager.getConnection(url, username, password);
+
+	        String sql = "UPDATE cuentas SET dinero = ? WHERE id = ?";
+	        statement = conn.prepareStatement(sql);
+
+	        statement.setBigDecimal(1, saldo);
+	        statement.setString(2, idCuenta);
+
+	        // Execute the update
+	        int rowsUpdated = statement.executeUpdate();
+
+	        if (rowsUpdated > 0) {
+	            System.out.println("Se ha actualizado el saldo correctamente");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        e.getCause();
+	    } finally {
+	        // Close resources in a finally block
+	        try {
+	            if (statement != null) {
+	                statement.close();
+	            }
+	            if (conn != null) {
+	                conn.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 }
 

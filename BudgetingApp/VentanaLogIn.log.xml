@@ -678,3 +678,82 @@
   <message>El usuario ha seleccionado una cuenta</message>
 </record>
 </log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T10:26:30.161274900Z</date>
+  <millis>1702290390161</millis>
+  <nanos>274900</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T10:28:29.216875Z</date>
+  <millis>1702290509216</millis>
+  <nanos>875000</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T10:29:18.890110Z</date>
+  <millis>1702290558890</millis>
+  <nanos>110000</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T10:34:09.264599300Z</date>
+  <millis>1702290849264</millis>
+  <nanos>599300</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T10:36:59.718121200Z</date>
+  <millis>1702291019718</millis>
+  <nanos>121200</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+</log>

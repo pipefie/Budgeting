@@ -8,20 +8,11 @@
 -- Versión de PHP: 8.0.28
 
 drop database if exists budgeting;
-<<<<<<< HEAD
 create database budgeting character set utf8 collate utf8_general_ci;
-=======
-create database budgeting character set latin1 collate latin1_general_cs;
-set sql_safe_updates = 0;
->>>>>>> refs/remotes/origin/master
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 use budgeting;
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/master
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -45,10 +36,33 @@ CREATE TABLE `acciones` (
 
 -- --------------------------------------------------------
 insert into acciones values 
-(1, "Ingresar"),
-(2, "Retirar"),
-(3, "Transferencia"),
-(4, "Invertir");
+(1, "VIVIENDA"),
+(2, "ALIMENTOS_Y_BEBIDAS"),
+(3, "COMPRAS"),
+(4, "TRANSPORTE"),
+(5, "ENTRETENIMIENTO_Y_VIDA_SOCIAL"),
+(6, "COMUNICACIÓN"),
+(7, "GASTOS_FINANCIEROS"),
+(8, "SALARIO"),
+(9, "SUELDO"),
+(10, "COMISIÓN"),
+(11, "INTERESES"),
+(12, "DIVIDENDOS"),
+( 13, "VENTA"),
+( 14, "INGRESOS_POR_ALQUILER"),
+(15, "REGALOS"),
+(16, "CUOTAS"),
+( 17, "SUBVENCIONES"),
+(18, "PRÉSTAMOS"),
+(19, "ALQUILER"),
+( 20, "JUEGOS_DE_AZAR"),
+(21, "DINERO_DE_BOLSILLO"),
+( 22, "ASIGNACIÓN"),
+( 23, "APOYO_GOBERNAMENTAL"),
+( 24, "REEMBOLSOS"),
+(25, "REGALÍAS"),
+( 26, "AHORROS"),
+(  27, "OTROS");
 --
 -- Estructura de tabla para la tabla `actividad`
 --
@@ -98,7 +112,6 @@ CREATE TABLE `movimientos` (
   `idaccion` int(11) NOT NULL,
   `idcuenta` int(11) NOT NULL,
   `dinero` decimal(10,2) NOT NULL,
-#  `idactividad` int(11) NOT NULL,  este no me parece necesario porque el objeto acitvidad vuelve a referenciar a acción
   `fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -304,7 +317,6 @@ ALTER TABLE `cuentas`
 ALTER TABLE `movimientos`
   ADD CONSTRAINT `movimientos_ibfk_1` FOREIGN KEY (`idcuenta`) REFERENCES `cuentas` (`id`),
   ADD CONSTRAINT `movimientos_ibfk_2` FOREIGN KEY (`idaccion`) REFERENCES `acciones` (`id`) ON UPDATE CASCADE;
-#  ADD CONSTRAINT `movimientos_ibfk_3` FOREIGN KEY (`idactividad`) REFERENCES `actividad` (`id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
@@ -376,26 +388,6 @@ INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (4,
 INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (1, 4, 75.00, '2009-07-14');
 INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (3, 5, -35.00, '2011-01-30');
 
-
-SELECT 
-    usuarios.nombre, 
-    usuarios.apellidos,
-    cuentas.id AS idCuenta, 
-    cuentas.nombreCuenta as NombreCuenta,
-    cuentas.tipoCuenta, 
-    tipocuenta.nombre as TipoCuenta,
-    cuentas.dinero AS saldoCuenta,
-    movimientos.id AS idMovimiento, 
-    movimientos.dinero AS montoMovimiento,
-    acciones.id AS idAccion,
-    acciones.nombre AS nombreAccion
-FROM usuarios
-JOIN cuentas ON usuarios.id = cuentas.idUsuario
-JOIN tipocuenta on tipocuenta.id = cuentas.tipoCuenta
-JOIN movimientos ON cuentas.id = movimientos.idcuenta
-JOIN acciones ON movimientos.idaccion = acciones.id
-WHERE usuarios.id = 1;
-
 SELECT 
     usuarios.nombre, 
     usuarios.apellidos,
@@ -403,6 +395,7 @@ SELECT
     cuentas.id AS idCuenta, 
     cuentas.nombreCuenta as NombreCuenta,
     cuentas.tipoCuenta, 
+    tipomoneda.nombre as divisa,
     tipocuenta.nombre as TipoCuenta,
     cuentas.dinero AS saldoCuenta,
     movimientos.id AS idMovimiento, 
@@ -410,10 +403,18 @@ SELECT
     acciones.id AS idAccion,
     acciones.nombre AS nombreAccion,
     movimientos.fecha
+    
 FROM usuarios
 JOIN cuentas ON usuarios.id = cuentas.idUsuario
 JOIN tipocuenta on tipocuenta.id = cuentas.tipoCuenta
 JOIN movimientos ON cuentas.id = movimientos.idcuenta
 JOIN acciones ON movimientos.idaccion = acciones.id
+join tipomoneda on cuentas.idmoneda = tipomoneda.id
 WHERE usuarios.id = 1
 order by movimientos.fecha;
+
+select * from usuarios where correo = 'prueba@gmail.com' and contrasena = 'prueba';
+
+SELECT cuentas.id, cuentas.nombreCuenta, cuentas.pais ,cuentas.dinero,tipocuenta.nombre AS tipoCuenta, tipomoneda.nombre as divisa 
+FROM cuentas,tipocuenta,tipomoneda 
+WHERE cuentas.idUsuario=1 and tipocuenta.id = cuentas.tipoCuenta and tipomoneda.id = cuentas.idmoneda;
