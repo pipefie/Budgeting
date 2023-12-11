@@ -8,20 +8,19 @@
 -- Versión de PHP: 8.0.28
 
 drop database if exists budgeting;
-<<<<<<< HEAD
-create database budgeting character set utf8 collate utf8_general_ci;
-=======
+
+
+
 create database budgeting character set latin1 collate latin1_general_cs;
 set sql_safe_updates = 0;
->>>>>>> refs/remotes/origin/master
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 use budgeting;
-<<<<<<< HEAD
-=======
 
->>>>>>> refs/remotes/origin/master
+
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
