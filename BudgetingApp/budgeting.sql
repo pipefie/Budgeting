@@ -62,7 +62,7 @@ insert into acciones values
 ( 24, "REEMBOLSOS"),
 (25, "REGALÍAS"),
 ( 26, "AHORROS"),
-(  27, "OTROS");
+( 27, "OTROS");
 --
 -- Estructura de tabla para la tabla `actividad`
 --
@@ -412,6 +412,8 @@ JOIN acciones ON movimientos.idaccion = acciones.id
 join tipomoneda on cuentas.idmoneda = tipomoneda.id
 WHERE usuarios.id = 1
 order by movimientos.fecha;
+
+
 
 select * from usuarios where correo = 'prueba@gmail.com' and contrasena = 'prueba';
 

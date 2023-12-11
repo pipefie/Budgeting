@@ -18,6 +18,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -29,6 +36,7 @@ import java.util.regex.Pattern;
 import javax.swing.JSplitPane;
 import java.awt.Font;
 import javax.swing.JPasswordField;
+import javax.swing.JProgressBar;
 
 public class VentanaLogIn extends JFrame {
 
@@ -43,7 +51,6 @@ public class VentanaLogIn extends JFrame {
 	private ConexionMySQL conexion =  new ConexionMySQL();
 	private static Usuario usuario = new Usuario();
 	private static Logger logger;
-	
 
 	/**
 	 * Launch the application.
@@ -219,6 +226,12 @@ public class VentanaLogIn extends JFrame {
 		passwordField.setBounds(21, 261, 339, 37);
 		panelLogIn.add(passwordField);
 		
+		
+		JProgressBar progressBar = new JProgressBar(0,100);
+		progressBar.setBounds(10, 392, 379, 14);
+		panelLogIn.add(progressBar);
+		
+		
 		JButton btnNewButton = new JButton("Log In");
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -238,9 +251,39 @@ public class VentanaLogIn extends JFrame {
 							usuario.setCorreo(datosusuario.get(3));
 							usuario.setId(datosusuario.get(0));
 							usuario.setCuentasUsuario(conexion.cargacuentas(usuario.getId()));
-							VentanaPrincipal ventana = new VentanaPrincipal(usuario, conexion);
-							ventana.setVisible(true);
-							dispose();
+							try {
+								BufferedWriter ficheroUsuAct = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("UsuarioAct.txt")));
+								ficheroUsuAct.write(usuario.getCorreo()+" es el ultimo usuario en iniciar sesion\n");
+					            ficheroUsuAct.close();
+							}catch (Exception ex) {
+								
+							}
+							Thread hiloFin = new Thread() {
+
+								@Override
+								public void run() {
+									 //synchronized (this) {
+										 for (int i=0;i<=100;i++) {
+											 progressBar.setValue(i);
+											 try {
+												Thread.sleep(50);
+											} catch (InterruptedException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+											 
+										 }
+											dispose();
+											VentanaPrincipal ventana = new VentanaPrincipal(usuario, conexion);
+											ventana.setVisible(true);
+										 
+								//} 
+									 }
+								
+							};
+							
+							hiloFin.start();
+
 							logger.log( Level.FINE, "El usuario " + usuario.getCorreo() + "ha iniciado sesion.");
 						}else {
 							 JOptionPane.showMessageDialog(null,"inicio de sesión fallido");
@@ -269,7 +312,7 @@ public class VentanaLogIn extends JFrame {
 		lblNewLabel_2.setIcon(icUser);	
 		lblNewLabel_2.setBounds(121, 26, 141, 126);
 		panelLogIn.add(lblNewLabel_2);
-		
+
 		JPanel panelCubreLogIn = new JPanel();
 		panelCubreLogIn.setBounds(0, 0, 399, 433);
 		internalFrame.getContentPane().add(panelCubreLogIn);

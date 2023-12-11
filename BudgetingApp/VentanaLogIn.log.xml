@@ -757,3 +757,19 @@
   <message>El usuario prueba@gmail.comha iniciado sesion.</message>
 </record>
 </log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T11:08:02.107391700Z</date>
+  <millis>1702292882107</millis>
+  <nanos>391700</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>WARNING</level>
+  <class>Ventanas.VentanaLogIn$5</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>Se cierra la aplicacion.</message>
+</record>
+</log>
