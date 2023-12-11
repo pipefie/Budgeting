@@ -18,6 +18,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -240,6 +247,13 @@ public class VentanaLogIn extends JFrame {
 							usuario.setCuentasUsuario(conexion.cargacuentas(usuario.getId()));
 							VentanaPrincipal ventana = new VentanaPrincipal(usuario, conexion);
 							ventana.setVisible(true);
+							try {
+								BufferedWriter ficheroUsuAct = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("UsuarioAct.txt")));
+								ficheroUsuAct.write(usuario.getCorreo()+" es el ultimo usuario en iniciar sesion\n");
+					            ficheroUsuAct.close();
+							}catch (Exception ex) {
+								
+							}
 							dispose();
 							logger.log( Level.FINE, "El usuario " + usuario.getCorreo() + "ha iniciado sesion.");
 						}else {
