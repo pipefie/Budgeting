@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import Clases.ConexionMySQL;
 import Clases.Cuenta;
@@ -42,8 +43,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JSplitPane;
+import javax.swing.JTable;
+
 import java.awt.Font;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
@@ -257,18 +261,40 @@ public class VentanaPrincipal extends JFrame {
 		panel_1_1.add(lblEvolucin, BorderLayout.NORTH);
 		
 		
-		//panel tabla
 		JPanel panel_1_2 = new JPanel();
-		panel_1_2.setLayout(null);
+		panel_1_2.setLayout(new BorderLayout());
 		panel_1_2.setBounds(780, 191, 382, 234);
 		internalFrame.getContentPane().add(panel_1_2);
-		
+
+		DefaultTableModel modeloTabla = new DefaultTableModel(new Object[]{"Fecha", "Descripción", "Cantidad", "Cuenta"}, 0);
+		JTable tabla = new JTable(modeloTabla);
+		JScrollPane scrollPane = new JScrollPane(tabla);
+		panel_1_2.add(scrollPane, BorderLayout.CENTER);
+
+		tabla.getColumnModel().getColumn(0).setPreferredWidth(100);
+		tabla.getColumnModel().getColumn(1).setPreferredWidth(200);
+		tabla.getColumnModel().getColumn(2).setPreferredWidth(80);
+
+		panel_1_2.add(tabla.getTableHeader(), BorderLayout.NORTH);
+
+		for (List<Map<String, Object>> movementsAcc : mapaMovimientosUsuario.values()) {
+			for (Map<String, Object> movement : movementsAcc) {
+			    Object[] rowData = {
+			            movement.get("fecha"),
+			            movement.get("Comentarios"),
+			            movement.get("montoMovimiento"),
+			            movement.get("NombreCuenta")
+			    };
+			    modeloTabla.addRow(rowData);
+			}
+
+		}
 		
 		
 		JLabel lblltimosMovimientos = new JLabel("Últimos Movimientos:");
 		lblltimosMovimientos.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblltimosMovimientos.setBounds(10, 11, 192, 17);
-		panel_1_2.add(lblltimosMovimientos);
+		panel_1_2.add(lblltimosMovimientos, BorderLayout.NORTH);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(0, 486, 1188, 111);

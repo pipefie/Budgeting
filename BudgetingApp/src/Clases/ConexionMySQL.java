@@ -278,6 +278,7 @@ public class ConexionMySQL {
 			String query = "SELECT usuarios.nombre, usuarios.apellidos, usuarios.correo, cuentas.id AS idCuenta, cuentas.nombreCuenta as NombreCuenta, cuentas.tipoCuenta, tipocuenta.nombre as TipoCuenta, cuentas.dinero AS saldoCuenta, "
 			        + "movimientos.id AS idMovimiento, "
 			        + "movimientos.dinero AS montoMovimiento, "
+			        + "movimientos.comentarios as Comentarios, "
 			        + "acciones.id AS idAccion, "
 			        + "acciones.nombre AS nombreAccion, "
 			        + "movimientos.fecha "
@@ -307,9 +308,11 @@ public class ConexionMySQL {
                  movementInfo.put("saldoCuenta", resultSet.getDouble("saldoCuenta"));
                  movementInfo.put("idMovimiento", resultSet.getInt("idMovimiento"));
                  movementInfo.put("montoMovimiento", resultSet.getDouble("montoMovimiento"));
+                 movementInfo.put("Comentarios", resultSet.getString("Comentarios"));
                  movementInfo.put("idAccion", resultSet.getInt("idAccion"));
                  movementInfo.put("nombreAccion", resultSet.getString("nombreAccion"));
                  movementInfo.put("fecha", resultSet.getDate("fecha"));
+                 
 
                  int accountId = resultSet.getInt("idCuenta");
                  accountMovements.computeIfAbsent(accountId, k -> new ArrayList<>()).add(movementInfo);

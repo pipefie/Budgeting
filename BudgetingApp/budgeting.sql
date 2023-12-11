@@ -112,7 +112,8 @@ CREATE TABLE `movimientos` (
   `idaccion` int(11) NOT NULL,
   `idcuenta` int(11) NOT NULL,
   `dinero` decimal(10,2) NOT NULL,
-  `fecha` date NOT NULL
+  `fecha` date NOT NULL,
+  comentarios varchar(200)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -325,68 +326,46 @@ COMMIT;
 
 
 
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (1, 3, 100.00, '2012-03-21', 'Entrada por concepto de salario');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (2, 3, 20.00, '2013-07-14', 'Gasto en alimentos y bebidas');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (1, 4, 50.00, '2014-11-27', 'Entrada por concepto de ventas en línea');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (3, 5, 30.00, '2016-05-05' ,'Pago de cuotas');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (4, 5, 80.00, '2018-09-12' ,'Compra de boletos para entretenimiento');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (1, 3, 150.00, '2019-01-22','Entrada por concepto de sueldo');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (2, 4, 200.00, '2020-03-03','Compra de productos en línea');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (3, 4, 30.00, '2021-05-07','Gasto en transporte');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (4, 5, 50.00, '2022-08-15','Pago de servicios');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (1, 5, 120.00, '2023-12-10','Entrada por concepto de ventas');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (1, 3, 300.00, '2023-12-23','Entrada por concepto de bonificación');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (2, 3, -50.00, '2013-06-01','Devolución de productos');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (4, 4, 150.00, '2015-09-18','Compra en línea');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (3, 5, -80.00, '2017-02-10','Reembolso por entretenimiento');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (2, 5, -30.00, '2018-07-30','Pago de factura de comunicación');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (1, 5, 180.00,'2019-12-04' , 'Entrada por concepto de ventas');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (2, 5, -90.00,'2021-04-20' ,'Devolución de productos');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (4, 5, 200.00, '2022-10-11','Compra de boletos para eventos');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (1, 5, 120.00, '2012-08-24','Entrada por concepto de ingresos adicionales');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (2, 5, -30.00, '2014-01-15','Devolución de compra');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (4, 5, 80.00, '2015-04-29','Compra de productos en línea');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (3, 5, -50.00,'2016-09-08' ,'Devolución de productos');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (2, 5, -15.00, '2018-01-26','Devolución de compra');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (1, 3, 240.00, '2019-06-09','Entrada por concepto de salario adicional');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (3, 3, -60.00, '2020-10-21','Pago de facturas');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (4, 3, 40.00, '2013-02-14','Compra de productos en línea');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (1, 3, 150.00, '2014-05-28','Entrada por concepto de bonificación');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (2, 3, -75.00, '2015-10-09','Devolución de productos');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (4, 3, 160.00, '2017-01-24','Compra de boletos para eventos');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (1, 3, 110.00, '2018-06-05','Entrada por concepto de sueldo');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (3, 3, -45.00, '2019-11-17','Gasto en transporte');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (4, 4, 90.00, '2021-03-30','Compra de productos en línea');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (1, 5, 200.00, '2022-08-10','Entrada por concepto de ingresos adicionales');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (2, 5, -80.00, '2023-01-10','Devolución de compra');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (3, 4, -20.00, '2023-02-02','Pago de facturas');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (4, 4, 130.00, '2023-03-01','Compra en línea');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (1, 4, 75.00, '2023-12-04','Entrada por concepto de ventas');
+INSERT INTO movimientos (idaccion, idcuenta, dinero, fecha, comentarios) VALUES (3, 5, -35.00, '2023-12-09','Gasto en entretenimiento');
 
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
-VALUES (1, 3, 100.00, '2023-12-09');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
-VALUES (2, 3, 20.00, '2023-12-10');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
-VALUES (1, 4, 50.00, '2023-12-11');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
-VALUES (3, 5, 30.00, '2023-12-12');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
-VALUES (4, 5, 80.00, '2023-12-13');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
-VALUES (1, 3, 150.00, '2023-12-14');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
-VALUES (2, 4, 200.00, '2023-12-15');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
-VALUES (3, 4, 30.00, '2023-12-16');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
-VALUES (4, 5, 50.00, '2023-12-17');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
-VALUES (1, 5, 120.00, '2023-12-18');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
-VALUES (1, 3, 300.00, '2023-12-19');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
-VALUES (2, 3, -50.00, '2023-12-20');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
-VALUES (4, 4, 150.00, '2023-12-21');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
-VALUES (3, 5, -80.00, '2023-12-22');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`)
-VALUES (2, 5, -30.00, '2023-12-23');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (1, 3, 200.00, '2012-05-15');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (2, 3, -40.00, '2013-02-20');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (4, 4, 120.00, '2014-08-10');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (3, 4, -60.00, '2016-11-25');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (2, 4, -25.00, '2018-04-03');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (1, 4, 300.00, '2019-09-12');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (3, 4, -75.00, '2020-02-28');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (4, 4, 50.00, '2021-05-07');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (1, 5, 180.00, '2022-08-15');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (2, 5, -90.00, '2023-01-22');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (4, 5, 200.00, '2023-06-30');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (1, 5, 120.00, '2003-07-18');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (2, 5, -30.00, '2004-02-25');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (4, 5, 80.00, '2005-10-14');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (3, 5, -50.00, '2007-03-21');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (2, 5, -15.00, '2009-01-05');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (1, 3, 240.00, '2010-04-30');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (3, 3, -60.00, '2011-09-09');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (4, 3, 40.00, '2012-12-16');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (1, 3, 150.00, '2014-06-03');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (2, 3, -75.00, '2016-02-17');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (4, 3, 160.00, '2017-08-24');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (1, 3, 110.00, '2018-11-11');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (3, 3, -45.00, '2019-05-29');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (4, 4, 90.00, '2020-10-06');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (1, 5, 200.00, '2021-12-23');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (2, 5, -80.00, '2004-03-03');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (3, 4, -20.00, '2005-09-19');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (4, 4, 130.00, '2007-11-27');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (1, 4, 75.00, '2009-07-14');
-INSERT INTO `movimientos` (`idaccion`, `idcuenta`, `dinero`, `fecha`) VALUES (3, 5, -35.00, '2011-01-30');
+
 
 SELECT 
     usuarios.nombre, 
@@ -400,6 +379,7 @@ SELECT
     cuentas.dinero AS saldoCuenta,
     movimientos.id AS idMovimiento, 
     movimientos.dinero AS montoMovimiento,
+    movimientos.comentarios as Comentarios,
     acciones.id AS idAccion,
     acciones.nombre AS nombreAccion,
     movimientos.fecha
@@ -412,11 +392,3 @@ JOIN acciones ON movimientos.idaccion = acciones.id
 join tipomoneda on cuentas.idmoneda = tipomoneda.id
 WHERE usuarios.id = 1
 order by movimientos.fecha;
-
-
-
-select * from usuarios where correo = 'prueba@gmail.com' and contrasena = 'prueba';
-
-SELECT cuentas.id, cuentas.nombreCuenta, cuentas.pais ,cuentas.dinero,tipocuenta.nombre AS tipoCuenta, tipomoneda.nombre as divisa 
-FROM cuentas,tipocuenta,tipomoneda 
-WHERE cuentas.idUsuario=1 and tipocuenta.id = cuentas.tipoCuenta and tipomoneda.id = cuentas.idmoneda;
