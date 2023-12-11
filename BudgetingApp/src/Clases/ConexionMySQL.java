@@ -81,7 +81,31 @@ public class ConexionMySQL {
 		}
 		return null;
     }
-    
+    public ArrayList<Currency> cargaCurrency() {
+    	Connection conn = null;
+    	
+    	try {
+    		conn = DriverManager.getConnection(url, username, password);
+      
+        	String consulta = "SELECT * FROM tipomoneda";
+        	java.sql.Statement estado =  conn.createStatement();
+			ResultSet resultado = estado.executeQuery(consulta);
+			while(resultado.next()) {
+				
+
+				ArrayList<Currency> lista = new ArrayList<>();
+				String tipodinero = resultado.getString("nombre");
+				Currency curr = Currency.getInstance(tipodinero);
+				return lista;
+				
+			}
+			System.out.println(resultado);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+    }
     
     public ArrayList<Cuenta> cargacuentas(String id) {
     	Connection conn = null;
