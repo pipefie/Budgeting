@@ -72,8 +72,8 @@ public class VentanaPrincipal extends JFrame implements DataObserver {
 	public static int distancia = 0;
 	private static Logger logger;
 	private static Cuenta cuentaUser;
-	private static JLabel lblPosicinTotal_1;
-	private static JLabel lblPosicinTotal_1_1;
+	private static JLabel lblPosicinTotal_1 = new JLabel("<dinero>");
+	private static JLabel lblPosicinTotal_1_1 = new JLabel("<balance>");
 	private static JTable tabla;
 	
 	/**
@@ -179,7 +179,6 @@ public class VentanaPrincipal extends JFrame implements DataObserver {
 		lblSaldo.setBounds(10, 39, 67, 17);
 		panel_1.add(lblSaldo);
 		
-		JLabel lblPosicinTotal_1 = new JLabel("<dinero>");
 		lblPosicinTotal_1.setForeground(new Color(37, 187, 0));
 		lblPosicinTotal_1.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblPosicinTotal_1.setBounds(55, 39, 137, 17);
@@ -189,11 +188,7 @@ public class VentanaPrincipal extends JFrame implements DataObserver {
 		lblMovimientosltimos.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblMovimientosltimos.setBounds(10, 67, 109, 17);
 		panel_1.add(lblMovimientosltimos);
-		
 
-		lblPosicinTotal_1_1 = new JLabel("<balance>");
-
-		JLabel lblPosicinTotal_1_1 = new JLabel("<balance>");
 		lblPosicinTotal_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPosicinTotal_1_1.setForeground(new Color(210, 0, 0));
 		lblPosicinTotal_1_1.setFont(new Font("Tahoma", Font.BOLD, 18));
