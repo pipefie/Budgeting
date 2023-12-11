@@ -12,6 +12,7 @@ import Clases.Usuario;
 
 import java.awt.Color;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.JInternalFrame;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
@@ -217,6 +218,7 @@ public class VentanaLogIn extends JFrame {
 		JProgressBar progressBar = new JProgressBar(0,100);
 		progressBar.setBounds(10, 392, 379, 14);
 		panelLogIn.add(progressBar);
+		progressBar.setForeground(new Color(255, 128, 0));
 		
 		
 		JButton btnNewButton = new JButton("Log In");

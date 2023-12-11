@@ -71,6 +71,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
+import javax.swing.SwingConstants;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -191,9 +192,10 @@ public class VentanaPrincipal extends JFrame {
 		panel_1.add(lblMovimientosltimos);
 		
 		JLabel lblPosicinTotal_1_1 = new JLabel("<balance>");
+		lblPosicinTotal_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPosicinTotal_1_1.setForeground(new Color(210, 0, 0));
 		lblPosicinTotal_1_1.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblPosicinTotal_1_1.setBounds(257, 65, 137, 17);
+		lblPosicinTotal_1_1.setBounds(235, 79, 137, 17);
 		panel_1.add(lblPosicinTotal_1_1);
 		
 		JLabel lblltimosDas = new JLabel("(últimos 31 días)");
@@ -326,7 +328,7 @@ public class VentanaPrincipal extends JFrame {
 						if(usuario.getCuentasUsuario().get(i).getIdcuenta().equals(idcuenta)) {
 							lblPosicinTotal_1_1.setText(usuario.getCuentasUsuario().get(i).getDinero().toString());
 							cuentaUser = usuario.getCuentasUsuario().get(i);
-							lblSaldo.setText(cuentaUser.getDinero().toString());
+							//lblSaldo.setText(cuentaUser.getDinero().toString());
 						}
 					}
 					}
