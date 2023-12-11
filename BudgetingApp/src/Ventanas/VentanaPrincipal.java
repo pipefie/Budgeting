@@ -256,10 +256,14 @@ public class VentanaPrincipal extends JFrame {
 		lblEvolucin.setBounds(10, 11, 137, 17);
 		panel_1_1.add(lblEvolucin, BorderLayout.NORTH);
 		
+		
+		//panel tabla
 		JPanel panel_1_2 = new JPanel();
 		panel_1_2.setLayout(null);
 		panel_1_2.setBounds(780, 191, 382, 234);
 		internalFrame.getContentPane().add(panel_1_2);
+		
+		
 		
 		JLabel lblltimosMovimientos = new JLabel("Últimos Movimientos:");
 		lblltimosMovimientos.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -308,6 +312,7 @@ public class VentanaPrincipal extends JFrame {
 						if(usuario.getCuentasUsuario().get(i).getIdcuenta().equals(idcuenta)) {
 							lblPosicinTotal_1_1.setText(usuario.getCuentasUsuario().get(i).getDinero().toString());
 							cuentaUser = usuario.getCuentasUsuario().get(i);
+							lblSaldo.setText(cuentaUser.getDinero().toString());
 						}
 					}
 					}

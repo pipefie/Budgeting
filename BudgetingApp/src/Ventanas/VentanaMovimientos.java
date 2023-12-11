@@ -249,8 +249,6 @@ public class VentanaMovimientos extends JFrame {
 					transaccion.setCurrencyTransaccion(Currency.getInstance((String)comboBoxDivisa.getSelectedItem()));
 					transaccion.setFechaHora(dateChooser.getDate());
 					
-					conn.subirMovimiento(comboBoxCategoria.getSelectedIndex()+1, Integer.parseInt(cuenta.getIdcuenta()), (double)spinnerCantidad.getValue(), dateChooser.getDate());
-					
 					if(Double.valueOf(String.valueOf(spinnerCantidad.getValue()))> 0) {
 						cuenta.aniadirDinero(new BigDecimal(Double.valueOf(String.valueOf(spinnerCantidad.getValue()))));
 					}
@@ -260,7 +258,9 @@ public class VentanaMovimientos extends JFrame {
 						// el negativo o positivo del monto de la transacción es solo para saber si es entrada o salida de dinero
 						cuenta.quitarDinero(new BigDecimal(Double.valueOf(String.valueOf(spinnerCantidad.getValue()))*-1));
 					}
+					conn.subirMovimiento(comboBoxCategoria.getSelectedIndex()+1, Integer.parseInt(cuenta.getIdcuenta()), (double)spinnerCantidad.getValue(), dateChooser.getDate());
 					conn.actualizarSaldo(cuenta.getIdcuenta(), cuenta.getDinero());
+					
 				
 				}
 				logger.log( Level.FINE, "El usuario ha realizado una operacion");
