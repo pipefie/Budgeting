@@ -914,3 +914,159 @@
   <message>El usuario ha seleccionado una cuenta</message>
 </record>
 </log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T08:15:07.384144100Z</date>
+  <millis>1702282507384</millis>
+  <nanos>144100</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T08:15:33.537556100Z</date>
+  <millis>1702282533537</millis>
+  <nanos>556100</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T08:16:23.848291500Z</date>
+  <millis>1702282583848</millis>
+  <nanos>291500</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T08:19:39.372014800Z</date>
+  <millis>1702282779372</millis>
+  <nanos>14800</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T08:22:24.941070200Z</date>
+  <millis>1702282944941</millis>
+  <nanos>70200</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T08:28:47.129501200Z</date>
+  <millis>1702283327129</millis>
+  <nanos>501200</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+<record>
+  <date>2023-12-11T08:28:59.030300800Z</date>
+  <millis>1702283339030</millis>
+  <nanos>300800</nanos>
+  <sequence>1</sequence>
+  <logger>Ventanas</logger>
+  <level>WARNING</level>
+  <class>Ventanas.VentanaLogIn$5</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>Se cierra la aplicacion.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T08:30:37.228168400Z</date>
+  <millis>1702283437228</millis>
+  <nanos>168400</nanos>
+  <sequence>0</sequence>
+  <logger>Ventanas</logger>
+  <level>FINE</level>
+  <class>Ventanas.VentanaLogIn$3</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario prueba@gmail.comha iniciado sesion.</message>
+</record>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+</log>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2023-12-11T08:31:51.565677900Z</date>
+  <millis>1702283511565</millis>
+  <nanos>677900</nanos>
+  <sequence>1</sequence>
+  <logger>Ventanas</logger>
+  <level>WARNING</level>
+  <class>Ventanas.VentanaPrincipal$6</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>El usuario cierra la sesion</message>
+</record>
+<record>
+  <date>2023-12-11T08:31:56.649562200Z</date>
+  <millis>1702283516649</millis>
+  <nanos>562200</nanos>
+  <sequence>2</sequence>
+  <logger>Ventanas</logger>
+  <level>WARNING</level>
+  <class>Ventanas.VentanaLogIn$5</class>
+  <method>mouseClicked</method>
+  <thread>19</thread>
+  <message>Se cierra la aplicacion.</message>
+</record>
+</log>

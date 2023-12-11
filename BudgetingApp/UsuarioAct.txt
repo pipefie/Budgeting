@@ -1,1 +1,1 @@
-prueba@gmail.com Es el usuario actual
+prueba@gmail.com es el ultimo usuario en iniciar sesion
