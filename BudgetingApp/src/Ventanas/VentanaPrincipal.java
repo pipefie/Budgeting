@@ -377,6 +377,7 @@ public class VentanaPrincipal extends JFrame {
 					logger.log( Level.FINEST, "El usuario quiere hacer una transferencia");
 					VentanaMovimientos frame = new VentanaMovimientos("TRANSFERENCIA", usuario, conn);
 					frame.setVisible(true);
+					dispose();
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -397,6 +398,7 @@ public class VentanaPrincipal extends JFrame {
 					logger.log( Level.FINEST, "El usuario quiere hacer un nuevo gasto");
 					VentanaMovimientos frame = new VentanaMovimientos("GASTO", usuario, conn);
 					frame.setVisible(true);
+					dispose();
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -417,6 +419,7 @@ public class VentanaPrincipal extends JFrame {
 					logger.log( Level.FINE, "El usuario quiere agregar una cuenta");
 					VentanaCuenta frame = new VentanaCuenta(usuario, conn);
 					frame.setVisible(true);
+					dispose();
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
@@ -438,6 +441,7 @@ public class VentanaPrincipal extends JFrame {
 					dispose();
 					VentanaLogIn frame = new VentanaLogIn();
 					frame.setVisible(true);
+					dispose();
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
