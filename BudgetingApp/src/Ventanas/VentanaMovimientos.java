@@ -245,10 +245,10 @@ public class VentanaMovimientos extends JFrame {
 		btnGenerarRegistro.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-	
-				if (comboCuenta.getSelectedIndex() == -1  || comboBoxCategoria.getSelectedIndex() == -1) {
-					
+				if (comboCuenta.getSelectedIndex() == -1 || comboBoxCategoria.getSelectedIndex() == -1 || String.valueOf(spinnerCantidad.getValue()).equals("0") 
+						|| dateChooser.getDate().equals(null)) {
 					JOptionPane.showMessageDialog(null, "Rellena todos los campos.");
+					return;
 				}
 				else {
 					transaccion = new Transaccion(); 

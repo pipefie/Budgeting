@@ -373,7 +373,7 @@ public class VentanaPrincipal extends JFrame implements DataObserver {
 					logger.log( Level.FINEST, "El usuario quiere hacer un ingreso");
 					VentanaMovimientos frame = new VentanaMovimientos("INGRESO", usuario, conn, VentanaPrincipal.this);
 					frame.setVisible(true);
-					
+					dispose();
 					
 				} catch (Exception ex) {
 					ex.printStackTrace();
