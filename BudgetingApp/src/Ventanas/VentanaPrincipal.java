@@ -193,7 +193,7 @@ public class VentanaPrincipal extends JFrame {
 		JLabel lblPosicinTotal_1_1 = new JLabel("<balance>");
 		lblPosicinTotal_1_1.setForeground(new Color(210, 0, 0));
 		lblPosicinTotal_1_1.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblPosicinTotal_1_1.setBounds(245, 66, 137, 17);
+		lblPosicinTotal_1_1.setBounds(257, 65, 137, 17);
 		panel_1.add(lblPosicinTotal_1_1);
 		
 		JLabel lblltimosDas = new JLabel("(últimos 31 días)");
@@ -220,12 +220,6 @@ public class VentanaPrincipal extends JFrame {
 		btnNewButton_1.setBounds(10, 122, 362, 32);
 		panel_1.add(btnNewButton_1);
 		
-		JLabel lblPosicinTotal_1_2 = new JLabel("<euros>");
-		lblPosicinTotal_1_2.setForeground(new Color(0, 0, 0));
-		lblPosicinTotal_1_2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblPosicinTotal_1_2.setBounds(315, 103, 67, 17);
-		panel_1.add(lblPosicinTotal_1_2);
-		
 		JButton btnNewButton_1_1 = new JButton("Grafico2");
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -234,12 +228,6 @@ public class VentanaPrincipal extends JFrame {
 		});
 		btnNewButton_1_1.setBounds(10, 182, 362, 32);
 		panel_1.add(btnNewButton_1_1);
-		
-		JLabel lblPosicinTotal_1_2_1 = new JLabel("<euros>");
-		lblPosicinTotal_1_2_1.setForeground(Color.BLACK);
-		lblPosicinTotal_1_2_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblPosicinTotal_1_2_1.setBounds(315, 163, 67, 17);
-		panel_1.add(lblPosicinTotal_1_2_1);
 		
 		JPanel panel_1_1 = new JPanel();
 		panel_1_1.setLayout(new BorderLayout());
